@@ -1,0 +1,4 @@
+%ifdef foo
+bar
+%endif
+mar

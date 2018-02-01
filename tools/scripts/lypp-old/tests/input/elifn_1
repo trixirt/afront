@@ -1,0 +1,9 @@
+%ifndef foo
+f
+%elifndef voo
+v
+%elifndef loo
+l
+%else
+e
+%endif

@@ -1,0 +1,33 @@
+lypp : Lex Yacc Preprocessor
+
+Similar to the C preprocessor, the lex yacc preprocessor supports extra tokens
+that help to organize lex and yacc files.
+
+A mapping is
+
+cpp                lypp
+
+#include file    %include file
+#ifdef d         %ifdef d
+#ifndef d        %ifndef d
+#else            %else
+#endif           %endif
+#define d        %def %d
+#undef d         %undef %d
+
+Additional commands
+
+                 %elifdef d
+                 %elifndef d
+
+The command line mapping is
+
+-I path          -I path
+-D d             -D d
+-U d             -U d
+
+Not supported
+
+Macros expansion
+#define macro(a,b) foo(a,b)
+

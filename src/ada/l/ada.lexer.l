@@ -1,0 +1,134 @@
+%{
+
+#include "scanner.h"
+#include "ada.parser.tab.hh"
+
+using token = Ada::Parser::token;
+
+%}
+
+%option debug
+%option noyywrap
+%option c++
+
+digit                   [0-9]
+dot                     [.]
+lower_case_letter       [a-z]
+other_special_character [!$%?@[\]^`{}~]
+space_character         [ ]
+special_character       ["#&'()*+,-./:;<=>_|]
+underline               [_]
+upper_case_letter       [A-Z]
+
+graphic_character ((basic_graphic_character) | (lower_case_letter) | (other_special_character))
+basic_graphic_character ((upper_case_letter) | (digit) | (special_character) | (space_character))
+basic_character (basic_graphic_character)
+letter ((upper_case_letter) | (lower_case_letter))
+letter_or_digit ((letter) | (digit))
+identifier letter ((underline)?(letter_or_digit))*
+integer digit ((unerline)?(digit))*
+exponent ((E [+]? integer) | (E - integer))
+decimal_literal ((integer) (dot integer)? (exponent))
+extended_digit ((digit) | (letter))
+based_integer ((extended_digit)((underline)?(extended_digit))*
+base (integer)
+based_literal ((base) # (based_integer)((dot)(based_integer))?) # (exponent)?
+character_literal (['](graphic_character)['])
+string_literal ([\"](graphic_character)*[\"])
+
+%%
+
+"<"  { LEXTOK(LT); }
+">"  { LEXTOK(GT); }
+"="  { LEXTOK(EQ); }
+","  { LEXTOK(COM); }
+"&"  { LEXTOK(AMP); }
+"+"  { LEXTOK(PLU); }
+"-"  { LEXTOK(MIN); }
+"."  { LEXTOK(DOT); }
+"*"  { LEXTOK(MUL); }
+"["  { LEXTOK(OBR); }
+"("  { LEXTOK(OPA); }
+")"  { LEXTOK(CPA); }
+":"  { LEXTOK(COL); }
+";"  { LEXTOK(SCO); }
+"'"  { LEXTOK(SQU); }
+"|"  { LEXTOK(VER); }
+"/"  { LEXTOK(SL); }
+"<<" { LEXTOK(LTLT); }
+">>" { LEXTOK(GTGT); }
+"<=" { LEXTOK(LTE); }
+">=" { LEXTOK(GTE); }
+"/=" { LEXTOK(NEQ); }
+"**" { LEXTOK(MULMUL); }
+"=>" { LEXTOK(ARROW); }
+"<>" { LEXTOK(BOX); }
+".." { LEXTOK(DOTDOT); }
+":=" { LEXTOK(ASSIGN); }
+"abort"    { LEXTOK(ABORT); }
+"abs"      { LEXTOK(ABS); }
+"accept"   { LEXTOK(ACCEPT); }
+"access"   { LEXTOK(ACCESS); }
+"all"      { LEXTOK(ALL); }
+"and"      { LEXTOK(AND); }
+"array"    { LEXTOK(ARRAY); }
+"at"       { LEXTOK(AT); }
+"begin"    { LEXTOK(BEGIN); }
+"body"     { LEXTOK(BODY); }
+"case"     { LEXTOK(CASE); }
+"constant" { LEXTOK(CONSTANT); }
+"declare" { LEXTOK(DECLARE); }
+"delay" { LEXTOK(DELAY); }
+"delta" { LEXTOK(DELTA); }
+"digits" { LEXTOK(DIGITS); }
+"do" { LEXTOK(DO); }
+"else" { LEXTOK(ELSE); }
+"elsif" { LEXTOK(ELSIF); }
+"end" { LEXTOK(END); }
+"entry" { LEXTOK(ENTRY); }
+"exception" { LEXTOK(EXCEPTION); }
+"exit" { LEXTOK(EXIT); }
+"for" { LEXTOK(FOR); }
+"function" { LEXTOK(FUNCTION); }
+"generic" { LEXTOK(GENERIC); }
+"goto" { LEXTOK(GOTO); }
+"if" { LEXTOK(IF); }
+"in" { LEXTOK(IN); }
+"is" { LEXTOK(IS); }
+"limited" { LEXTOK(LIMITED); }
+"loop" { LEXTOK(LOOP); }
+"mod" { LEXTOK(MOD); }
+"new" { LEXTOK(NEW); }
+"not" { LEXTOK(NOT); }
+"null" { LEXTOK(NULL); }
+"of" { LEXTOK(OF); }
+"or" { LEXTOK(OR); }
+"others" { LEXTOK(OTHERS); }
+"package" { LEXTOK(PACKAGE); }
+"pragma" { LEXTOK(PRAGMA); }
+"private" { LEXTOK(PRIVATE); }
+"procedure" { LEXTOK(PROCEDURE); }
+"raise" { LEXTOK(RAISE); }
+"range" { LEXTOK(RANGE); }
+"record" { LEXTOK(RECORD); }
+"renames" { LEXTOK(RENAMES); }
+"return" { LEXTOK(RETURN); }
+"reverse" { LEXTOK(REVERSE); }
+"select" { LEXTOK(SELECT); }
+"seperate" { LEXTOK(SEPARATE); }
+"subtype" { LEXTOK(SUBTYPE); }
+"task" { LEXTOK(TASK); }
+"terminate" { LEXTOK(TERMINATE);}
+"then" { LEXTOK(THEN); }
+"type" { LEXTOK(TYPE);}
+"use" { LEXTOK(USE); }
+"when" { LEXTOK(WHEN); }
+"while" { LEXTOK(WHILE); }
+"with" { LEXTOK(WITH); }
+"xor" { LEXTOK(XOR); }
+"character_literal" { LEXTOK(CHARACTER_LITERAL); }
+"string_literal"    { LEXTOK(STRING_LITERAL); }
+"numeric_literal"   { LEXTOK(NUMERIC_LITERAL); }
+"identifier"        { LEXTOK(IDENTIFIER); }
+
+%%

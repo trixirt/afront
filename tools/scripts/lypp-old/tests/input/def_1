@@ -1,0 +1,12 @@
+%ifdef foo
+%def voo
+bar
+%endif
+%ifndef voo
+goo
+%endif
+mar
+%undef foo
+%ifndef foo
+loo
+%endif

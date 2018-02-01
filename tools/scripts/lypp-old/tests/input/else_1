@@ -1,0 +1,6 @@
+%ifdef foo
+goo
+%else
+bar
+%endif
+mar

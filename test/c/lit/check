@@ -1,0 +1,25 @@
+#!/bin/sh
+
+H=`dirname $0`
+H=`realpath $H`
+L=$H/../../../../../src/llvm/utils/lit/lit.py
+if [ ! -x $L ]; then
+   echo "Can not find lit"
+   exit 1
+fi
+
+host=`hostname`
+B=$H/../../../../../builder/$host/build/llvm/build/Ninja/bin/
+if [ ! -x $B/FileCheck ]; then
+   echo "Can not find FileCheck"
+   ls $B
+   exit 1
+fi
+
+C=$H/../../../obj
+if [ ! -x $C/cc1 ]; then
+   echo "Can not find cc1"
+   exit 1
+fi
+
+$L --path $B --path $C $@
