@@ -1,9 +1,0 @@
-%ifdef foo
-f
-%elifdef voo
-v
-%elifdef loo
-l
-%else
-e
-%endif

@@ -1,6 +1,0 @@
-%ifndef foo
-bar
-%elifndef voo
-goo
-%endif
-mar
