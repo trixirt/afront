@@ -1,0 +1,42 @@
+Afront, a compiler front end project
+ or
+Affront, why you are doing those horrible things to my favorite language ?!?
+
+Project goals
+A frame work for writing and doing interesting things with compiler frontends.
+
+Lexing and parsing are done with our old friends flex and bison.
+Some organizational improvment provided by lypp, a lex/yacc preprocessor.
+
+The names of the important bits are picked to match as closely as possible the
+language specification they are coming from.
+
+ex/ C's 6.7.2 type-specifier
+
+The grammer part is here
+  c/y/c.grammer.type_specifier.yy
+
+It's production generates cases here
+  c/pt/type_specifier.h
+
+with a single class called type_specifier.
+
+The directory structure 
+  <lang>/l is for the lexical handling.
+  <lang>/y is for the parser's grammer.
+  <lang>/pt is a specific languages's parse tree
+  <lant>/pt/v are the visitor classes used to walk the parse tree.
+
+Building.
+  Only tested on Ubuntu 16.04 x86-64.
+
+First build lex/yacc etc.
+  $ > cd tools/scripts
+  $ > ./build.sh
+
+Then the project
+
+  $ > cd build
+  $ > ./build.sh
+
+Be warned you will have to hack build.sh.
