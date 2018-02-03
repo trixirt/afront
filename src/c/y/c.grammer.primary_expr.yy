@@ -36,8 +36,11 @@
 %endif
 
 primary_expr
-	: identifier 	 { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); } 
-	| CONSTANT       { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); } 
-	| STRING_LITERAL { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); } 
-	| OPA expr CPA   { $$ = std::shared_ptr<primary_expr> (new primary_expr($2)); } 
+	: identifier 	    { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); } 
+	| CONSTANT          { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); } 
+	| STRING_LITERAL    { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); } 
+	| OPA expr CPA      { $$ = std::shared_ptr<primary_expr> (new primary_expr($2)); }
+%ifdef c11
+	| generic_selection { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); }
+%endif			
 	;

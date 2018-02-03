@@ -100,6 +100,12 @@ void cg::v(function_definition *a) { a->caccept(this); }
 
 void cg::v(function_specifier *a) { a->caccept(this); }
 
+void cg::v(generic_association *a) { a->caccept(this); }
+
+void cg::v(generic_assoc_list *a) { a->caccept(this); }
+
+void cg::v(generic_selection *a) { a->caccept(this); }
+
 void cg::v(identifier *a) {}
 
 void cg::v(identifier_list *a) { a->caccept(this); }

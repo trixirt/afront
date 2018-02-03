@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Rix
+ * Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -67,6 +67,9 @@ class function_body;
 class function_declarator;
 class function_definition;
 class function_specifier;
+class generic_association;
+class generic_assoc_list;
+class generic_selection;
 class identifier;
 class identifier_list;
 class inclusive_or_expr;
@@ -149,6 +152,9 @@ public:
   virtual void v(function_declarator *a) = 0;
   virtual void v(function_definition *a) = 0;
   virtual void v(function_specifier *a) = 0;
+  virtual void v(generic_association *a) = 0;
+  virtual void v(generic_assoc_list *a) = 0;
+  virtual void v(generic_selection *a) = 0;
   virtual void v(identifier *a) = 0;
   virtual void v(identifier_list *a) = 0;
   virtual void v(inclusive_or_expr *a) = 0;

@@ -42,6 +42,7 @@ public:
   primary_expr(lex::token a);
   primary_expr(std::shared_ptr<identifier> a);
   primary_expr(std::shared_ptr<expr> a);
+  primary_expr(std::shared_ptr<generic_selection> a);
   virtual ~primary_expr(){};
   virtual void accept(visitor *a);
   virtual std::string classname();

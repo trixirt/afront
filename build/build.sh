@@ -2,25 +2,6 @@
 
 set -x
 
-LLVM_VER=5.0
-GCC_VER=7.2.1
-AFL_VER=2.52b
-
-TAG=current
-if [ -d /volume/hab ]; then
-    OS=`uname -s`
-    HM=`uname -m`
-    HABTOOLS_PREFIX=/volume/hab
-    R=`${HABTOOLS_PREFIX}/${OS}/bin/os-id`
-    HABTOOLS=${HABTOOLS_PREFIX}/${OS}/${R}/${HM}
-else
-    echo "Expecting hab.."
-    exit 1
-fi
-export PATH=$HABTOOLS/llvm/${LLVM_VER}/${TAG}/bin:$HABTOOLS/gcc/${GCC_VER}/${TAG}/bin:$HABTOOLS/afl/$AFL_VER/afl/bin:$PATH
-#export AFL_QUIET=
-export AFL_PATH=/volume/hab/Linux/Ubuntu-16.04/x86_64/afl/2.52b/afl/lib/afl
-
 AR=ar
 CC="ccache clang"
 CXX="ccache clang++"
@@ -134,7 +115,7 @@ if [ -f parser.tab.cc ]; then
     rm stack.hh
 fi
 
-$LYPP -I $SRC/c/y $LYPP_FLAGS $SRC/c/y/c.parser.yy > parser.yy
+$LYPP -I $SRC/c/y $LYPP_FLAGS -Dc99 -Dc11 $SRC/c/y/c.parser.yy > parser.yy
 $YACC $YACC_FLAGS -d -v parser.yy
 
 if [ -f parser.tab.hh ]; then
@@ -188,7 +169,8 @@ PT="abstract_array_declarator direct_abstract_declarator abstract_declarator
     declaration_list declaration_specifiers direct_declarator declarator enumerator
     enumerator_list enum_specifier equality_expr exclusive_or_expr expr
     expression_statement external_definition translation_unit function_body
-    function_declarator function_definition function_specifier identifier identifier_list
+    function_declarator function_definition function_specifier 
+    generic_association generic_assoc_list generic_selection identifier identifier_list
     inclusive_or_expr init_declarator init_declarator_list initializer
     initializer_list iteration_statement jump_statement labeled_statement
     logical_and_expr logical_or_expr multiplicative_expr n

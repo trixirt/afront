@@ -198,6 +198,9 @@ void chk::v(function_definition *a) {
 }
 
 void chk::v(function_specifier *a) { a->caccept(this); }
+void chk::v(generic_association *a) { a->caccept(this); }
+void chk::v(generic_assoc_list *a) { a->caccept(this); }
+void chk::v(generic_selection *a) { a->caccept(this); }
 
 void chk::v(identifier *a) {
   if (debug) {

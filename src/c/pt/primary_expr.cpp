@@ -37,6 +37,7 @@
 primary_expr::primary_expr(lex::token _a) : n(_a) {}
 primary_expr::primary_expr(std::shared_ptr<identifier> _a) { *this += _a; }
 primary_expr::primary_expr(std::shared_ptr<expr> _a) { *this += _a; }
+primary_expr::primary_expr(std::shared_ptr<generic_selection> a) { *this += a; }
 void primary_expr::accept(visitor *_a) { _a->v(this); }
 std::string primary_expr::classname() { return "primary_expr"; };
 

@@ -57,6 +57,9 @@ function_body
 function_declarator
 function_definition
 function_specifier
+generic_association
+generic_assoc_list
+generic_selection
 identifier
 identifier_list
 inclusive_or_expr

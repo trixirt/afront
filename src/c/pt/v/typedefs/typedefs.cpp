@@ -94,6 +94,9 @@ void typedefs::v(function_body *a) { /* skip */ }
 void typedefs::v(function_declarator *a) { /* skip */ }
 void typedefs::v(function_definition *a) { /* skip */ }
 void typedefs::v(function_specifier *a) { /* skip */ }
+void typedefs::v(generic_association *a) { /* skip */ }
+void typedefs::v(generic_assoc_list *a) { /* skip */ }
+void typedefs::v(generic_selection *a) { /* skip */ }
 void typedefs::v(identifier_list *a) { /* skip */ }
 void typedefs::v(inclusive_or_expr *a) { /* skip */ }
 void typedefs::v(initializer *a) { /* skip */ }

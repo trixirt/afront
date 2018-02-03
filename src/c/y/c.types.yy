@@ -61,6 +61,10 @@
 %type <std::shared_ptr<function_body>> function_body;
 %type <std::shared_ptr<function_declarator>> function_declarator;
 %type <std::shared_ptr<function_definition>> function_definition;
+%type <std::shared_ptr<function_specifier>> function_specifier;
+%type <std::shared_ptr<generic_association>> generic_association;
+%type <std::shared_ptr<generic_assoc_list>> generic_assoc_list;
+%type <std::shared_ptr<generic_selection>> generic_selection;
 %type <std::shared_ptr<identifier>> typename_identifier;
 %type <std::shared_ptr<identifier>> identifier;
 %type <std::shared_ptr<identifier_list>> identifier_list;

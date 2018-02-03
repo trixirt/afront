@@ -78,6 +78,9 @@ public:
   virtual void v(function_declarator *a);
   virtual void v(function_definition *a);
   virtual void v(function_specifier *a);
+  virtual void v(generic_association *a);
+  virtual void v(generic_assoc_list *a);
+  virtual void v(generic_selection *a);
   virtual void v(identifier *a);
   virtual void v(identifier_list *a);
   virtual void v(inclusive_or_expr *a);

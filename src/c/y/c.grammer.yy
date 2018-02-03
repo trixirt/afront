@@ -51,6 +51,11 @@
 %include c.grammer.assignment_expr.yy
 %include c.grammer.assignment_operator.yy
 %include c.grammer.expr.yy
+%ifdef c11
+%include c.grammer.generic_association.yy
+%include c.grammer.generic_assoc_list.yy
+%include c.grammer.generic_selection.yy
+%endif
 %include c.grammer.constant_expr.yy
 %include c.grammer.declaration.yy
 %include c.grammer.declaration_specifiers.yy

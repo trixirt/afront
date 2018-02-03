@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,27 +32,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_ASSIGNMENT_EXPR_H
-#define NADA_C_PT_ASSIGNMENT_EXPR_H
+#include "pt.h"
 
-#include "n.h"
-#include <string>
-
-class conditional_expr;
-class unary_expr;
-class assignment_operator;
-class assignment_expr;
-
-class assignment_expr : public n {
-public:
-  assignment_expr(std::shared_ptr<conditional_expr> a);
-  assignment_expr(std::shared_ptr<unary_expr> a,
-                  std::shared_ptr<assignment_operator> b,
-                  std::shared_ptr<assignment_expr> c);
-
-  virtual ~assignment_expr(){};
-  virtual void accept(visitor *a);
-  virtual std::string classname();
-};
-
-#endif
+generic_assoc_list::generic_assoc_list(std::shared_ptr<generic_association> a) {
+  *this += a;
+}
+void generic_assoc_list::accept(visitor *a) { a->v(this); };
+std::string generic_assoc_list::classname() { return "generic_assoc_list"; };
