@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,8 +31,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%type <std::shared_ptr<abi>> abi;
+%type <std::shared_ptr<configuration>> configuration;
+%type <std::shared_ptr<constant>> constant;
+%type <std::shared_ptr<data_layout>> data_layout;
+%type <std::shared_ptr<endian>> endian;
+%type <std::shared_ptr<identifier>> identifier;
+%type <std::shared_ptr<language_type>> language_type;
+%type <std::shared_ptr<layout_option_list>> layout_option_list;
+%type <std::shared_ptr<layout_option>> layout_option;
+%type <std::shared_ptr<mangle>> mangle;
+%type <std::shared_ptr<object_class>> object_class;
+%type <std::shared_ptr<object_list>> object_list;
+%type <std::shared_ptr<object>> object;
+%type <std::shared_ptr<stack>> stack;
+%type <std::shared_ptr<string_constant>> string_constant;
+%type <std::shared_ptr<target_triple>> target_triple;
+%type <std::shared_ptr<triple>> triple;
 
-configuration
-	: data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2));  d->set($$); }
-	: triple data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2, $3));  d->set($$); }
-	;
+

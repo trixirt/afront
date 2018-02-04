@@ -31,8 +31,20 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-configuration
-	: data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2));  d->set($$); }
-	: triple data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2, $3));  d->set($$); }
-	;
+%include fig.grammer.abi.yy
+%include fig.grammer.configuration.yy
+%include fig.grammer.constant.yy
+%include fig.grammer.data_layout.yy
+%include fig.grammer.endian.yy
+%include fig.grammer.identifier.yy
+%include fig.grammer.language_type.yy
+%include fig.grammer.layout_option_list.yy
+%include fig.grammer.layout_option.yy
+%include fig.grammer.mangle.yy
+%include fig.grammer.object_class.yy
+%include fig.grammer.object_list.yy
+%include fig.grammer.object.yy
+%include fig.grammer.stack.yy
+%include fig.grammer.string_constant.yy
+%include fig.grammer.target_triple.yy
+%include fig.grammer.triple.yy

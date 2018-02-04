@@ -31,6 +31,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-target_triple
-	: TARGET_TRIPLE string_constant   { $$ = std::shared_ptr<target_triple> (new target_triple($2)); }
+abi
+	: abi string_constant   { $$ = std::shared_ptr<abi> (new abi($2)); }
 	;

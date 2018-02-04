@@ -31,8 +31,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-configuration
-	: data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2));  d->set($$); }
-	: triple data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2, $3));  d->set($$); }
+triple
+	: TRIPLE identifier   { $$ = std::shared_ptr<triple> (new triple($2)); }
 	;

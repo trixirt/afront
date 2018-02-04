@@ -1,4 +1,5 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/*
+ * Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,8 +32,33 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#ifndef AFRONT_FIG_PT_PT_H
+#define AFRONT_FIG_PT_PT_H
 
-configuration
-	: data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2));  d->set($$); }
-	: triple data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2, $3));  d->set($$); }
-	;
+#include "n.h"
+
+class abi;
+class configuration;
+class constant;
+class data_layout;
+class endian;
+class identifier;
+class language_type;
+class layout_option_list;
+class layout_option;
+class mangle;
+class object_class;
+class object_list;
+class object;
+class stack;
+class string_constant;
+class target_triple;
+class triple;
+
+class abi : public n {
+    abi(std::shared_ptr<string_constant> a);
+    virtual ~abi(){};
+    virtual void accept(visitor *a);
+};
+
+#endif

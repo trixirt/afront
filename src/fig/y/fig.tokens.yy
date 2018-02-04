@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,8 +31,16 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%token <class lex::token> ABI
+%token <class lex::token> AGGREGATE
+%token <class lex::token> BIG
+%token <class lex::token> CONSTANT
+%token <class lex::token> IDENTIFIER
+%token <class lex::token> INTEGER
+%token <class lex::token> LITTLE
+%token <class lex::token> MANGLE
+%token <class lex::token> POINTER
+%token <class lex::token> REAL
+%token <class lex::token> STACK
+%token <class lex::token> STRING_CONSTANT
 
-configuration
-	: data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2));  d->set($$); }
-	: triple data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2, $3));  d->set($$); }
-	;

@@ -32,6 +32,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 language_type
-	: STRING_LITERAL object_class CONSTANT           { $$ = std::shared_ptr<language_type> (new language_type($1, $2, $3)); }
-	| STRING_LITERAL object_class CONSTANT CONSTANT  { $$ = std::shared_ptr<language_type> (new language_type($1, $2, $3, $4)); }
+	: string_literal object_class constant           { $$ = std::shared_ptr<language_type> (new language_type($1, $2, $3)); }
+	| string_literal object_class constant constant  { $$ = std::shared_ptr<language_type> (new language_type($1, $2, $3, $4)); }
 	;

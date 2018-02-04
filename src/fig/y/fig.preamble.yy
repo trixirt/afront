@@ -31,8 +31,36 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%skeleton "lalr1.cc"
+%require  "3.0.4"
+%ifdef DEBUG
+%debug
+%endif
+%defines
+%define api.namespace {nada}
+%define api.value.type variant
+%define api.location.type {lex::location}
+%define parser_class_name {parser}
+%define parse.error verbose
 
-configuration
-	: data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2));  d->set($$); }
-	: triple data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2, $3));  d->set($$); }
-	;
+%code requires {
+      #include "driver.h"
+      //#include "pt.h"
+}
+
+%parse-param { fig::driver *d }
+
+%code{
+   #include <iostream>
+   #include <cstdlib>
+   #include <fstream>
+   #include <string>
+   
+   /* include for all driver functions */
+   #include "driver.h"
+   #include "scanner.h"
+
+#undef yylex
+#define yylex d->scanner->yylex
+}
+
