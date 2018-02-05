@@ -46,5 +46,4 @@
 %include fig.grammer.object.yy
 %include fig.grammer.stack.yy
 %include fig.grammer.string_constant.yy
-%include fig.grammer.target_triple.yy
 %include fig.grammer.triple.yy

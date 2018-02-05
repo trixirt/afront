@@ -52,13 +52,115 @@ class object_list;
 class object;
 class stack;
 class string_constant;
-class target_triple;
 class triple;
 
 class abi : public n {
-    abi(std::shared_ptr<string_constant> a);
-    virtual ~abi(){};
-    virtual void accept(visitor *a);
+  abi(std::shared_ptr<string_constant> a);
+  virtual ~abi(){};
+  virtual void accept(visitor *a);
+};
+
+class configuration : public n {
+  configuration(std::shared_ptr<data_layout> a,
+                std::shared_ptr<language_type_list> b);
+  configuration(std::shared_ptr<triple> a, std::shared_ptr<data_layout> b,
+                std::shared_ptr<language_type_list> c);
+  virtual ~configuration(){};
+  virtual void accept(visitor *a);
+};
+
+class constant : public n {
+  constant(lex::token a);
+  virtual ~constant(){};
+  virtual void accept(visitor *a);
+};
+
+class data_layout : public n {
+  data_layout(std::shared_ptr<endian> a, std::shared_ptr<object_list> b);
+  data_layout(std::shared_ptr<endian> a, std::shared_ptr<layout_option_list> b,
+              std::shared_ptr<object_list> c);
+  virtual ~data_layout(){};
+  virtual void accept(visitor *a);
+};
+
+class endian : public n {
+  endian(lex::token a);
+  virtual ~endian(){};
+  virtual void accept(visitor *a);
+};
+
+class identifier : public n {
+  identifier(lex::token a);
+  virtual ~identifier(){};
+  virtual void accept(visitor *a);
+};
+
+class language_type : public n {
+  language_type(std::shared_ptr<string_literal> a,
+                std::shared_ptr<object_class> b, std::shared_ptr<constant> c);
+  language_type(std::shared_ptr<string_literal> a,
+                std::shared_ptr<object_class> b, std::shared_ptr<constant> c,
+                std::shared_ptr<constant> d);
+  virtual ~language_type(){};
+  virtual void accept(visitor *a);
+};
+
+class layout_option_list : public n {
+  layout_option_list(std::shared_ptr<layout_option> a);
+  virtual ~layout_option_list(){};
+  virtual void accept(visitor *a);
+};
+
+class layout_option : public n {
+  layout_option(std::shared_ptr<stack> a);
+  layout_option(std::shared_ptr<mangle> a);
+  layout_option(std::shared_ptr<abi> a);
+  virtual ~layout_option(){};
+  virtual void accept(visitor *a);
+};
+
+class mangle : public n {
+  mangle(std::shared_ptr<string_constant> a);
+  virtual ~mangle(){};
+  virtual void accept(visitor *a);
+};
+
+class object_class : public n {
+  object_class(lex::token a);
+  virtual ~object_class(){};
+  virtual void accept(visitor *a);
+};
+
+class object_list : public n {
+  object_list(std::shared_ptr<object> a);
+  virtual ~object_list(){};
+  virtual void accept(visitor *a);
+};
+
+class object : public n {
+  object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b);
+  object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b,
+         std::shared_ptr<constant> c);
+  virtual ~object(){};
+  virtual void accept(visitor *a);
+};
+
+class stack : public n {
+  stack(std::shared_ptr<constant> a);
+  virtual ~stack(){};
+  virtual void accept(visitor *a);
+};
+
+class string_constant : public n {
+  string_constant(lex::token a);
+  virtual ~string_constant(){};
+  virtual void accept(visitor *a);
+};
+
+class triple : public n {
+  triple(std::shared_ptr<string_constant> a);
+  virtual ~triple(){};
+  virtual void accept(visitor *a);
 };
 
 #endif
