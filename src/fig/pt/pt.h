@@ -36,6 +36,7 @@
 #define AFRONT_FIG_PT_PT_H
 
 #include "n.h"
+#include "v/visitor.h"
 
 class abi;
 class configuration;
@@ -44,6 +45,7 @@ class data_layout;
 class endian;
 class identifier;
 class language_type;
+class language_type_list;
 class layout_option_list;
 class layout_option;
 class mangle;
@@ -96,12 +98,18 @@ class identifier : public n {
 };
 
 class language_type : public n {
-  language_type(std::shared_ptr<string_literal> a,
+  language_type(std::shared_ptr<string_constant> a,
                 std::shared_ptr<object_class> b, std::shared_ptr<constant> c);
-  language_type(std::shared_ptr<string_literal> a,
+  language_type(std::shared_ptr<string_constant> a,
                 std::shared_ptr<object_class> b, std::shared_ptr<constant> c,
                 std::shared_ptr<constant> d);
   virtual ~language_type(){};
+  virtual void accept(visitor *a);
+};
+
+class language_type_list : public n {
+  language_type_list(std::shared_ptr<language_type> a);
+  virtual ~language_type_list(){};
   virtual void accept(visitor *a);
 };
 

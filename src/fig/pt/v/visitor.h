@@ -1,4 +1,5 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/*
+ * Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,7 +32,52 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-language_type
-	: string_constant object_class constant           { $$ = std::shared_ptr<language_type> (new language_type($1, $2, $3)); }
-	| string_constant object_class constant constant  { $$ = std::shared_ptr<language_type> (new language_type($1, $2, $3, $4)); }
-	;
+#ifndef AFRONT_FIG_PT_VIS_VISITOR_H
+#define AFRONT_FIG_PT_VIS_VISITOR_H
+
+class abi;
+class configuration;
+class constant;
+class data_layout;
+class endian;
+class identifier;
+class language_type;
+class language_type_list;
+class layout_option_list;
+class layout_option;
+class mangle;
+class object_class;
+class object_list;
+class object;
+class stack;
+class string_constant;
+class triple;
+
+class visitor {
+public:
+  visitor(){};
+  virtual ~visitor(){};
+
+  virtual void descend() {}
+  virtual void ascend() {}
+
+  virtual void v(abi *a) = 0;
+  virtual void v(configuration *a) = 0;
+  virtual void v(constant *a) = 0;
+  virtual void v(data_layout *a) = 0;
+  virtual void v(endian *a) = 0;
+  virtual void v(identifier *a) = 0;
+  virtual void v(language_type *a) = 0;
+  virtual void v(language_type_list *a) = 0;
+  virtual void v(layout_option_list *a) = 0;
+  virtual void v(layout_option *a) = 0;
+  virtual void v(mangle *a) = 0;
+  virtual void v(object_class *a) = 0;
+  virtual void v(object_list *a) = 0;
+  virtual void v(object *a) = 0;
+  virtual void v(stack *a) = 0;
+  virtual void v(string_constant *a) = 0;
+  virtual void v(triple *a) = 0;
+};
+
+#endif

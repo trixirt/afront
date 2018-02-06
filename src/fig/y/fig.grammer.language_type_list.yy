@@ -31,7 +31,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-language_type
-	: string_constant object_class constant           { $$ = std::shared_ptr<language_type> (new language_type($1, $2, $3)); }
-	| string_constant object_class constant constant  { $$ = std::shared_ptr<language_type> (new language_type($1, $2, $3, $4)); }
+language_type_list
+	: language_type             { $$ = std::shared_ptr<language_type_list> (new language_type_list($1)); }
+	| language_type_list language_type { *$1 += $2; $$ = $1; }
 	;

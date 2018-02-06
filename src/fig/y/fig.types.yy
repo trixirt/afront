@@ -38,6 +38,7 @@
 %type <std::shared_ptr<endian>> endian;
 %type <std::shared_ptr<identifier>> identifier;
 %type <std::shared_ptr<language_type>> language_type;
+%type <std::shared_ptr<language_type_list>> language_type_list;
 %type <std::shared_ptr<layout_option_list>> layout_option_list;
 %type <std::shared_ptr<layout_option>> layout_option;
 %type <std::shared_ptr<mangle>> mangle;
