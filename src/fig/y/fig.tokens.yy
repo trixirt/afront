@@ -43,4 +43,6 @@
 %token <class lex::token> REAL
 %token <class lex::token> STACK
 %token <class lex::token> STRING_CONSTANT
+%token <class lex::token> TRIPLE
+%token <class lex::token> VECTOR
 

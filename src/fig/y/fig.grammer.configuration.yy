@@ -33,6 +33,6 @@
  */
 
 configuration
-	: data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2));  d->set($$); }
-	: triple data_layout language_type_list  {  $$ = std::shared_ptr<configuration> (new configuration($1, $2, $3));  d->set($$); }
+	: data_layout language_type_list        {  $$ = std::shared_ptr<configuration> (new configuration($1, $2));  d->set($$); }
+	| triple data_layout language_type_list {  $$ = std::shared_ptr<configuration> (new configuration($1, $2, $3));  d->set($$); }
 	;

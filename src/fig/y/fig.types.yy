@@ -47,7 +47,6 @@
 %type <std::shared_ptr<object>> object;
 %type <std::shared_ptr<stack>> stack;
 %type <std::shared_ptr<string_constant>> string_constant;
-%type <std::shared_ptr<target_triple>> target_triple;
 %type <std::shared_ptr<triple>> triple;
 
 

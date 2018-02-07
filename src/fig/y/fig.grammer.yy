@@ -38,6 +38,7 @@
 %include fig.grammer.endian.yy
 %include fig.grammer.identifier.yy
 %include fig.grammer.language_type.yy
+%include fig.grammer.language_type_list.yy
 %include fig.grammer.layout_option_list.yy
 %include fig.grammer.layout_option.yy
 %include fig.grammer.mangle.yy

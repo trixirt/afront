@@ -32,17 +32,19 @@ LYPP=$TOOLS/bin/lypp
 LYPP_FLAGS="-DDEBUG"
 CXXFLAGS="$CXXFLAGS -std=$CXX_STD -I${SRC} -I${TOOLS}/include -I${OBJ} -g -O0"
 CINCLUDES="-I${SRC}/c -I${SRC}/c/pt -I${SRC}/l -I${SRC}/c/l -I${OBJ}/c -I${SRC}/pt -I${SRC}/at"
+FIGINCLUDES="-I${SRC}/fig -I${SRC}/fig/pt -I${SRC}/l -I${SRC}/fig/l -I${OBJ}/fig -I${SRC}/pt -I${SRC}/at"
 CLIBS=
 
+mkdir -p ${OBJ}/at
+mkdir -p ${OBJ}/ada
 mkdir -p ${OBJ}/c/pt/v/pa
 mkdir -p ${OBJ}/c/pt/v/cg
 mkdir -p ${OBJ}/c/pt/v/chk
 mkdir -p ${OBJ}/c/pt/v/scope
 mkdir -p ${OBJ}/c/pt/v/typedefs
-mkdir -p ${OBJ}/pt
-mkdir -p ${OBJ}/at
-mkdir -p ${OBJ}/ada
 mkdir -p ${OBJ}/con
+mkdir -p ${OBJ}/fig/pt
+mkdir -p ${OBJ}/pt
 
 cd ${OBJ}
 
@@ -108,6 +110,53 @@ fi
 CLIBS="$CLIBS -L${OBJ} -lpt"
 cd ${OBJ}
 PT_OBJS=
+
+cd fig
+
+$LYPP -I $SRC/fig/y $LYPP_FLAGS $SRC/fig/y/fig.parser.yy > parser.yy
+$YACC $YACC_FLAGS -d -v parser.yy
+
+if [ ! -f parser.tab.cc ]; then
+    exit 1
+fi
+if [ -f parser.o ]; then
+    rm parser.o
+fi
+$CXX $CXXFLAGS $FIGINCLUDES -c parser.tab.cc -o parser.o
+if [ ! -f parser.o ]; then
+    echo "Problem building parser"
+    exit 1
+fi
+exit
+C_OBJS="fig/parser.o $C_OBJS"
+
+
+PT="pt"
+PT_OBJS=
+for pt in $PT; do
+    f=pt/${pt}.o
+    if [ -f $f ]; then
+	rm $f
+    fi
+    $CXX $CXXFLAGS $CINCLUDES -c ${SRC}/fig/pt/${pt}.cpp -o ${f}
+    if [ ! -f $f ]; then
+	echo "Failed to build $f"
+	exit 1
+    fi
+    PT_OBJS="$f $PT_OBJS"
+done 
+
+if [ -f libfigpt.a ]; then
+    rm libfigpt.a
+fi
+$AR cr libfigpt.a $PT_OBJS
+if [ ! -f libfigpt.a ]; then
+    echo "Failed to build libcpt.a"
+    exit 1
+fi
+CLIBS="-L${OBJ}/fig -lfigpt $CLIBS"
+
+cd ..
 
 cd c
 if [ -f parser.tab.cc ]; then
