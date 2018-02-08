@@ -33,7 +33,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "at/at.h"
-#include "c/driver.h"
+#include "c/c_driver.h"
 #include "c/pt/v/cg/cg.h"
 #include "c/pt/v/chk/chk.h"
 #include "c/pt/v/scope/scope.h"
@@ -95,17 +95,17 @@ void init_types(std::shared_ptr<scope> a) {
 
 int main(int argc, char *argv[]) {
   int ret = 0;
-  c::driver driver;
+  c_driver drv;
   char *f = nullptr;
   chk *vchk = nullptr;
   cg *vcg = nullptr;
   if (argc == 2)
     f = argv[1];
-  if (!driver.parse(f)) {
-    std::cout << driver.result() << std::endl;
+  if (!drv.parse(f)) {
+    std::cout << drv.result() << std::endl;
     ret = 1;
   } else {
-    std::shared_ptr<translation_unit> tu = driver.get();
+      std::shared_ptr<n> root = drv.get_root();
     std::shared_ptr<scope> a =
         std::shared_ptr<scope>(new scope("cc1", nullptr, nullptr));
     if (a == nullptr) {
@@ -115,26 +115,26 @@ int main(int argc, char *argv[]) {
       init_types(a);
       vchk = new chk(a);
       try {
-        tu->accept(vchk);
+        root->accept(vchk);
 	vcg = new cg();
 	try {
-	    tu->accept(vcg);
+	    root->accept(vcg);
 	    
 	} catch (ice_exception &e) {
-	    driver.ice(e.file(), e.line(), e.what());
+	    drv.ice(e.file(), e.line(), e.what());
 	    ret = 2;
 	    goto end;
 	} catch (visitor_exception &e) {
-	    driver.error(e.who()->here(), e.what());
+	    drv.error(e.who()->here(), e.what());
 	    ret = 1;
 	    goto end;
 	}
       } catch (ice_exception &e) {
-        driver.ice(e.file(), e.line(), e.what());
+        drv.ice(e.file(), e.line(), e.what());
         ret = 2;
 	goto end;
       } catch (visitor_exception &e) {
-        driver.error(e.who()->here(), e.what());
+        drv.error(e.who()->here(), e.what());
         ret = 1;
 	goto end;
       }

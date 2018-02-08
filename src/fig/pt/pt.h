@@ -72,7 +72,7 @@ class configuration : public n {
 };
 
 class constant : public n {
-  constant(lex::token a);
+  constant(lex_token a);
   virtual ~constant(){};
   virtual void accept(visitor *a);
 };
@@ -86,13 +86,13 @@ class data_layout : public n {
 };
 
 class endian : public n {
-  endian(lex::token a);
+  endian(lex_token a);
   virtual ~endian(){};
   virtual void accept(visitor *a);
 };
 
 class identifier : public n {
-  identifier(lex::token a);
+  identifier(lex_token a);
   virtual ~identifier(){};
   virtual void accept(visitor *a);
 };
@@ -134,7 +134,7 @@ class mangle : public n {
 };
 
 class object_class : public n {
-  object_class(lex::token a);
+  object_class(lex_token a);
   virtual ~object_class(){};
   virtual void accept(visitor *a);
 };
@@ -160,7 +160,7 @@ class stack : public n {
 };
 
 class string_constant : public n {
-  string_constant(lex::token a);
+  string_constant(lex_token a);
   virtual ~string_constant(){};
   virtual void accept(visitor *a);
 };

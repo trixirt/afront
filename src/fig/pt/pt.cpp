@@ -51,7 +51,7 @@ configuration::configuration(std::shared_ptr<triple> a,
 }
 void configuration::accept(visitor *a) { a->v(this); }
 
-constant::constant(lex::token a) : n(a) {}
+constant::constant(lex_token a) : n(a) {}
 void constant::accept(visitor *a) { a->v(this); }
 
 data_layout::data_layout(std::shared_ptr<endian> a,
@@ -68,10 +68,10 @@ data_layout::data_layout(std::shared_ptr<endian> a,
 }
 void data_layout::accept(visitor *a) { a->v(this); }
 
-endian::endian(lex::token a) : n(a) {}
+endian::endian(lex_token a) : n(a) {}
 void endian::accept(visitor *a) { a->v(this); }
 
-identifier::identifier(lex::token a) : n(a) {}
+identifier::identifier(lex_token a) : n(a) {}
 void identifier::accept(visitor *a) { a->v(this); }
 
 language_type::language_type(std::shared_ptr<string_constant> a,
@@ -110,7 +110,7 @@ void layout_option::accept(visitor *a) { a->v(this); }
 mangle::mangle(std::shared_ptr<string_constant> a) { *this += a; }
 void mangle::accept(visitor *a) { a->v(this); }
 
-object_class::object_class(lex::token a) : n(a) {}
+object_class::object_class(lex_token a) : n(a) {}
 void object_class::accept(visitor *a) { a->v(this); }
 
 object_list::object_list(std::shared_ptr<object> a) { *this += a; }
@@ -131,7 +131,7 @@ void object::accept(visitor *a) { a->v(this); }
 stack::stack(std::shared_ptr<constant> a) { *this += a; }
 void stack::accept(visitor *a) { a->v(this); }
 
-string_constant::string_constant(lex::token a) : n(a) {}
+string_constant::string_constant(lex_token a) : n(a) {}
 void string_constant::accept(visitor *a) { a->v(this); }
 
 triple::triple(std::shared_ptr<string_constant> a) { *this += a; }

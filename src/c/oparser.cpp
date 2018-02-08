@@ -45,16 +45,15 @@
 // Clinton Jeffery, jeffery@cs.uidaho.edu
 // http://www.unicon.org/merr/
 
-namespace nada {
-oparser::oparser(c::driver *d) : parser(d) {
+oparser::oparser(c_driver *drv) : parser(drv) {
 #include "oparser_warn.h"
 }
-void oparser::error(const class lex::location &loc, const std::string &msg) {
+void oparser::error(const class location &loc, const std::string &msg) {
 #ifndef WARNING_TRAINING
-  fprintf(stderr, "%s:%u:%u Error: %s\n", d->filename.c_str(), loc.begin.line,
+  fprintf(stderr, "%s:%u:%u Error: %s\n", drv->filename.c_str(), loc.begin.line,
           loc.begin.column, msg.c_str());
   unsigned l = loc.begin.line;
-  std::shared_ptr<std::string> s = d->scanner->get_line(l);
+  std::shared_ptr<std::string> s = drv->scan->get_line(l);
   if (s != nullptr) {
     const char *cs = s->c_str();
     fprintf(stderr, "%s", s->c_str());
@@ -76,7 +75,7 @@ void oparser::error(const class lex::location &loc, const std::string &msg) {
 }
 std::string oparser::yysyntax_error_(state_type yystate,
                                      const symbol_type &yyla) const {
-  std::string r = nada::parser::yysyntax_error_(yystate, yyla);
+  std::string r = afront::parser::yysyntax_error_(yystate, yyla);
   std::hash<std::string> shash;
   std::size_t h = shash(r);
   auto si = syntax_error_map.find((int)yystate);
@@ -109,4 +108,3 @@ std::string oparser::yysyntax_error_(state_type yystate,
   }
   return r;
 }
-} // namespace nada

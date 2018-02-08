@@ -37,18 +37,18 @@
 %debug
 %endif
 %defines
-%define api.namespace {nada}
+%define api.namespace {afront}
 %define api.value.type variant
-%define api.location.type {lex::location}
+%define api.location.type {location}
 %define parser_class_name {parser}
 %define parse.error verbose
 
 %code requires {
-      #include "driver.h"
+      #include "c_driver.h"
       #include "pt.h"
 }
 
-%parse-param { c::driver *d }
+%parse-param { c_driver *drv }
 
 %code{
    #include <iostream>
@@ -57,10 +57,10 @@
    #include <string>
    
    /* include for all driver functions */
-   #include "driver.h"
+   #include "c_driver.h"
    #include "scanner.h"
 
 #undef yylex
-#define yylex d->scanner->yylex
+#define yylex drv->scan->yylex
 }
 

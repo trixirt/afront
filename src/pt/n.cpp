@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Rix
+ * Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -37,15 +37,15 @@
 #include "l/location.h"
 
 n::n() : m() {}
-n::n(lex::token a) : m() { lt = a; }
-class lex::location &n::here() {
+n::n(lex_token a) : m() { lt = a; }
+class location &n::here() {
   return lt.here();
 }
 signed n::what() { return lt.what(); }
 
 std::string n::where() {
   if (what() != -1) {
-    class lex::location l = here();
+    class location l = here();
     if (l.begin.filename != nullptr) {
       std::string r = *l.begin.filename;
       r += ':';

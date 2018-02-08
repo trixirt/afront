@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2017 Tom Rix
+/* Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,25 +31,38 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_AND_EXPR_H
-#define NADA_C_PT_AND_EXPR_H
+#ifndef AFRONT_DRIVER
+#define AFRONT_DRIVER
 
-#include "n.h"
+#include "pt/pt.h"
 #include <string>
 
-class equality_expr;
-class and_expr;
+class oparser;
+class parser;
+class scanner;
 
-class and_expr : public n {
+class driver {
 public:
-  and_expr(std::shared_ptr<equality_expr> a);
-  and_expr(std::shared_ptr<and_expr> a, lex::token b,
-           std::shared_ptr<equality_expr> c);
+  driver() = default;
+  virtual ~driver();
 
-  virtual ~and_expr(){};
-  virtual void accept(visitor *a);
-  virtual std::string classname();
+  bool parse(const char *filename);
+  std::string result();
+  std::shared_ptr<n> get_root();
+  void set_root(std::shared_ptr<n> a);
+  
+  void error(const class location &a, const std::string &b);
+  void ice(const char *a, unsigned b, const std::string &c);
+
+  virtual bool initialize_scanner(std::istream *a) = 0;
+  virtual bool initialize_parser() = 0;
+
+  oparser *parser = nullptr;
+  scanner *scan = nullptr;
+  std::shared_ptr<n> root;
+  std::string filename;
+  friend class oparser;
+  friend class parser;
 };
-
 
 #endif

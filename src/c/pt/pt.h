@@ -32,18 +32,123 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_PT_H
-#define NADA_C_PT_PT_H
+#ifndef AFRONT_C_PT_PT_H
+#define AFRONT_C_PT_PT_H
+
+class abstract_array_declarator;
+class abstract_declarator;
+class abstract_function_declarator;
+class additive_expr;
+class and_expr;
+class argument_expr_list;
+class array_declarator;
+class assignment_expr;
+class assignment_operator;
+class cast_expr;
+class compound_statement;
+class conditional_expr;
+class constant_expr;
+class declaration;
+class declaration_list;
+class declaration_specifiers;
+class declarator;
+class direct_abstract_declarator;
+class direct_declarator;
+class enum_specifier;
+class enumerator;
+class enumerator_list;
+class equality_expr;
+class exclusive_or_expr;
+class expr;
+class expression_statement;
+class external_definition;
+class function_body;
+class function_declarator;
+class function_definition;
+class function_specifier;
+class generic_association;
+class generic_assoc_list;
+class generic_selection;
+class identifier;
+class identifier_list;
+class inclusive_or_expr;
+class init_declaration;
+class init_declarator;
+class init_declarator_list;
+class initializer;
+class initializer_list;
+class iteration_statement;
+class jump_statement;
+class labeled_statement;
+class logical_and_expr;
+class logical_or_expr;
+class multiplicative_expr;
+class parameter_declaration;
+class parameter_list;
+class parameter_type_list;
+class pointer;
+class postfix_expr;
+class primary_expr;
+class relation_expr;
+class selection_statement;
+class shift_expr;
+class specifier_qualifier_list;
+class statement;
+class statement_list;
+class storage_class_specifier;
+class struct_declaration;
+class struct_declaration_list;
+class struct_declarator;
+class struct_declarator_list;
+class struct_or_union;
+class struct_or_union_specifier;
+class translation_unit;
+class type_name;
+class type_qualifier;
+class type_qualifier_list;
+class typedef_name;
+class type_specifier;
+class unary_expr;
+class unary_operator;
 
 #include "abstract_array_declarator.h"
 #include "abstract_declarator.h"
 #include "abstract_function_declarator.h"
-#include "additive_expr.h"
-#include "and_expr.h"
+
+class additive_expr : public n {
+public:
+  additive_expr(std::shared_ptr<multiplicative_expr> a);
+  additive_expr(std::shared_ptr<additive_expr> a, lex_token b,
+                std::shared_ptr<multiplicative_expr> c);
+
+  virtual ~additive_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class and_expr : public n {
+public:
+  and_expr(std::shared_ptr<equality_expr> a);
+  and_expr(std::shared_ptr<and_expr> a, lex_token b,
+           std::shared_ptr<equality_expr> c);
+
+  virtual ~and_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "argument_expr_list.h"
 #include "array_declarator.h"
 #include "assignment_expr.h"
-#include "assignment_operator.h"
+
+class assignment_operator : public n {
+public:
+  assignment_operator(lex_token a);
+  virtual ~assignment_operator(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "cast_expr.h"
 #include "compound_statement.h"
 #include "conditional_expr.h"
@@ -57,59 +162,301 @@
 #include "enum_specifier.h"
 #include "enumerator.h"
 #include "enumerator_list.h"
-#include "equality_expr.h"
-#include "exclusive_or_expr.h"
+
+class equality_expr : public n {
+public:
+  equality_expr(std::shared_ptr<relation_expr> a);
+  equality_expr(std::shared_ptr<equality_expr> a, lex_token b,
+                std::shared_ptr<relation_expr> c);
+
+  virtual ~equality_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class exclusive_or_expr : public n {
+public:
+  exclusive_or_expr(std::shared_ptr<and_expr> a);
+  exclusive_or_expr(std::shared_ptr<exclusive_or_expr> a, lex_token b,
+                    std::shared_ptr<and_expr> c);
+
+  virtual ~exclusive_or_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "expr.h"
 #include "expression_statement.h"
 #include "external_definition.h"
 #include "function_body.h"
 #include "function_declarator.h"
 #include "function_definition.h"
-#include "function_specifier.h"
+
+class function_specifier : public n {
+public:
+  function_specifier(lex_token a);
+
+  virtual ~function_specifier(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "generic_association.h"
 #include "generic_assoc_list.h"
 #include "generic_selection.h"
-#include "identifier.h"
+
+class identifier : public n {
+public:
+  identifier(lex_token a);
+  virtual ~identifier(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "identifier_list.h"
-#include "inclusive_or_expr.h"
+
+class inclusive_or_expr : public n {
+public:
+  inclusive_or_expr(std::shared_ptr<exclusive_or_expr> a);
+  inclusive_or_expr(std::shared_ptr<inclusive_or_expr> a, lex_token b,
+                    std::shared_ptr<exclusive_or_expr> c);
+
+  virtual ~inclusive_or_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "init_declaration.h"
 #include "init_declarator.h"
 #include "init_declarator_list.h"
 #include "initializer.h"
 #include "initializer_list.h"
-#include "iteration_statement.h"
-#include "jump_statement.h"
-#include "labeled_statement.h"
-#include "logical_and_expr.h"
-#include "logical_or_expr.h"
-#include "multiplicative_expr.h"
+class iteration_statement : public n {
+public:
+  iteration_statement(lex_token a, std::shared_ptr<expr> b,
+                      std::shared_ptr<statement> c);
+  iteration_statement(lex_token a, std::shared_ptr<statement> b, lex_token c,
+                      std::shared_ptr<expr> d);
+  iteration_statement(lex_token a, std::shared_ptr<expr> b,
+                      std::shared_ptr<expr> c, std::shared_ptr<expr> d,
+                      std::shared_ptr<statement> e);
+
+  virtual ~iteration_statement(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class jump_statement : public n {
+public:
+  jump_statement(lex_token a);
+  jump_statement(lex_token a, std::shared_ptr<identifier> b);
+  jump_statement(lex_token a, std::shared_ptr<expr> b);
+  virtual ~jump_statement(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class labeled_statement : public n {
+public:
+  labeled_statement(std::shared_ptr<identifier> a,
+                    std::shared_ptr<statement> b);
+  labeled_statement(lex_token a, std::shared_ptr<constant_expr> b,
+                    std::shared_ptr<statement> c);
+  labeled_statement(lex_token a, std::shared_ptr<statement> b);
+
+  virtual ~labeled_statement(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class logical_and_expr : public n {
+public:
+  logical_and_expr(std::shared_ptr<inclusive_or_expr> a);
+  logical_and_expr(std::shared_ptr<logical_and_expr> a, lex_token b,
+                   std::shared_ptr<inclusive_or_expr> c);
+
+  virtual ~logical_and_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class logical_or_expr : public n {
+public:
+  logical_or_expr(std::shared_ptr<logical_and_expr> a);
+  logical_or_expr(std::shared_ptr<logical_or_expr> a, lex_token b,
+                  std::shared_ptr<logical_and_expr> c);
+
+  virtual ~logical_or_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class multiplicative_expr : public n {
+public:
+  multiplicative_expr(std::shared_ptr<cast_expr> a);
+  multiplicative_expr(std::shared_ptr<multiplicative_expr> a, lex_token b,
+                      std::shared_ptr<cast_expr> c);
+
+  virtual ~multiplicative_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "parameter_declaration.h"
 #include "parameter_list.h"
-#include "parameter_type_list.h"
+
+class parameter_type_list : public n {
+public:
+  parameter_type_list(std::shared_ptr<parameter_list> a);
+  parameter_type_list(std::shared_ptr<parameter_list> a, lex_token b);
+
+  virtual ~parameter_type_list(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "pointer.h"
-#include "postfix_expr.h"
-#include "primary_expr.h"
-#include "relation_expr.h"
-#include "selection_statement.h"
-#include "shift_expr.h"
+
+class postfix_expr : public n {
+public:
+  postfix_expr(std::shared_ptr<primary_expr> a);
+  postfix_expr(std::shared_ptr<postfix_expr> a, std::shared_ptr<expr> b);
+  postfix_expr(std::shared_ptr<postfix_expr> a);
+  postfix_expr(std::shared_ptr<postfix_expr> a,
+               std::shared_ptr<argument_expr_list> b);
+  postfix_expr(std::shared_ptr<postfix_expr> a, std::shared_ptr<identifier> b);
+  postfix_expr(std::shared_ptr<postfix_expr> a, lex_token b,
+               std::shared_ptr<identifier> c);
+  postfix_expr(std::shared_ptr<postfix_expr> a, lex_token b);
+  postfix_expr(std::shared_ptr<type_name> a,
+               std::shared_ptr<identifier_list> b);
+
+  virtual ~postfix_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class primary_expr : public n {
+public:
+  primary_expr(lex_token a);
+  primary_expr(std::shared_ptr<identifier> a);
+  primary_expr(std::shared_ptr<expr> a);
+  primary_expr(std::shared_ptr<generic_selection> a);
+  virtual ~primary_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class relation_expr : public n {
+public:
+  relation_expr(std::shared_ptr<shift_expr> a);
+  relation_expr(std::shared_ptr<relation_expr> a, lex_token b,
+                std::shared_ptr<shift_expr> c);
+
+  virtual ~relation_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class selection_statement : public n {
+public:
+  selection_statement(lex_token a, std::shared_ptr<expr> b,
+                      std::shared_ptr<statement> c);
+  selection_statement(lex_token a, std::shared_ptr<expr> b,
+                      std::shared_ptr<statement> c, lex_token d,
+                      std::shared_ptr<statement> e);
+  virtual ~selection_statement(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+
+private:
+  lex_token elt;
+};
+
+class shift_expr : public n {
+public:
+  shift_expr(std::shared_ptr<additive_expr> a);
+  shift_expr(std::shared_ptr<shift_expr> a, lex_token b,
+             std::shared_ptr<additive_expr> c);
+
+  virtual ~shift_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "specifier_qualifier_list.h"
 #include "statement.h"
 #include "statement_list.h"
-#include "storage_class_specifier.h"
+
+class storage_class_specifier : public n {
+public:
+  storage_class_specifier(lex_token a);
+  virtual ~storage_class_specifier(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "struct_declaration.h"
 #include "struct_declaration_list.h"
 #include "struct_declarator.h"
 #include "struct_declarator_list.h"
-#include "struct_or_union.h"
+
+class struct_or_union : public n {
+public:
+  struct_or_union(lex_token a);
+  virtual ~struct_or_union(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "struct_or_union_specifier.h"
 #include "translation_unit.h"
 #include "type_name.h"
-#include "type_qualifier.h"
+
+class type_qualifier : public n {
+public:
+  type_qualifier(lex_token a);
+
+  virtual ~type_qualifier(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "type_qualifier_list.h"
 #include "typedef_name.h"
-#include "type_specifier.h"
-#include "unary_expr.h"
-#include "unary_operator.h"
+
+class type_specifier : public n {
+public:
+  type_specifier(lex_token a);
+  type_specifier(std::shared_ptr<struct_or_union_specifier> a);
+  type_specifier(std::shared_ptr<enum_specifier> a);
+  type_specifier(std::shared_ptr<typedef_name> a);
+
+  virtual ~type_specifier(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class unary_expr : public n {
+public:
+  unary_expr(std::shared_ptr<postfix_expr> a);
+  unary_expr(lex_token a, std::shared_ptr<unary_expr> b);
+  unary_expr(std::shared_ptr<unary_operator> a, std::shared_ptr<cast_expr> b);
+  unary_expr(std::shared_ptr<unary_expr> a, std::shared_ptr<identifier> b);
+  unary_expr(lex_token a, std::shared_ptr<type_name> b);
+
+  virtual ~unary_expr(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class unary_operator : public n {
+public:
+  unary_operator(lex_token a);
+  virtual ~unary_operator(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
 
 #include "v/visitor.h"
 #endif

@@ -43,7 +43,7 @@ declaration
 	   $$ = std::shared_ptr<declaration> (new declaration($1,$2));
 	   // Need to check for typedef identifiers
 	   if ($$->find_typedefs(a)) {
-	      d->add_typedefs(a);
+	      drv->add_typedefs(a);
 	} }
 	;
 

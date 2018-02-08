@@ -122,13 +122,12 @@ fi
 if [ -f parser.o ]; then
     rm parser.o
 fi
-$CXX $CXXFLAGS $FIGINCLUDES -c parser.tab.cc -o parser.o
-if [ ! -f parser.o ]; then
-    echo "Problem building parser"
-    exit 1
-fi
-exit
-C_OBJS="fig/parser.o $C_OBJS"
+#$CXX $CXXFLAGS $FIGINCLUDES -c parser.tab.cc -o parser.o
+#if [ ! -f parser.o ]; then
+#    echo "Problem building parser"
+#    exit 1
+#fi
+#C_OBJS="fig/parser.o $C_OBJS"
 
 
 PT="pt"
@@ -211,26 +210,23 @@ fi
 
 C_OBJS="c/c.lexer.o $C_OBJS"
 
-PT="abstract_array_declarator direct_abstract_declarator abstract_declarator
-    abstract_function_declarator additive_expr and_expr argument_expr_list
-    array_declarator assignment_expr assignment_operator cast_expr
+PT="pt abstract_array_declarator direct_abstract_declarator abstract_declarator
+    abstract_function_declarator argument_expr_list
+    array_declarator assignment_expr cast_expr
     compound_statement conditional_expr constant_expr declaration
     declaration_list declaration_specifiers direct_declarator declarator enumerator
-    enumerator_list enum_specifier equality_expr exclusive_or_expr expr
+    enumerator_list enum_specifier expr
     expression_statement external_definition translation_unit function_body
-    function_declarator function_definition function_specifier 
-    generic_association generic_assoc_list generic_selection identifier identifier_list
-    inclusive_or_expr init_declarator init_declarator_list initializer
-    initializer_list iteration_statement jump_statement labeled_statement
-    logical_and_expr logical_or_expr multiplicative_expr n
-    parameter_declaration parameter_list
-    parameter_type_list pointer postfix_expr primary_expr relation_expr
-    selection_statement specifier_qualifier_list shift_expr statement statement_list
-    storage_class_specifier struct_declaration struct_declaration_list
-    struct_declarator struct_declarator_list struct_or_union
-    struct_or_union_specifier type_name type_qualifier type_qualifier_list
-    typedef_name type_specifier 
-    unary_expr unary_operator"
+    function_declarator function_definition 
+    generic_association generic_assoc_list generic_selection identifier_list
+    init_declarator init_declarator_list initializer
+    initializer_list 
+    n parameter_declaration parameter_list pointer
+    specifier_qualifier_list statement statement_list
+    struct_declaration struct_declaration_list
+    struct_declarator struct_declarator_list
+    struct_or_union_specifier type_name type_qualifier_list
+    typedef_name"
 PT_OBJS=
 for pt in $PT; do
     f=pt/${pt}.o
@@ -287,7 +283,7 @@ CLIBS="$CLIBS -lcpt"
 
 cd ..
 
-C="driver oparser cc1"
+C="c_driver oparser cc1"
 for c in $C; do
     if [ -f ${c}.o ]; then
 	rm ${c}.o
@@ -301,7 +297,7 @@ for c in $C; do
     C_OBJS="${c}.o $C_OBJS"
 done
 
-C="m"
+C="m driver"
 for c in $C; do
     if [ -f ${c}.o ]; then
 	rm ${c}.o

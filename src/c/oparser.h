@@ -32,24 +32,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#ifndef AFRONT_C_OPARSER_H
+#define AFRONT_C_OPARSER_H
 
 #include <map>
-
 #include "parser.tab.hh"
 
 typedef std::map<std::size_t, std::string> hs_map;
 typedef std::map<int, std::shared_ptr<hs_map>> sh_map;
 
-namespace nada {
-
-class oparser : public parser {
+class oparser : public afront::parser {
 public:
-  oparser(c::driver *d);
-  virtual void error(const class lex::location &loc, const std::string &msg);
+  oparser(c_driver *drv);
+  virtual void error(const class location &loc, const std::string &msg);
   virtual std::string yysyntax_error_(state_type yystate,
                                       const symbol_type &yyla) const;
 
 private:
   sh_map syntax_error_map;
 };
-} // namespace nada
+
+#endif /* AFRONT_C_OPARSER_H */

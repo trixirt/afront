@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,18 +31,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_FUNCTION_SPECIFIER_H
-#define NADA_C_PT_FUNCTION_SPECIFIER_H
+#ifndef AFRONT_C_DRIVER
+#define AFRONT_C_DRIVER
 
-#include "n.h"
+#include "con/driver.h"
+#include "pt/pt.h"
 
-class function_specifier : public n {
+class c_driver : public driver {
 public:
-  function_specifier(lex::token a);
-
-  virtual ~function_specifier(){};
-  virtual void accept(visitor *a);
-  virtual std::string classname();
+    c_driver() = default;
+    virtual bool initialize_scanner(std::istream *a);
+    virtual bool initialize_parser();
+    void add_typedefs(std::vector<identifier *> a);
 };
 
 #endif

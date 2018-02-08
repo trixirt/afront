@@ -32,23 +32,39 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_EQUALITY_EXPR_H
-#define NADA_C_PT_EQUALITY_EXPR_H
 
-#include "n.h"
-#include <string>
+#include "c_driver.h"
+#include "oparser.h"
+#include "scanner.h"
 
-class relation_expr;
-class equality_expr;
-class equality_expr : public n {
-public:
-  equality_expr(std::shared_ptr<relation_expr> a);
-  equality_expr(std::shared_ptr<equality_expr> a, lex::token b,
-                std::shared_ptr<relation_expr> c);
+void c_driver::add_typedefs(std::vector<identifier *> a) {
+  for (auto i : a) {
+    scan->add_typename(i->who());
+  }
+}
 
-  virtual ~equality_expr(){};
-  virtual void accept(visitor *a);
-  virtual std::string classname();
-};
-
-#endif
+bool c_driver::initialize_scanner(std::istream *i) {
+    bool ret = false;
+    scan = new scanner(i, &this->filename);
+    if (scan) {
+	/* Additional builtin types */
+	/* XXX this should be common */
+	const char *builtin_types[] = {
+	    "__builtin_va_list",
+	    "",
+	};
+	for (const char **c = builtin_types; **c != '\0'; c++) {
+	    scan->add_typename(*c);
+	}
+	ret = true;
+    }
+    return ret;
+}
+bool c_driver::initialize_parser() {
+    bool ret = false;
+    parser = new oparser(this);
+    if (parser) {
+	ret = true;
+    }
+    return ret;
+}

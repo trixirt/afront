@@ -32,11 +32,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_LEX_LOCATION_H
-#define NADA_LEX_LOCATION_H
+#ifndef AFRONT_LEX_LOCATION_H
+#define AFRONT_LEX_LOCATION_H
 #include <iostream>
 #include <string>
-namespace lex {
+
 class pos {
 public:
   pos() : line(1), column(1){};
@@ -113,5 +113,5 @@ static inline std::ostream &operator<<(std::ostream &o,
   }
   return o;
 }
-} // namespace lex
+
 #endif

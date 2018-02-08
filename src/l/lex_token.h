@@ -32,30 +32,29 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_LEX_TOKEN_H
-#define NADA_LEX_TOKEN_H
+#ifndef AFRONT_LEX_TOKEN_H
+#define AFRONT_LEX_TOKEN_H
 
 #include "location.h"
-namespace lex {
 
-class token {
+class lex_token {
 public:
-  token() {
+    lex_token() {
     t = -1;
     l = std::shared_ptr<class location>(new location());
   }
-  token(std::string a, location b, unsigned c) {
+    lex_token(std::string a, location b, unsigned c) {
     s = a;
     l = std::shared_ptr<class location>(new location(b));
     t = c;
   }
   std::string text() { return s; }
-  class lex::location &here() const {
+  class location &here() const {
     return *l.get();
   }
   signed what() { return t; }
 
-  class token &operator+=(const class token &rhs) {
+  class lex_token &operator+=(const class lex_token &rhs) {
       *l += rhs.here();
       return *this;
   }
@@ -65,6 +64,5 @@ private:
   std::shared_ptr<class location> l;
   signed t;
 };
-} // namespace lex
 
 #endif

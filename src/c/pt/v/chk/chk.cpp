@@ -104,8 +104,8 @@ void chk::v(declaration_specifiers *a) {
         unsigned what = scs->what();
         if (a->parent() != nullptr) {
 
-          if ((what != nada::parser::token::EXTERN) &&
-              (what != nada::parser::token::STATIC)) {
+          if ((what != afront::parser::token::EXTERN) &&
+              (what != afront::parser::token::STATIC)) {
             if (dynamic_cast<function_definition *>(a->parent())) {
               // c99 6.9.1 Function definitions
               // 4. The storage-class specifier, if any, in the declaration
@@ -117,7 +117,7 @@ void chk::v(declaration_specifiers *a) {
             }
           }
 
-          if (what != nada::parser::token::REGISTER) {
+          if (what != afront::parser::token::REGISTER) {
             if (dynamic_cast<parameter_declaration *>(a->parent())) {
               // c99 6.9.1 Function Definitions
               // 6. The declarations in the declaration list shall contain
@@ -362,7 +362,7 @@ void chk::v(type_specifier *a) {
       //
       //
       //    void
-      if (compound_type[0] == nada::parser::token::VOID) {
+      if (compound_type[0] == afront::parser::token::VOID) {
         if (compound_type.size() > 1) {
           throw(visitor_exception("overspecified void type", a));
         }
@@ -371,7 +371,7 @@ void chk::v(type_specifier *a) {
       //    char
       //    signed char
       //    unsigned char
-      else if (compound_type[0] == nada::parser::token::CHAR) {
+      else if (compound_type[0] == afront::parser::token::CHAR) {
         if (compound_type.size() > 2) {
           throw(visitor_exception("overspecified char type", a));
         } else {
@@ -379,8 +379,8 @@ void chk::v(type_specifier *a) {
           if (compound_type.size() == 1) {
             valid = true;
           } else /* 2 */ {
-            if ((compound_type[1] == nada::parser::token::SIGNED) ||
-                (compound_type[1] == nada::parser::token::UNSIGNED))
+            if ((compound_type[1] == afront::parser::token::SIGNED) ||
+                (compound_type[1] == afront::parser::token::UNSIGNED))
               valid = true;
           }
           if (!valid)
@@ -391,7 +391,7 @@ void chk::v(type_specifier *a) {
       //    short
       //    signed short
       //    unsigned short
-      else if (compound_type[0] == nada::parser::token::SHORT) {
+      else if (compound_type[0] == afront::parser::token::SHORT) {
         if (compound_type.size() > 2) {
           throw(visitor_exception("overspecified short type", a));
         } else {
@@ -400,8 +400,8 @@ void chk::v(type_specifier *a) {
             valid = true;
           } else /* 2 */ {
 
-            if ((compound_type[1] == nada::parser::token::SIGNED) ||
-                (compound_type[1] == nada::parser::token::UNSIGNED))
+            if ((compound_type[1] == afront::parser::token::SIGNED) ||
+                (compound_type[1] == afront::parser::token::UNSIGNED))
               valid = true;
           }
           if (!valid)
@@ -423,7 +423,7 @@ void chk::v(type_specifier *a) {
       //
       //    signed long long int
       //    unsigned long long int
-      else if (compound_type[0] == nada::parser::token::INT) {
+      else if (compound_type[0] == afront::parser::token::INT) {
         if (compound_type.size() > 4) {
           throw(visitor_exception("overspecified int type", a));
         } else {
@@ -431,26 +431,26 @@ void chk::v(type_specifier *a) {
           if (compound_type.size() == 1) {
             valid = true;
           } else if (compound_type.size() == 2) {
-            if ((compound_type[1] == nada::parser::token::SIGNED) ||
-                (compound_type[1] == nada::parser::token::UNSIGNED) ||
-                (compound_type[1] == nada::parser::token::SHORT) ||
-                (compound_type[1] == nada::parser::token::LONG))
+            if ((compound_type[1] == afront::parser::token::SIGNED) ||
+                (compound_type[1] == afront::parser::token::UNSIGNED) ||
+                (compound_type[1] == afront::parser::token::SHORT) ||
+                (compound_type[1] == afront::parser::token::LONG))
               valid = true;
           } else if (compound_type.size() == 3) {
-            if ((compound_type[1] == nada::parser::token::SHORT) &&
-                ((compound_type[2] == nada::parser::token::SIGNED) ||
-                 (compound_type[2] == nada::parser::token::UNSIGNED)))
+            if ((compound_type[1] == afront::parser::token::SHORT) &&
+                ((compound_type[2] == afront::parser::token::SIGNED) ||
+                 (compound_type[2] == afront::parser::token::UNSIGNED)))
               valid = true;
-            else if ((compound_type[1] == nada::parser::token::LONG) &&
-                     ((compound_type[2] == nada::parser::token::SIGNED) ||
-                      (compound_type[2] == nada::parser::token::UNSIGNED) ||
-                      (compound_type[2] == nada::parser::token::LONG)))
+            else if ((compound_type[1] == afront::parser::token::LONG) &&
+                     ((compound_type[2] == afront::parser::token::SIGNED) ||
+                      (compound_type[2] == afront::parser::token::UNSIGNED) ||
+                      (compound_type[2] == afront::parser::token::LONG)))
               valid = true;
           } else /* 4 */ {
-            if ((compound_type[1] == nada::parser::token::LONG) &&
-                (compound_type[2] == nada::parser::token::LONG) &&
-                ((compound_type[3] == nada::parser::token::SIGNED) ||
-                 (compound_type[3] == nada::parser::token::UNSIGNED)))
+            if ((compound_type[1] == afront::parser::token::LONG) &&
+                (compound_type[2] == afront::parser::token::LONG) &&
+                ((compound_type[3] == afront::parser::token::SIGNED) ||
+                 (compound_type[3] == afront::parser::token::UNSIGNED)))
               valid = true;
           }
           if (!valid)
@@ -459,14 +459,14 @@ void chk::v(type_specifier *a) {
       }
       //
       //    signed
-      else if (compound_type[0] == nada::parser::token::SIGNED) {
+      else if (compound_type[0] == afront::parser::token::SIGNED) {
         if (compound_type.size() > 1) {
           throw(visitor_exception("overspecified signed type", a));
         }
       }
       //
       //    unsigned
-      else if (compound_type[0] == nada::parser::token::UNSIGNED) {
+      else if (compound_type[0] == afront::parser::token::UNSIGNED) {
         if (compound_type.size() > 1) {
           throw(visitor_exception("overspecified unsigned type", a));
         }
@@ -478,7 +478,7 @@ void chk::v(type_specifier *a) {
       //    long long
       //    signed long long
       //    unsigned long long
-      else if (compound_type[0] == nada::parser::token::LONG) {
+      else if (compound_type[0] == afront::parser::token::LONG) {
         if (compound_type.size() > 3) {
           throw(visitor_exception("overspecified long type", a));
         } else {
@@ -486,14 +486,14 @@ void chk::v(type_specifier *a) {
           if (compound_type.size() == 1) {
             valid = true;
           } else if (compound_type.size() == 2) {
-            if ((compound_type[1] == nada::parser::token::SIGNED) ||
-                (compound_type[1] == nada::parser::token::UNSIGNED) ||
-                (compound_type[1] == nada::parser::token::LONG))
+            if ((compound_type[1] == afront::parser::token::SIGNED) ||
+                (compound_type[1] == afront::parser::token::UNSIGNED) ||
+                (compound_type[1] == afront::parser::token::LONG))
               valid = true;
           } else /* 3 */ {
-            if ((compound_type[1] == nada::parser::token::LONG) &&
-                ((compound_type[2] == nada::parser::token::SIGNED) ||
-                 (compound_type[2] == nada::parser::token::UNSIGNED)))
+            if ((compound_type[1] == afront::parser::token::LONG) &&
+                ((compound_type[2] == afront::parser::token::SIGNED) ||
+                 (compound_type[2] == afront::parser::token::UNSIGNED)))
               valid = true;
           }
 
@@ -503,7 +503,7 @@ void chk::v(type_specifier *a) {
       }
       //
       //    float
-      else if (compound_type[0] == nada::parser::token::FLOAT) {
+      else if (compound_type[0] == afront::parser::token::FLOAT) {
         if (compound_type.size() > 1) {
           throw(visitor_exception("overspecified float type", a));
         }
@@ -511,7 +511,7 @@ void chk::v(type_specifier *a) {
       //
       //    double
       //    long double
-      else if (compound_type[0] == nada::parser::token::DOUBLE) {
+      else if (compound_type[0] == afront::parser::token::DOUBLE) {
         if (compound_type.size() > 2) {
           throw(visitor_exception("overspecified double type", a));
         } else {
@@ -520,7 +520,7 @@ void chk::v(type_specifier *a) {
             valid = true;
           } else /* 2 */ {
 
-            if (compound_type[1] == nada::parser::token::LONG)
+            if (compound_type[1] == afront::parser::token::LONG)
               valid = true;
           }
           if (!valid)
@@ -530,13 +530,13 @@ void chk::v(type_specifier *a) {
 #ifdef C99
       //
       //    _Bool
-      else if (compound_type[0] == nada::parser::token::_BOOL) {
+      else if (compound_type[0] == afront::parser::token::_BOOL) {
       }
       //
       //     float _Complex
       //     double _Complex
       //     long double _Complex
-      else if (compound_type[0] == nada::parser::token::_COMPLEX) {
+      else if (compound_type[0] == afront::parser::token::_COMPLEX) {
       }
 #error "Add _Bool and _Complex"
 #endif
@@ -564,7 +564,7 @@ void chk::v(type_specifier *a) {
       if (dynamic_cast<storage_class_specifier *>(s.get())) {
         class storage_class_specifier *scs =
             dynamic_cast<storage_class_specifier *>(s.get());
-        if (scs->what() == nada::parser::token::TYPEDEF) {
+        if (scs->what() == afront::parser::token::TYPEDEF) {
           // This is not a simple aggregate type
           // Defer checking till later
           tdef = true;

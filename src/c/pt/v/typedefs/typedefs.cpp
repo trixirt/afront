@@ -46,7 +46,7 @@ bool typedefs::is() { return seen_typedef; }
 void typedefs::v(declaration *a) { a->caccept(this); }
 void typedefs::v(declaration_specifiers *a) { a->caccept(this); }
 void typedefs::v(storage_class_specifier *a) {
-  if (a->what() == nada::parser::token::TYPEDEF)
+  if (a->what() == afront::parser::token::TYPEDEF)
     seen_typedef = true;
   /* terminal */
 }

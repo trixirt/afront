@@ -38,7 +38,7 @@
 translation_unit
 	: external_definition      {
 	  $$ = std::shared_ptr<translation_unit> (new translation_unit($1));
-	  d->set($$);
+	  drv->set_root($$);
 	}
 	| translation_unit external_definition { *$1 += $2; $$ = $1; }
 	;

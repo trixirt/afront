@@ -32,8 +32,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_N_H
-#define NADA_C_PT_N_H
+#ifndef AFRONT_C_PT_N_H
+#define AFRONT_C_PT_N_H
 
 #include "con/m.h"
 #include "l/lex_token.h"
@@ -43,7 +43,7 @@
 class n : public m {
 public:
   n();
-  n(lex::token a);
+  n(lex_token a);
   virtual ~n(){};
   virtual void accept(visitor *a);
   virtual std::string classname();
@@ -51,13 +51,13 @@ public:
   class n &operator+=(const std::shared_ptr<n> &rhs);
   /* add to children, front */
   class n &operator*=(const std::shared_ptr<n> &rhs);
-  class lex::location &here();
+  class location &here();
   std::string where();
   signed what();
   std::string who();
 
 private:
-  lex::token lt;
+  lex_token lt;
 };
 
 class visitor_exception : public std::exception {

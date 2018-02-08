@@ -32,20 +32,62 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_PRIMARY_EXPR_H
-#define NADA_C_PT_PRIMARY_EXPR_H
 
-#include "n.h"
+#include "driver.h"
+#include "oparser.h"
+#include "scanner.h"
+#include <fstream>
 
-class primary_expr : public n {
-public:
-  primary_expr(lex::token a);
-  primary_expr(std::shared_ptr<identifier> a);
-  primary_expr(std::shared_ptr<expr> a);
-  primary_expr(std::shared_ptr<generic_selection> a);
-  virtual ~primary_expr(){};
-  virtual void accept(visitor *a);
-  virtual std::string classname();
-};
+static const char *default_filename = "stdin";
 
-#endif
+driver::~driver() {
+  if (scan)
+    delete (scan);
+  if (parser)
+    delete (parser);
+}
+
+bool driver::parse(const char *const filename) {
+  bool ret = false;
+  std::ifstream *ifs = nullptr;
+
+  if (filename != nullptr) {
+    ifs = new std::ifstream(filename);
+    std::ifstream *ifs = new std::ifstream(filename);
+    if (ifs->good()) {
+      this->filename = filename; // needed for location
+    }
+  } else {
+    this->filename = default_filename;
+  }
+  std::istream *i = (ifs != nullptr && ifs->good()) ? ifs : &std::cin;
+
+  if (initialize_scanner (i)) {
+      if (initialize_parser ()) {
+	  // yyresult :
+	  // 0 on success
+	  // 1 on failure
+	  ret = parser->parse() ? false : true;
+      } else {
+	  // TBD : HANDLER ERROR
+      }
+  } else {
+      // TBD : HANDLE ERROR
+  } 
+
+end:
+  return ret;
+}
+
+std::string driver::result() { return "" /* Add something here */; }
+
+std::shared_ptr<n> driver::get_root() { return root; }
+void driver::set_root(std::shared_ptr<n> a) { root = a; }
+
+void driver::error(const class location &loc, const std::string &msg) {
+  parser->error(loc, msg);
+}
+void driver::ice(const char *a, unsigned b, const std::string &c) {
+  fprintf(stderr, "Internal Error: %s %d %s\n", a, b, c.c_str());
+}
+
