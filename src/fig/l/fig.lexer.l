@@ -41,11 +41,11 @@
 #undef YY_DECL
 #define	YY_DECL			 	\
     int		\
-    lex::scanner::yylex( nada::parser::semantic_type* lval \
+    scanner::yylex( afront::parser::semantic_type* lval \
 	)
 
 #define YY_USER_ACTION user_action();
-void lex::scanner::user_action () {
+void scanner::user_action () {
   if (s == nullptr)
     s = std::shared_ptr<std::string> (new std::string());
   if (s != nullptr)
@@ -53,13 +53,13 @@ void lex::scanner::user_action () {
   loc->step();
   loc->columns(yyleng);
 }
-void lex::scanner::line () {
+void scanner::line () {
   loc->lines();
   ln.push_back(s);
   s = nullptr;
 }
 
-std::shared_ptr<std::string> lex::scanner::get_line(size_t a) {
+std::shared_ptr<std::string> scanner::get_line(size_t a) {
   std::shared_ptr<std::string> r = nullptr;
   if (a > 0) {
     /* input line is 1 base, vector is 0 based, so subtract 1*/
@@ -73,25 +73,21 @@ std::shared_ptr<std::string> lex::scanner::get_line(size_t a) {
   return r;  
 }
 
-int lex::scanner::yylex(nada::parser::semantic_type* lval, lex::location* loc) {
+int scanner::yylex(afront::parser::semantic_type* lval, location* loc) {
   *loc = *this->loc;
   return yylex(lval);
 }
 
-void lex::scanner::add_typename(std::string a) {
-  tn.insert(a);
-}
-
-#define LEXTOK(A) lval->build<lex::token>(lex::token(yytext, *this->loc, nada::parser::token::A)); return (nada::parser::token::A)
+#define LEXTOK(A) lval->build<lex_token>(lex_token(yytext, *this->loc, afront::parser::token::A)); return (afront::parser::token::A)
 
 /* TBD */
 #define RESERVED(A) 
 
 int yyFlexLexer::yylex() { return -1; /* to silence undefined reference in yyFlexLex class */ }
 
-using token = nada::parser::token;
+using token = afront::parser::token;
 
-#define yyterminate() return nada::parser::token::END;
+#define yyterminate() return afront::parser::token::END;
 
 static void comment();
 
@@ -114,29 +110,25 @@ letter			[a-zA-Z_]
 
 %}
 
-"/*"             { BEGIN(C_COMMENT);   }
-<C_COMMENT>"*/"  { BEGIN(INITIAL);     }
-<C_COMMENT>.     {                     }
-<C_COMMENT>\n    { this->line();       }
+"/*"                        { BEGIN(C_COMMENT);   }
+<C_COMMENT>"*/"             { BEGIN(INITIAL);     }
+<C_COMMENT>.                { }
+<C_COMMENT>\n               { this->line();       }
 
-"//"             { BEGIN(CPP_COMMENT); }
-<CPP_COMMENT>.   {                     }
-<CPP_COMMENT>\n  { this->line(); BEGIN(INITIAL); }
+"//"                        { BEGIN(CPP_COMMENT); }
+<CPP_COMMENT>.              { }
+<CPP_COMMENT>\n             { this->line(); BEGIN(INITIAL); }
 
-"#"             { BEGIN(SH_COMMENT); }
-<SH_COMMENT>.   {                     }
-<SH_COMMENT>\n  { this->line(); BEGIN(INITIAL); }
-
+"#"                         { BEGIN(SH_COMMENT); }
+<SH_COMMENT>.               { }
+<SH_COMMENT>\n              { this->line(); BEGIN(INITIAL); }
 
 "abi"                       { LEXTOK(ABI); }
-
 "mangle"                    { LEXTOK(MANGLE); }
-"stack"                     { LEXTOK(MANGLE); }
-
-"target-triple"                    { LEXTOK(TARGET_TRIPLE); }
+"stack"                     { LEXTOK(STACK); }
+"triple"                    { LEXTOK(TRIPLE); }
 "little"                    { LEXTOK(LITTLE); }
 "big"                       { LEXTOK(BIG); }
-
 "integer"                   { LEXTOK(INTEGER); }
 "real"                      { LEXTOK(REAL); }
 "vector"                    { LEXTOK(VECTOR); }

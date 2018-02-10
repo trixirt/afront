@@ -32,5 +32,5 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 mangle
-	: MANGLE identifier   { $$ = std::shared_ptr<mangle> (new mangle($2)); }
+	: MANGLE string_constant   { $$ = std::shared_ptr<mangle> (new mangle($2)); }
 	;

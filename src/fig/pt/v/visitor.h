@@ -49,7 +49,7 @@ class mangle;
 class object_class;
 class object_list;
 class object;
-class stack;
+class target_stack;
 class string_constant;
 class triple;
 
@@ -71,11 +71,13 @@ public:
   virtual void v(language_type_list *a) = 0;
   virtual void v(layout_option_list *a) = 0;
   virtual void v(layout_option *a) = 0;
+  virtual void v(m *a) = 0;
   virtual void v(mangle *a) = 0;
+  virtual void v(n *a) = 0;
   virtual void v(object_class *a) = 0;
   virtual void v(object_list *a) = 0;
   virtual void v(object *a) = 0;
-  virtual void v(stack *a) = 0;
+  virtual void v(target_stack *a) = 0;
   virtual void v(string_constant *a) = 0;
   virtual void v(triple *a) = 0;
 };

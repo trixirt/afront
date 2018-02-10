@@ -37,12 +37,15 @@
 #include "con/driver.h"
 #include "pt/pt.h"
 
+class oparser;
+
 class c_driver : public driver {
 public:
-    c_driver() = default;
-    virtual bool initialize_scanner(std::istream *a);
-    virtual bool initialize_parser();
-    void add_typedefs(std::vector<identifier *> a);
+  c_driver() = default;
+  virtual bool initialize_scanner(std::istream *a);
+  virtual bool initialize_parser();
+  void add_typedefs(std::vector<identifier *> a);
+  friend class oparser;
 };
 
 #endif

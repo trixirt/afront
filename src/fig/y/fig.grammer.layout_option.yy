@@ -33,6 +33,6 @@
  */
 layout_option
 	: stack  { $$ = std::shared_ptr<layout_option> (new layout_option($1)); }
-	| mangle      { $$ = std::shared_ptr<layout_option> (new layout_option($1)); }
+	| mangle { $$ = std::shared_ptr<layout_option> (new layout_option($1)); }
 	| abi    { $$ = std::shared_ptr<layout_option> (new layout_option($1)); }
 	;

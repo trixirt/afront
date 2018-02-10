@@ -32,13 +32,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#include <iostream>
 #include "at/at.h"
 #include "c/c_driver.h"
 #include "c/pt/v/cg/cg.h"
 #include "c/pt/v/chk/chk.h"
 #include "c/pt/v/scope/scope.h"
 #include "e.h"
-#include <iostream>
 
 void init_types(std::shared_ptr<scope> a) {
   // 6.7.2 Type specifiers

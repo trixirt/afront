@@ -61,6 +61,6 @@
    #include "scanner.h"
 
 #undef yylex
-#define yylex drv->scan->yylex
+#define yylex drv->Scanner->yylex
 }
 

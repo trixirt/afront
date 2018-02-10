@@ -3,6 +3,8 @@
 set -x
 
 AR=ar
+LD=ld.lld
+LORDER=lorder
 CC="ccache clang"
 CXX="ccache clang++"
 #CXX="clang++"
@@ -31,8 +33,8 @@ YACC=$TOOLS/bin/bison
 LYPP=$TOOLS/bin/lypp
 LYPP_FLAGS="-DDEBUG"
 CXXFLAGS="$CXXFLAGS -std=$CXX_STD -I${SRC} -I${TOOLS}/include -I${OBJ} -g -O0"
-CINCLUDES="-I${SRC}/c -I${SRC}/c/pt -I${SRC}/l -I${SRC}/c/l -I${OBJ}/c -I${SRC}/pt -I${SRC}/at"
-FIGINCLUDES="-I${SRC}/fig -I${SRC}/fig/pt -I${SRC}/l -I${SRC}/fig/l -I${OBJ}/fig -I${SRC}/pt -I${SRC}/at"
+C_INCLUDES="-I${SRC}/c -I${SRC}/c/pt -I${SRC}/l -I${SRC}/c/l -I${OBJ}/c -I${SRC}/pt -I${SRC}/at"
+FIG_INCLUDES="-I${SRC}/fig -I${SRC}/fig/pt -I${SRC}/l -I${SRC}/fig/l -I${OBJ}/fig -I${SRC}/pt -I${SRC}/at"
 CLIBS=
 
 mkdir -p ${OBJ}/at
@@ -61,7 +63,7 @@ for at in $AT; do
     if [ -f $f ]; then
 	rm $f
     fi
-    $CXX $CXXFLAGS $CINCLUDES -c ${SRC}/at/${at}.cpp -o ${f}
+    $CXX $CXXFLAGS $C_INCLUDES -c ${SRC}/at/${at}.cpp -o ${f}
     if [ ! -f $f ]; then
 	echo "Failed to build $f"
 	exit 1
@@ -113,6 +115,8 @@ PT_OBJS=
 
 cd fig
 
+FIG_OBJS=
+
 $LYPP -I $SRC/fig/y $LYPP_FLAGS $SRC/fig/y/fig.parser.yy > parser.yy
 $YACC $YACC_FLAGS -d -v parser.yy
 
@@ -122,38 +126,90 @@ fi
 if [ -f parser.o ]; then
     rm parser.o
 fi
-#$CXX $CXXFLAGS $FIGINCLUDES -c parser.tab.cc -o parser.o
-#if [ ! -f parser.o ]; then
-#    echo "Problem building parser"
-#    exit 1
-#fi
-#C_OBJS="fig/parser.o $C_OBJS"
+$CXX $CXXFLAGS $FIG_INCLUDES -c parser.tab.cc -o parser.o
+if [ ! -f parser.o ]; then
+    echo "Problem building parser"
+    exit 1
+fi
+FIG_OBJS="$FIG_OBJS parser.o"
 
+$LYPP -I $SRC/fig/l -I $SRC/c/l $LYPP_FLAGS $SRC/fig/l/fig.lexer.l > fig.lexer.l
+$LEX --outfile=fig.lexer.yy.cc fig.lexer.l
+if [ ! -f fig.lexer.yy.cc ]; then
+    exit 1
+fi
+if [ -f fig.lexer.o ]; then
+    rm fig.lexer.o
+fi
 
-PT="pt"
-PT_OBJS=
+$CXX $CXXFLAGS $FIG_INCLUDES -c fig.lexer.yy.cc -o fig.lexer.o
+if [ ! -f fig.lexer.o ]; then
+    exit 1
+fi
+
+FIG_OBJS="$FIG_OBJS fig.lexer.o"
+
+if [ -f pt.o ]; then
+    rm pt.o
+fi
+
+if [ -f fig_driver.o ]; then
+    rm fig_driver.o
+fi
+$CXX $CXXFLAGS $FIG_INCLUDES -c $SRC/fig/fig_driver.cpp -o fig_driver.o
+if [ ! -f fig_driver.o ]; then
+    echo "Problem building fig_driver"
+    exit 1
+fi
+FIG_OBJS="$FIG_OBJS fig_driver.o"
+
+$CXX $CXXFLAGS $FIG_INCLUDES -c ${SRC}/fig/pt/pt.cpp -o pt.o
+if [ ! -f pt.o ]; then
+    echo "Failed to build pt.o"
+    exit 1
+fi
+FIG_OBJS="$FIG_OBJS pt.o"
+
+C="m driver"
+for c in $C; do
+    if [ -f ${c}.o ]; then
+	rm ${c}.o
+    fi
+    
+    $CXX $CXXFLAGS $FIG_INCLUDES -I. -c ${SRC}/con/${c}.cpp -o ${c}.o
+    if [ ! -f ${c}.o ]; then
+	echo "Failed to build ${c}.o"
+	exit 1
+    fi
+    FIG_OBJS="$FIG_OBJS ${c}.o"
+done
+
+PT="n"
 for pt in $PT; do
     f=pt/${pt}.o
     if [ -f $f ]; then
 	rm $f
     fi
-    $CXX $CXXFLAGS $CINCLUDES -c ${SRC}/fig/pt/${pt}.cpp -o ${f}
+    $CXX $CXXFLAGS $FIG_INCLUDES -c ${SRC}/pt/${pt}.cpp -o ${f}
     if [ ! -f $f ]; then
 	echo "Failed to build $f"
 	exit 1
     fi
-    PT_OBJS="$f $PT_OBJS"
+    FIG_OBJS="$FIG_OBJS $f"
 done 
+
 
 if [ -f libfigpt.a ]; then
     rm libfigpt.a
 fi
-$AR cr libfigpt.a $PT_OBJS
+FIG_OJBS=`$LORDER $FIG_OBJS | tsort`
+$AR cr libfigpt.a $FIG_OBJS
+# $LD -r -o libfigpt.a $PT_OBJS
 if [ ! -f libfigpt.a ]; then
     echo "Failed to build libcpt.a"
     exit 1
 fi
-CLIBS="-L${OBJ}/fig -lfigpt $CLIBS"
+# CLIBS="-L${OBJ}/fig -lfigpt $CLIBS"
 
 cd ..
 
@@ -182,7 +238,7 @@ fi
 if [ -f parser.o ]; then
     rm parser.o
 fi
-$CXX $CXXFLAGS $CINCLUDES -c parser.tab.cc -o parser.o
+$CXX $CXXFLAGS $C_INCLUDES -c parser.tab.cc -o parser.o
 if [ ! -f parser.o ]; then
     echo "Problem building parser"
     exit 1
@@ -202,8 +258,8 @@ if [ -f c.lexer.o ]; then
     rm c.lexer.o
 fi
 
-$CXX $CXXFLAGS $CINCLUDES -E c.lexer.yy.cc > c.lexer.ii
-$CXX $CXXFLAGS $CINCLUDES -c c.lexer.yy.cc -o c.lexer.o
+# $CXX $CXXFLAGS $C_INCLUDES -E c.lexer.yy.cc > c.lexer.ii
+$CXX $CXXFLAGS $C_INCLUDES -c c.lexer.yy.cc -o c.lexer.o
 if [ ! -f c.lexer.o ]; then
     exit 1
 fi
@@ -233,7 +289,7 @@ for pt in $PT; do
     if [ -f $f ]; then
 	rm $f
     fi
-    $CXX $CXXFLAGS $CINCLUDES -c ${SRC}/c/pt/${pt}.cpp -o ${f}
+    $CXX $CXXFLAGS $C_INCLUDES -c ${SRC}/c/pt/${pt}.cpp -o ${f}
     if [ ! -f $f ]; then
 	echo "Failed to build $f"
 	exit 1
@@ -245,6 +301,7 @@ if [ -f libcpt.a ]; then
     rm libcpt.a
 fi
 $AR cr libcpt.a $PT_OBJS
+#$LD -r -o libcpt.a $PT_OBJS
 if [ ! -f libcpt.a ]; then
     echo "Failed to build libcpt.a"
     exit 1
@@ -261,7 +318,7 @@ for v in $V; do
 	if [ -f $f ]; then
 	    rm $f
 	fi
-	$CXX $CXXFLAGS $CINCLUDES -I${SRC}/c/pt/v  -c ${SRC}/c/pt/v/${v}/${vs}.cpp -o ${f}
+	$CXX $CXXFLAGS $C_INCLUDES -I${SRC}/c/pt/v  -c ${SRC}/c/pt/v/${v}/${vs}.cpp -o ${f}
 	if [ ! -f $f ]; then
 	    echo "Failed to build $f"
 	    exit 1
@@ -289,7 +346,7 @@ for c in $C; do
 	rm ${c}.o
     fi
     
-    $CXX $CXXFLAGS $CINCLUDES -c ${SRC}/c/${c}.cpp -o ${c}.o
+    $CXX $CXXFLAGS $C_INCLUDES -c ${SRC}/c/${c}.cpp -o ${c}.o
     if [ ! -f ${c}.o ]; then
 	echo "Failed to build ${c}.o"
 	exit 1
@@ -303,7 +360,7 @@ for c in $C; do
 	rm ${c}.o
     fi
     
-    $CXX $CXXFLAGS $CINCLUDES -c ${SRC}/con/${c}.cpp -o ${c}.o
+    $CXX $CXXFLAGS $C_INCLUDES -c ${SRC}/con/${c}.cpp -o ${c}.o
     if [ ! -f ${c}.o ]; then
 	echo "Failed to build ${c}.o"
 	exit 1

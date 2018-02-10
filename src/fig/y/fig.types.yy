@@ -45,7 +45,8 @@
 %type <std::shared_ptr<object_class>> object_class;
 %type <std::shared_ptr<object_list>> object_list;
 %type <std::shared_ptr<object>> object;
-%type <std::shared_ptr<stack>> stack;
+/* name conflict with bison generated class 'stack' */
+%type <std::shared_ptr<target_stack>> stack;
 %type <std::shared_ptr<string_constant>> string_constant;
 %type <std::shared_ptr<triple>> triple;
 

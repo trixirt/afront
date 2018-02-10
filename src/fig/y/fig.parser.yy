@@ -9,3 +9,4 @@
 
 %%
 
+%include fig.error.yy

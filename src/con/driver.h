@@ -37,8 +37,9 @@
 #include "pt/pt.h"
 #include <string>
 
-class oparser;
+namespace afront {
 class parser;
+}
 class scanner;
 
 class driver {
@@ -50,18 +51,17 @@ public:
   std::string result();
   std::shared_ptr<n> get_root();
   void set_root(std::shared_ptr<n> a);
-  
+
   void error(const class location &a, const std::string &b);
   void ice(const char *a, unsigned b, const std::string &c);
 
   virtual bool initialize_scanner(std::istream *a) = 0;
   virtual bool initialize_parser() = 0;
 
-  oparser *parser = nullptr;
-  scanner *scan = nullptr;
-  std::shared_ptr<n> root;
-  std::string filename;
-  friend class oparser;
+  afront::parser *Parser = nullptr;
+  scanner *Scanner = nullptr;
+  std::shared_ptr<n> Root;
+  std::string Filename;
   friend class parser;
 };
 

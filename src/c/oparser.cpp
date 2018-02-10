@@ -50,10 +50,10 @@ oparser::oparser(c_driver *drv) : parser(drv) {
 }
 void oparser::error(const class location &loc, const std::string &msg) {
 #ifndef WARNING_TRAINING
-  fprintf(stderr, "%s:%u:%u Error: %s\n", drv->filename.c_str(), loc.begin.line,
+  fprintf(stderr, "%s:%u:%u Error: %s\n", drv->Filename.c_str(), loc.begin.line,
           loc.begin.column, msg.c_str());
   unsigned l = loc.begin.line;
-  std::shared_ptr<std::string> s = drv->scan->get_line(l);
+  std::shared_ptr<std::string> s = drv->Scanner->get_line(l);
   if (s != nullptr) {
     const char *cs = s->c_str();
     fprintf(stderr, "%s", s->c_str());
@@ -86,8 +86,9 @@ std::string oparser::yysyntax_error_(state_type yystate,
       return hi->second;
     } else {
 #ifdef WARNING_TRAINING
-      fprintf(stdout, "/* %d %20lld */ (*syntax_error_map[%d])[%lld] = %s;\n", (int)yystate,
-              (long long)h, (int)yystate, (long long)h, r.c_str());
+      fprintf(stdout, "/* %d %20lld */ (*syntax_error_map[%d])[%lld] = %s;\n",
+              (int)yystate, (long long)h, (int)yystate, (long long)h,
+              r.c_str());
 #ifdef ABORT_TRAINING
       abort();
 #endif
@@ -96,11 +97,12 @@ std::string oparser::yysyntax_error_(state_type yystate,
   } else {
 #ifdef WARNING_TRAINING
     fprintf(stdout,
-            "/* %d 0                    */ syntax_error_map[%d] = std::shared_ptr<hs_map> "
+            "/* %d 0                    */ syntax_error_map[%d] = "
+            "std::shared_ptr<hs_map> "
             "(new hs_map());\n",
             (int)yystate, (int)yystate);
-    fprintf(stdout, "/* %d %20lld */ (*syntax_error_map[%d])[%lld] = \"%s\";\n", (int)yystate,
-            (long long)h, (int)yystate, (long long)h, r.c_str());
+    fprintf(stdout, "/* %d %20lld */ (*syntax_error_map[%d])[%lld] = \"%s\";\n",
+            (int)yystate, (long long)h, (int)yystate, (long long)h, r.c_str());
 #ifdef ABORT_TRAINING
     abort();
 #endif

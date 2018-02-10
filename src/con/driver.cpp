@@ -34,17 +34,17 @@
  */
 
 #include "driver.h"
-#include "oparser.h"
+#include "parser.tab.hh"
 #include "scanner.h"
 #include <fstream>
 
 static const char *default_filename = "stdin";
 
 driver::~driver() {
-  if (scan)
-    delete (scan);
-  if (parser)
-    delete (parser);
+  if (Scanner)
+    delete (Scanner);
+  if (Parser)
+    delete (Parser);
 }
 
 bool driver::parse(const char *const filename) {
@@ -55,25 +55,25 @@ bool driver::parse(const char *const filename) {
     ifs = new std::ifstream(filename);
     std::ifstream *ifs = new std::ifstream(filename);
     if (ifs->good()) {
-      this->filename = filename; // needed for location
+      Filename = filename; // needed for location
     }
   } else {
-    this->filename = default_filename;
+    Filename = default_filename;
   }
   std::istream *i = (ifs != nullptr && ifs->good()) ? ifs : &std::cin;
 
-  if (initialize_scanner (i)) {
-      if (initialize_parser ()) {
-	  // yyresult :
-	  // 0 on success
-	  // 1 on failure
-	  ret = parser->parse() ? false : true;
-      } else {
-	  // TBD : HANDLER ERROR
-      }
+  if (initialize_scanner(i)) {
+    if (initialize_parser()) {
+      // yyresult :
+      // 0 on success
+      // 1 on failure
+      ret = Parser->parse() ? false : true;
+    } else {
+      // TBD : HANDLER ERROR
+    }
   } else {
-      // TBD : HANDLE ERROR
-  } 
+    // TBD : HANDLE ERROR
+  }
 
 end:
   return ret;
@@ -81,13 +81,12 @@ end:
 
 std::string driver::result() { return "" /* Add something here */; }
 
-std::shared_ptr<n> driver::get_root() { return root; }
-void driver::set_root(std::shared_ptr<n> a) { root = a; }
+std::shared_ptr<n> driver::get_root() { return Root; }
+void driver::set_root(std::shared_ptr<n> a) { Root = a; }
 
 void driver::error(const class location &loc, const std::string &msg) {
-  parser->error(loc, msg);
+  Parser->error(loc, msg);
 }
 void driver::ice(const char *a, unsigned b, const std::string &c) {
   fprintf(stderr, "Internal Error: %s %d %s\n", a, b, c.c_str());
 }
-

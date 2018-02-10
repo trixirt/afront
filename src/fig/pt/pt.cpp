@@ -102,13 +102,23 @@ layout_option_list::layout_option_list(std::shared_ptr<layout_option> a) {
 }
 void layout_option_list::accept(visitor *a) { a->v(this); }
 
-layout_option::layout_option(std::shared_ptr<stack> a) { *this += a; }
+layout_option::layout_option(std::shared_ptr<target_stack> a) { *this += a; }
 layout_option::layout_option(std::shared_ptr<mangle> a) { *this += a; }
 layout_option::layout_option(std::shared_ptr<abi> a) { *this += a; }
 void layout_option::accept(visitor *a) { a->v(this); }
 
+void m::accept(visitor *a) { a->v(this); };
+void m::caccept(visitor *a) {
+  a->descend();
+  for (auto i : c)
+    i->accept(a);
+  a->ascend();
+}
+
 mangle::mangle(std::shared_ptr<string_constant> a) { *this += a; }
 void mangle::accept(visitor *a) { a->v(this); }
+
+void n::accept(visitor *a) { a->v(this); };
 
 object_class::object_class(lex_token a) : n(a) {}
 void object_class::accept(visitor *a) { a->v(this); }
@@ -128,11 +138,11 @@ object::object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b,
 }
 void object::accept(visitor *a) { a->v(this); }
 
-stack::stack(std::shared_ptr<constant> a) { *this += a; }
-void stack::accept(visitor *a) { a->v(this); }
-
 string_constant::string_constant(lex_token a) : n(a) {}
 void string_constant::accept(visitor *a) { a->v(this); }
+
+target_stack::target_stack(std::shared_ptr<constant> a) { *this += a; }
+void target_stack::accept(visitor *a) { a->v(this); }
 
 triple::triple(std::shared_ptr<string_constant> a) { *this += a; }
 void triple::accept(visitor *a) { a->v(this); }

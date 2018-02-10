@@ -190,16 +190,15 @@ letter			[a-zA-Z_]
 "??)"        { LEXTOK(CBK); }
 "{"        { LEXTOK(OBR); }
 "??<"        { LEXTOK(OBR); }
-
-"}"        { LEXTOK(CBR); }
-"??>"        { LEXTOK(CBR); }
-"("        { LEXTOK(OPA); }
-")"        { LEXTOK(CPA); }
-":"        { LEXTOK(COL); }
-";"        { LEXTOK(SCO); }
-"'"        { LEXTOK(SQU); }
-"|"        { LEXTOK(OR); }
-"??!"      { LEXTOK(OR); }
+"}"                         { LEXTOK(CBR); }
+"??>"                       { LEXTOK(CBR); }
+"("                         { LEXTOK(OPA); }
+")"                         { LEXTOK(CPA); }
+":"                         { LEXTOK(COL); }
+";"                         { LEXTOK(SCO); }
+"'"                         { LEXTOK(SQU); }
+"|"                         { LEXTOK(OR); }
+"??!"                       { LEXTOK(OR); }
 "||"                        { LEXTOK(OROR); }
 "??!|"                      { LEXTOK(OROR); }
 "|??!"                      { LEXTOK(OROR); }

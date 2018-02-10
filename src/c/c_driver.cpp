@@ -39,32 +39,32 @@
 
 void c_driver::add_typedefs(std::vector<identifier *> a) {
   for (auto i : a) {
-    scan->add_typename(i->who());
+    Scanner->add_typename(i->who());
   }
 }
 
 bool c_driver::initialize_scanner(std::istream *i) {
-    bool ret = false;
-    scan = new scanner(i, &this->filename);
-    if (scan) {
-	/* Additional builtin types */
-	/* XXX this should be common */
-	const char *builtin_types[] = {
-	    "__builtin_va_list",
-	    "",
-	};
-	for (const char **c = builtin_types; **c != '\0'; c++) {
-	    scan->add_typename(*c);
-	}
-	ret = true;
+  bool ret = false;
+  Scanner = new scanner(i, &Filename);
+  if (Scanner) {
+    /* Additional builtin types */
+    /* XXX this should be common */
+    const char *builtin_types[] = {
+        "__builtin_va_list",
+        "",
+    };
+    for (const char **c = builtin_types; **c != '\0'; c++) {
+      Scanner->add_typename(*c);
     }
-    return ret;
+    ret = true;
+  }
+  return ret;
 }
 bool c_driver::initialize_parser() {
-    bool ret = false;
-    parser = new oparser(this);
-    if (parser) {
-	ret = true;
-    }
-    return ret;
+  bool ret = false;
+  Parser = new oparser(this);
+  if (Parser) {
+    ret = true;
+  }
+  return ret;
 }
