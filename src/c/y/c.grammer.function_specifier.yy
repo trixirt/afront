@@ -36,5 +36,10 @@
 %endif
 
 function_specifier
-	: INLINE  { $$ = std::shared_ptr<function_specifier> (new function_specifier($1)); } 
+%ifdef c99
+	: INLINE  { $$ = std::shared_ptr<function_specifier> (new function_specifier($1)); }
+%ifdef c11
+        | _NORETURN  { $$ = std::shared_ptr<function_specifier> (new function_specifier($1)); }
+%endif	
+%endif	
 	;

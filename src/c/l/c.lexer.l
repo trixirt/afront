@@ -186,10 +186,10 @@ letter			[a-zA-Z_]
 "?"        { LEXTOK(QUE); }
 "["        { LEXTOK(OBK); }
 "??("        { LEXTOK(OBK); }
-"]"        { LEXTOK(CBK); }
-"??)"        { LEXTOK(CBK); }
-"{"        { LEXTOK(OBR); }
-"??<"        { LEXTOK(OBR); }
+"]"                         { LEXTOK(CBK); }
+"??)"                       { LEXTOK(CBK); }
+"{"                         { LEXTOK(OBR); }
+"??<"                       { LEXTOK(OBR); }
 "}"                         { LEXTOK(CBR); }
 "??>"                       { LEXTOK(CBR); }
 "("                         { LEXTOK(OPA); }
@@ -224,12 +224,6 @@ letter			[a-zA-Z_]
 "char"                      { LEXTOK(CHAR); }
 "const"                     { LEXTOK(CONST); }
 "volatile"                  { LEXTOK(VOLATILE);   }
-%ifdef c99 
-"restrict"                  { LEXTOK(RESTRICT);   }
-%endif
-%ifdef c11
-"_Atomic"                   { LEXTOK(ATOMIC);   }
-%endif
 "continue"                  { LEXTOK(CONTINUE); }
 "default"                   { LEXTOK(DEFAULT); }
 "do"                        { LEXTOK(DO); }
@@ -256,21 +250,21 @@ letter			[a-zA-Z_]
 "unsigned"                  { LEXTOK(UNSIGNED);   }
 "void"                      { LEXTOK(VOID);       }
 "while"                     { LEXTOK(WHILE);      }
-%ifndef c99
-"inline"                    { RESERVED("c99"); }
-"restrict"                  { RESERVED("c99"); }
-"_Bool"                     { RESERVED("c99"); }
-"_Complex"                  { RESERVED("c99"); }
-"_Imaginary"                { RESERVED("c99"); }
+%ifdef c99
+"inline"                    { LEXTOK(INLINE); }
+"restrict"                  { LEXTOK(RESTRICT); }
+"_Bool"                     { LEXTOK(_BOOL); }
+"_Complex"                  { LEXTOK(_COMPLEX); }
+"_Imaginary"                { LEXTOK(_IMAGINARY); }
 %endif
-%ifndef c11
-"_Alignas"                  { RESERVED("c11"); }
-"_Alignof"                  { RESERVED("c11"); }
-"_Atomic"                   { RESERVED("c11"); }
-"_Generic"                  { RESERVED("c11"); }
-"_Noreturn"                 { RESERVED("c11"); }
-"_Static_assert"            { RESERVED("c11"); }
-"_Thread_local"             { RESERVED("cll"); }
+%ifdef c11
+"_Alignas"                  { LEXTOK(_ALIGNAS); }
+"_Alignof"                  { LEXTOK(_ALIGNOF); }
+"_Atomic"                   { LEXTOK(_ATOMIC); }
+"_Generic"                  { LEXTOK(_GENERIC); }
+"_Noreturn"                 { LEXTOK(_NORETURN) }
+"_Static_assert"            { LEXTOK(_STATIC_ASSERT); }
+"_Thread_local"             { LEXTOK(_THREAD_LOCAL); }
 %endif
 {letter}({letter}|{digit})* { if (tn.count(yytext)) {
                                 LEXTOK(TYPENAME_IDENTIFIER); 
