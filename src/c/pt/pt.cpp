@@ -34,6 +34,94 @@
  */
 #include "pt.h"
 
+abstract_array_declarator::abstract_array_declarator() {}
+abstract_array_declarator::abstract_array_declarator(
+    std::shared_ptr<direct_abstract_declarator> a) {
+  *this += a;
+}
+abstract_array_declarator::abstract_array_declarator(
+    std::shared_ptr<constant_expr> a) {
+  *this += a;
+}
+abstract_array_declarator::abstract_array_declarator(
+    std::shared_ptr<direct_abstract_declarator> a,
+    std::shared_ptr<constant_expr> b) {
+  *this += a;
+  *this += b;
+}
+
+abstract_array_declarator::abstract_array_declarator(
+    std::shared_ptr<assignment_expr> a) {
+  *this += a;
+}
+abstract_array_declarator::abstract_array_declarator(
+    std::shared_ptr<direct_abstract_declarator> a,
+    std::shared_ptr<assignment_expr> b) {
+  *this += a;
+  *this += b;
+}
+
+abstract_array_declarator::abstract_array_declarator(lex_token a) : n(a) {}
+abstract_array_declarator::abstract_array_declarator(
+    std::shared_ptr<direct_abstract_declarator> a, lex_token b)
+    : n(b) {
+  *this += a;
+}
+
+abstract_array_declarator::abstract_array_declarator(
+    lex_token a, std::shared_ptr<assignment_expr> b)
+    : n(a) {
+  *this += b;
+}
+
+abstract_array_declarator::abstract_array_declarator(
+    std::shared_ptr<direct_abstract_declarator> a, lex_token b,
+    std::shared_ptr<assignment_expr> c)
+    : n(b) {
+  *this += a;
+  *this += c;
+}
+
+abstract_array_declarator::abstract_array_declarator(
+    lex_token a, std::shared_ptr<type_qualifier_list> b,
+    std::shared_ptr<assignment_expr> c)
+    : n(a) {
+  *this += b;
+  *this += c;
+}
+
+abstract_array_declarator::abstract_array_declarator(
+    std::shared_ptr<direct_abstract_declarator> a, lex_token b,
+    std::shared_ptr<type_qualifier_list> c, std::shared_ptr<assignment_expr> d)
+    : n(b) {
+  *this += a;
+  *this += c;
+  *this += d;
+}
+
+abstract_array_declarator::abstract_array_declarator(
+    std::shared_ptr<type_qualifier_list> a, lex_token b,
+    std::shared_ptr<assignment_expr> c)
+    : n(b) {
+  *this += a;
+  *this += c;
+}
+
+void abstract_array_declarator::accept(visitor *a) { a->v(this); };
+std::string abstract_array_declarator::classname() {
+  return "abstract_array_declarator";
+};
+
+abstract_array_declarator::abstract_array_declarator(
+    std::shared_ptr<direct_abstract_declarator> a,
+    std::shared_ptr<type_qualifier_list> b, lex_token c,
+    std::shared_ptr<assignment_expr> d)
+    : n(c) {
+  *this += a;
+  *this += b;
+  *this += d;
+}
+
 additive_expr::additive_expr(std::shared_ptr<multiplicative_expr> a) {
   *this += a;
 }

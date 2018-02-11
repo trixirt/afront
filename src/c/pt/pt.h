@@ -35,6 +35,8 @@
 #ifndef AFRONT_C_PT_PT_H
 #define AFRONT_C_PT_PT_H
 
+#include "n.h"
+
 class abstract_array_declarator;
 class abstract_declarator;
 class abstract_function_declarator;
@@ -112,7 +114,41 @@ class type_specifier;
 class unary_expr;
 class unary_operator;
 
-#include "abstract_array_declarator.h"
+class abstract_array_declarator : public n {
+public:
+  abstract_array_declarator();
+  abstract_array_declarator(std::shared_ptr<direct_abstract_declarator> a);
+  abstract_array_declarator(std::shared_ptr<constant_expr> a);
+  abstract_array_declarator(std::shared_ptr<direct_abstract_declarator> a,
+                            std::shared_ptr<constant_expr> b);
+  /* changed to assignment expression in c99 */
+  abstract_array_declarator(std::shared_ptr<assignment_expr> a);
+  abstract_array_declarator(std::shared_ptr<direct_abstract_declarator> a,
+                            std::shared_ptr<assignment_expr> b);
+  /* c99 variable length array */
+  abstract_array_declarator(lex_token a);
+  abstract_array_declarator(std::shared_ptr<direct_abstract_declarator> a,
+                            lex_token b);
+  /* c11 type qualifier attrib */
+  abstract_array_declarator(lex_token a, std::shared_ptr<assignment_expr> b);
+  abstract_array_declarator(std::shared_ptr<direct_abstract_declarator> a,
+                            lex_token b, std::shared_ptr<assignment_expr> c);
+  abstract_array_declarator(lex_token a, std::shared_ptr<type_qualifier_list> b,
+                            std::shared_ptr<assignment_expr> c);
+  abstract_array_declarator(std::shared_ptr<direct_abstract_declarator> a,
+                            lex_token b, std::shared_ptr<type_qualifier_list> c,
+                            std::shared_ptr<assignment_expr> d);
+  abstract_array_declarator(std::shared_ptr<type_qualifier_list> a, lex_token b,
+                            std::shared_ptr<assignment_expr> c);
+  abstract_array_declarator(std::shared_ptr<direct_abstract_declarator> a,
+                            std::shared_ptr<type_qualifier_list> b, lex_token c,
+                            std::shared_ptr<assignment_expr> d);
+
+  virtual ~abstract_array_declarator(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "abstract_declarator.h"
 #include "abstract_function_declarator.h"
 

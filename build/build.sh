@@ -266,11 +266,11 @@ fi
 
 C_OBJS="c/c.lexer.o $C_OBJS"
 
-PT="pt abstract_array_declarator direct_abstract_declarator abstract_declarator
+PT="pt direct_abstract_declarator abstract_declarator
     abstract_function_declarator argument_expr_list
     array_declarator assignment_expr cast_expr
     compound_statement conditional_expr constant_expr declaration
-    declaration_list declaration_specifiers direct_declarator declarator enumerator
+    declaration_list direct_declarator declarator enumerator
     enumerator_list enum_specifier expr
     expression_statement external_definition translation_unit function_body
     function_declarator function_definition 
