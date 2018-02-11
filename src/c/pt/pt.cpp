@@ -154,6 +154,64 @@ and_expr::and_expr(std::shared_ptr<and_expr> a, lex_token b,
 void and_expr::accept(visitor *a) { a->v(this); };
 std::string and_expr::classname() { return "and_expr"; };
 
+array_declarator::array_declarator(std::shared_ptr<direct_declarator> a) {
+  *this += a;
+}
+array_declarator::array_declarator(std::shared_ptr<direct_declarator> a,
+                                   std::shared_ptr<constant_expr> b) {
+  *this += a;
+  *this += b;
+}
+array_declarator::array_declarator(std::shared_ptr<direct_declarator> a,
+                                   std::shared_ptr<assignment_expr> b) {
+  *this += a;
+  *this += b;
+}
+array_declarator::array_declarator(std::shared_ptr<direct_declarator> a,
+                                   std::shared_ptr<type_qualifier_list> b) {
+  *this += a;
+  *this += b;
+}
+array_declarator::array_declarator(std::shared_ptr<direct_declarator> a,
+                                   lex_token b,
+                                   std::shared_ptr<assignment_expr> c)
+    : n(b) {
+  *this += a;
+  *this += c;
+}
+array_declarator::array_declarator(std::shared_ptr<direct_declarator> a,
+                                   lex_token b,
+                                   std::shared_ptr<type_qualifier_list> c,
+                                   std::shared_ptr<assignment_expr> d)
+    : n(b) {
+  *this += a;
+  *this += c;
+  *this += d;
+}
+array_declarator::array_declarator(std::shared_ptr<direct_declarator> a,
+                                   std::shared_ptr<type_qualifier_list> b,
+                                   lex_token c,
+                                   std::shared_ptr<assignment_expr> d)
+    : n(c) {
+  *this += a;
+  *this += b;
+  *this += d;
+}
+array_declarator::array_declarator(std::shared_ptr<direct_declarator> a,
+                                   lex_token b)
+    : n(b) {
+  *this += a;
+}
+array_declarator::array_declarator(std::shared_ptr<direct_declarator> a,
+                                   std::shared_ptr<type_qualifier_list> b,
+                                   lex_token c)
+    : n(c) {
+  *this += a;
+  *this += b;
+}
+void array_declarator::accept(visitor *a) { a->v(this); };
+std::string array_declarator::classname() { return "array_declarator"; };
+
 assignment_operator::assignment_operator(lex_token a) : n(a){};
 void assignment_operator::accept(visitor *a) { a->v(this); };
 std::string assignment_operator::classname() { return "assignment_operator"; };

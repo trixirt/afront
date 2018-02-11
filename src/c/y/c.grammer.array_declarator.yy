@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 Tom Rix
+/* Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -37,5 +37,17 @@
 
 array_declarator
 	: direct_declarator OBK CBK                { $$ = std::shared_ptr<array_declarator> (new array_declarator($1)); }
+%ifdef c99
+	| direct_declarator OBK assignment_expr CBK  { $$ = std::shared_ptr<array_declarator> (new array_declarator($1, $3)); }
+%else
 	| direct_declarator OBK constant_expr CBK  { $$ = std::shared_ptr<array_declarator> (new array_declarator($1, $3)); }
+%endif
+%ifdef c99
+	| direct_declarator OBK type_qualifier_list CBK  { $$ = std::shared_ptr<array_declarator> (new array_declarator($1, $3)); }
+	| direct_declarator OBK STATIC assignment_expr CBK  { $$ = std::shared_ptr<array_declarator> (new array_declarator($1, $3, $4)); }
+	| direct_declarator OBK STATIC type_qualifier_list assignment_expr CBK  { $$ = std::shared_ptr<array_declarator> (new array_declarator($1, $3, $4, $5)); }
+	| direct_declarator OBK type_qualifier_list STATIC assignment_expr CBK  { $$ = std::shared_ptr<array_declarator> (new array_declarator($1, $3, $4, $5)); }
+	| direct_declarator OBK MUL CBK  { $$ = std::shared_ptr<array_declarator> (new array_declarator($1, $3)); }
+	| direct_declarator OBK type_qualifier_list MUL CBK  { $$ = std::shared_ptr<array_declarator> (new array_declarator($1, $3, $4)); }
+%endif
 	;

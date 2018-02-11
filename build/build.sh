@@ -268,7 +268,7 @@ C_OBJS="c/c.lexer.o $C_OBJS"
 
 PT="pt direct_abstract_declarator abstract_declarator
     abstract_function_declarator argument_expr_list
-    array_declarator assignment_expr cast_expr
+    assignment_expr cast_expr
     compound_statement conditional_expr constant_expr declaration
     declaration_list direct_declarator declarator enumerator
     enumerator_list enum_specifier expr

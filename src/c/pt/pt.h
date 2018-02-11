@@ -184,7 +184,33 @@ public:
 };
 
 #include "argument_expr_list.h"
-#include "array_declarator.h"
+
+class array_declarator : public n {
+public:
+  array_declarator(std::shared_ptr<direct_declarator> a);
+  array_declarator(std::shared_ptr<direct_declarator> a,
+                   std::shared_ptr<constant_expr> b);
+  array_declarator(std::shared_ptr<direct_declarator> a,
+                   std::shared_ptr<assignment_expr> b);
+  array_declarator(std::shared_ptr<direct_declarator> a,
+                   std::shared_ptr<type_qualifier_list> b);
+  array_declarator(std::shared_ptr<direct_declarator> a, lex_token b,
+                   std::shared_ptr<assignment_expr> c);
+  array_declarator(std::shared_ptr<direct_declarator> a, lex_token b,
+                   std::shared_ptr<type_qualifier_list> c,
+                   std::shared_ptr<assignment_expr> d);
+  array_declarator(std::shared_ptr<direct_declarator> a,
+                   std::shared_ptr<type_qualifier_list> b, lex_token c,
+                   std::shared_ptr<assignment_expr> d);
+  array_declarator(std::shared_ptr<direct_declarator> a, lex_token b);
+  array_declarator(std::shared_ptr<direct_declarator> a,
+                   std::shared_ptr<type_qualifier_list> b, lex_token c);
+
+  virtual ~array_declarator(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "assignment_expr.h"
 
 class assignment_operator : public n {
