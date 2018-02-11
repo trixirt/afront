@@ -39,6 +39,7 @@ class abstract_array_declarator;
 class abstract_declarator;
 class abstract_function_declarator;
 class additive_expr;
+class alignment_specifier;
 class and_expr;
 class argument_expr_list;
 class array_declarator;
@@ -126,6 +127,15 @@ public:
   virtual std::string classname();
 };
 
+class alignment_specifier : public n {
+public:
+  alignment_specifier(std::shared_ptr<type_name> a);
+  alignment_specifier(std::shared_ptr<constant_expr> a);
+  virtual ~alignment_specifier(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 class and_expr : public n {
 public:
   and_expr(std::shared_ptr<equality_expr> a);
@@ -155,7 +165,21 @@ public:
 #include "constant_expr.h"
 #include "declaration.h"
 #include "declaration_list.h"
-#include "declaration_specifiers.h"
+
+class declaration_specifiers : public n {
+public:
+  declaration_specifiers(std::shared_ptr<storage_class_specifier> a);
+  declaration_specifiers(std::shared_ptr<type_specifier> a);
+  declaration_specifiers(std::shared_ptr<type_qualifier> a);
+  /* c99 */
+  declaration_specifiers(std::shared_ptr<function_specifier> a);
+  /* c11 */
+  declaration_specifiers(std::shared_ptr<alignment_specifier> a);
+  virtual ~declaration_specifiers(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "declarator.h"
 #include "direct_abstract_declarator.h"
 #include "direct_declarator.h"
@@ -201,8 +225,8 @@ public:
   virtual std::string classname();
 };
 
-#include "generic_association.h"
 #include "generic_assoc_list.h"
+#include "generic_association.h"
 #include "generic_selection.h"
 
 class identifier : public n {
@@ -226,7 +250,6 @@ public:
   virtual std::string classname();
 };
 
-#include "init_declaration.h"
 #include "init_declarator.h"
 #include "init_declarator_list.h"
 #include "initializer.h"

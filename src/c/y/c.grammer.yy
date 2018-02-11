@@ -51,11 +51,6 @@
 %include c.grammer.assignment_expr.yy
 %include c.grammer.assignment_operator.yy
 %include c.grammer.expr.yy
-%ifdef c11
-%include c.grammer.generic_association.yy
-%include c.grammer.generic_assoc_list.yy
-%include c.grammer.generic_selection.yy
-%endif
 %include c.grammer.constant_expr.yy
 %include c.grammer.declaration.yy
 %include c.grammer.declaration_specifiers.yy
@@ -65,9 +60,6 @@
 %include c.grammer.typedef_name.yy
 %include c.grammer.type_specifier.yy
 %include c.grammer.type_qualifier.yy
-%ifdef c99
-%include c.grammer.function_specifier.yy
-%endif
 %include c.grammer.struct_or_union_specifier.yy
 %include c.grammer.struct_or_union.yy
 %include c.grammer.struct_declaration_list.yy
@@ -109,3 +101,12 @@
 %include c.grammer.function_definition.yy
 %include c.grammer.function_body.yy
 %include c.grammer.identifier.yy
+%ifdef c99
+%include c.grammer.function_specifier.yy
+%endif
+%ifdef c11
+%include c.grammer.alignment_specifier.yy
+%include c.grammer.generic_association.yy
+%include c.grammer.generic_assoc_list.yy
+%include c.grammer.generic_selection.yy
+%endif

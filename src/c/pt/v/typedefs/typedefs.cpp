@@ -71,6 +71,7 @@ void typedefs::v(abstract_array_declarator *a) { /* skip */ }
 void typedefs::v(abstract_declarator *a) { /* skip */ }
 void typedefs::v(abstract_function_declarator *a) { /* skip */ }
 void typedefs::v(additive_expr *a) { /* skip */ }
+void typedefs::v(alignment_specifier *a) { /* skip */ }
 void typedefs::v(and_expr *a) { /* skip */ }
 void typedefs::v(argument_expr_list *a) { /* skip */ }
 void typedefs::v(array_declarator *a) { /* skip */ }

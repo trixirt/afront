@@ -35,6 +35,7 @@
 %type <std::shared_ptr<abstract_declarator>> abstract_declarator;
 %type <std::shared_ptr<abstract_function_declarator>> abstract_function_declarator;
 %type <std::shared_ptr<additive_expr>> additive_expr;
+%type <std::shared_ptr<alignment_specifier>> alignment_specifier;
 %type <std::shared_ptr<and_expr>> and_expr;
 %type <std::shared_ptr<argument_expr_list>> argument_expr_list;
 %type <std::shared_ptr<array_declarator>> array_declarator;

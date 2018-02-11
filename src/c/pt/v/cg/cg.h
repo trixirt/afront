@@ -45,6 +45,7 @@ public:
   virtual void v(abstract_declarator *a);
   virtual void v(abstract_function_declarator *a);
   virtual void v(additive_expr *a);
+  virtual void v(alignment_specifier *a);
   virtual void v(and_expr *a);
   virtual void v(argument_expr_list *a);
   virtual void v(array_declarator *a);

@@ -47,4 +47,8 @@ declaration_specifiers
 	| function_specifier                             { $$ = std::shared_ptr<declaration_specifiers> (new declaration_specifiers($1)); } 
 	| function_specifier declaration_specifiers      { *$2 *= $1; $$ = $2; }
 %endif
+%ifdef c11
+	| alignment_specifier                             { $$ = std::shared_ptr<declaration_specifiers> (new declaration_specifiers($1)); } 
+	| alignment_specifier declaration_specifiers      { *$2 *= $1; $$ = $2; }
+%endif
 	;

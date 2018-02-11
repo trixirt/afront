@@ -50,6 +50,7 @@ void chk::v(abstract_array_declarator *a) { a->caccept(this); }
 void chk::v(abstract_declarator *a) { a->caccept(this); }
 void chk::v(abstract_function_declarator *a) { a->caccept(this); }
 void chk::v(additive_expr *a) { a->caccept(this); }
+void chk::v(alignment_specifier *a) { a->caccept(this); }
 void chk::v(and_expr *a) { a->caccept(this); }
 void chk::v(argument_expr_list *a) { a->caccept(this); }
 void chk::v(array_declarator *a) { a->caccept(this); }

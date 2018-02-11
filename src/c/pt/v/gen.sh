@@ -30,6 +30,7 @@ C="abstract_array_declarator
 abstract_declarator
 abstract_function_declarator
 additive_expr
+alignment_specifier
 and_expr
 argument_expr_list
 array_declarator

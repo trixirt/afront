@@ -46,6 +46,8 @@ void cg::v(abstract_function_declarator *a) { a->caccept(this); }
 
 void cg::v(additive_expr *a) { a->caccept(this); }
 
+void cg::v(alignment_specifier *a) { a->caccept(this); }
+
 void cg::v(and_expr *a) { a->caccept(this); }
 
 void cg::v(argument_expr_list *a) { a->caccept(this); }

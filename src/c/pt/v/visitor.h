@@ -39,6 +39,7 @@ class abstract_array_declarator;
 class abstract_declarator;
 class abstract_function_declarator;
 class additive_expr;
+class alignment_specifier;
 class and_expr;
 class argument_expr_list;
 class array_declarator;
@@ -125,6 +126,7 @@ public:
   virtual void v(abstract_declarator *a) = 0;
   virtual void v(abstract_function_declarator *a) = 0;
   virtual void v(additive_expr *a) = 0;
+  virtual void v(alignment_specifier *a) = 0;
   virtual void v(and_expr *a) = 0;
   virtual void v(argument_expr_list *a) = 0;
   virtual void v(array_declarator *a) = 0;

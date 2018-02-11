@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2017 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,26 +31,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_DECLARATION_SPECIFIERS_H
-#define NADA_C_PT_DECLARATION_SPECIFIERS_H
+%ifdef debug.all
+%def   debug.grammer.alignment_specifier
+%endif
 
-#include "n.h"
-
-class storage_class_specifier;
-class type_specifier;
-class type_qualifier;
-class function_specifier;
-class declaration_specifiers : public n {
-public:
-  declaration_specifiers(std::shared_ptr<storage_class_specifier> a);
-  declaration_specifiers(std::shared_ptr<type_specifier> a);
-  declaration_specifiers(std::shared_ptr<type_qualifier> a);
-  /* c99 */
-  declaration_specifiers(std::shared_ptr<function_specifier> a);
-
-  virtual ~declaration_specifiers(){};
-  virtual void accept(visitor *a);
-  virtual std::string classname();
-};
-
-#endif
+alignment_specifier
+	: _ALIGNAS OPA type_name CPA     { $$ = std::shared_ptr<alignment_specifier> (new alignment_specifier($3)); } 
+	| _ALIGNAS OPA constant_expr CPA { $$ = std::shared_ptr<alignment_specifier> (new alignment_specifier($3)); } 
+	;

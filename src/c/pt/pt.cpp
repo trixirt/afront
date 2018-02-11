@@ -46,6 +46,15 @@ additive_expr::additive_expr(std::shared_ptr<additive_expr> a, lex_token b,
 void additive_expr::accept(visitor *a) { a->v(this); };
 std::string additive_expr::classname() { return "additive_expr"; };
 
+// Alignment Specifier 6.7.5
+alignment_specifier::alignment_specifier(std::shared_ptr<type_name> a) {
+  *this += a;
+}
+alignment_specifier::alignment_specifier(std::shared_ptr<constant_expr> a) {
+  *this += a;
+}
+void alignment_specifier::accept(visitor *a) { a->v(this); };
+std::string alignment_specifier::classname() { return "alignment_specifier"; };
 
 and_expr::and_expr(std::shared_ptr<equality_expr> a) { *this += a; }
 and_expr::and_expr(std::shared_ptr<and_expr> a, lex_token b,
@@ -75,14 +84,41 @@ exclusive_or_expr::exclusive_or_expr(std::shared_ptr<and_expr> a) {
   *this += a;
 }
 exclusive_or_expr::exclusive_or_expr(std::shared_ptr<exclusive_or_expr> a,
-                                     lex_token b,
-                                     std::shared_ptr<and_expr> c)
+                                     lex_token b, std::shared_ptr<and_expr> c)
     : n(b) {
   *this += a;
   *this += c;
 }
 void exclusive_or_expr::accept(visitor *a) { a->v(this); };
 std::string exclusive_or_expr::classname() { return "exclusive_or_expr"; };
+
+declaration_specifiers::declaration_specifiers(
+    std::shared_ptr<storage_class_specifier> a) {
+  *this += a;
+}
+
+declaration_specifiers::declaration_specifiers(
+    std::shared_ptr<type_specifier> a) {
+  *this += a;
+}
+declaration_specifiers::declaration_specifiers(
+    std::shared_ptr<type_qualifier> a) {
+  *this += a;
+}
+
+declaration_specifiers::declaration_specifiers(
+    std::shared_ptr<function_specifier> a) {
+  *this += a;
+}
+
+declaration_specifiers::declaration_specifiers(
+    std::shared_ptr<alignment_specifier> a) {
+  *this += a;
+}
+void declaration_specifiers::accept(visitor *a) { a->v(this); };
+std::string declaration_specifiers::classname() {
+  return "declaration_specifiers";
+};
 
 function_specifier::function_specifier(lex_token a) : n(a) {}
 void function_specifier::accept(visitor *a) { a->v(this); };
@@ -105,8 +141,7 @@ inclusive_or_expr::inclusive_or_expr(std::shared_ptr<inclusive_or_expr> a,
 void inclusive_or_expr::accept(visitor *a) { a->v(this); };
 std::string inclusive_or_expr::classname() { return "inclusive_or_expr"; };
 
-iteration_statement::iteration_statement(lex_token a,
-                                         std::shared_ptr<expr> b,
+iteration_statement::iteration_statement(lex_token a, std::shared_ptr<expr> b,
                                          std::shared_ptr<statement> c)
     : n(a) {
   *this += b;
@@ -114,15 +149,13 @@ iteration_statement::iteration_statement(lex_token a,
 }
 iteration_statement::iteration_statement(lex_token a,
                                          std::shared_ptr<statement> b,
-                                         lex_token c,
-                                         std::shared_ptr<expr> d)
+                                         lex_token c, std::shared_ptr<expr> d)
     : n(a) {
   *this += b;
   *this += d;
 }
 
-iteration_statement::iteration_statement(lex_token a,
-                                         std::shared_ptr<expr> b,
+iteration_statement::iteration_statement(lex_token a, std::shared_ptr<expr> b,
                                          std::shared_ptr<expr> c,
                                          std::shared_ptr<expr> d,
                                          std::shared_ptr<statement> e)
@@ -195,9 +228,9 @@ std::string logical_or_expr::classname() { return "logical_or_expr"; };
 multiplicative_expr::multiplicative_expr(std::shared_ptr<cast_expr> a) {
   *this += a;
 }
-multiplicative_expr::multiplicative_expr(
-    std::shared_ptr<multiplicative_expr> a, lex_token b,
-    std::shared_ptr<cast_expr> c)
+multiplicative_expr::multiplicative_expr(std::shared_ptr<multiplicative_expr> a,
+                                         lex_token b,
+                                         std::shared_ptr<cast_expr> c)
     : n(b) {
   *this += a;
   *this += c;
@@ -269,15 +302,13 @@ relation_expr::relation_expr(std::shared_ptr<relation_expr> a, lex_token b,
 void relation_expr::accept(visitor *a) { a->v(this); };
 std::string relation_expr::classname() { return "relation_expr"; };
 
-selection_statement::selection_statement(lex_token a,
-                                         std::shared_ptr<expr> b,
+selection_statement::selection_statement(lex_token a, std::shared_ptr<expr> b,
                                          std::shared_ptr<statement> c)
     : n(a) {
   *this += b;
   *this += c;
 }
-selection_statement::selection_statement(lex_token a,
-                                         std::shared_ptr<expr> b,
+selection_statement::selection_statement(lex_token a, std::shared_ptr<expr> b,
                                          std::shared_ptr<statement> c,
                                          lex_token d,
                                          std::shared_ptr<statement> e) {
@@ -320,9 +351,7 @@ type_specifier::type_specifier(std::shared_ptr<struct_or_union_specifier> a) {
 type_specifier::type_specifier(std::shared_ptr<enum_specifier> a) {
   *this += a;
 }
-type_specifier::type_specifier(std::shared_ptr<typedef_name> a) {
-  *this += a;
-}
+type_specifier::type_specifier(std::shared_ptr<typedef_name> a) { *this += a; }
 void type_specifier::accept(visitor *a) { a->v(this); };
 std::string type_specifier::classname() { return "type_specifier"; };
 
@@ -349,6 +378,3 @@ std::string unary_expr::classname() { return "unary_expr"; };
 unary_operator::unary_operator(lex_token a) : n(a) {}
 void unary_operator::accept(visitor *a) { a->v(this); }
 std::string unary_operator::classname() { return "unary_operator"; };
-
-
-
