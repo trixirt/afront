@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,26 +31,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_STRUCT_OR_UNION_SPECIFIER_H
-#define NADA_C_PT_STRUCT_OR_UNION_SPECIFIER_H
+%ifdef debug.all
+%def   debug.grammer.atomic_type_specifier
+%endif
 
-#include "n.h"
-
-class struct_or_union_specifier : public n {
-public:
-  struct_or_union_specifier(std::shared_ptr<struct_or_union> a,
-                            std::shared_ptr<identifier> b,
-                            std::shared_ptr<struct_declaration_list> c);
-
-  struct_or_union_specifier(std::shared_ptr<struct_or_union> a,
-                            std::shared_ptr<struct_declaration_list> b);
-
-  struct_or_union_specifier(std::shared_ptr<struct_or_union> a,
-                            std::shared_ptr<identifier> b);
-
-  virtual ~struct_or_union_specifier(){};
-  virtual void accept(visitor *a);
-  virtual std::string classname();
-};
-
-#endif
+atomic_type_specifier
+	: _ATOMIC OPA type_name CPA  { $$ = std::shared_ptr<atomic_type_specifier> (new atomic_type_specifier($3)); } 
+	;

@@ -47,6 +47,7 @@ class argument_expr_list;
 class array_declarator;
 class assignment_expr;
 class assignment_operator;
+class atomic_type_specifier;
 class cast_expr;
 class compound_statement;
 class conditional_expr;
@@ -217,6 +218,14 @@ class assignment_operator : public n {
 public:
   assignment_operator(lex_token a);
   virtual ~assignment_operator(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class atomic_type_specifier : public n {
+public:
+  atomic_type_specifier(std::shared_ptr<type_name> a);
+  virtual ~atomic_type_specifier(){};
   virtual void accept(visitor *a);
   virtual std::string classname();
 };
@@ -494,7 +503,23 @@ public:
   virtual std::string classname();
 };
 
-#include "struct_or_union_specifier.h"
+class struct_or_union_specifier : public n {
+public:
+  struct_or_union_specifier(std::shared_ptr<struct_or_union> a,
+                            std::shared_ptr<identifier> b,
+                            std::shared_ptr<struct_declaration_list> c);
+
+  struct_or_union_specifier(std::shared_ptr<struct_or_union> a,
+                            std::shared_ptr<struct_declaration_list> b);
+
+  struct_or_union_specifier(std::shared_ptr<struct_or_union> a,
+                            std::shared_ptr<identifier> b);
+
+  virtual ~struct_or_union_specifier(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "translation_unit.h"
 #include "type_name.h"
 
@@ -516,6 +541,7 @@ public:
   type_specifier(std::shared_ptr<struct_or_union_specifier> a);
   type_specifier(std::shared_ptr<enum_specifier> a);
   type_specifier(std::shared_ptr<typedef_name> a);
+  type_specifier(std::shared_ptr<atomic_type_specifier> a);
 
   virtual ~type_specifier(){};
   virtual void accept(visitor *a);

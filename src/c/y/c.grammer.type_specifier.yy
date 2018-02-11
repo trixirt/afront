@@ -36,15 +36,22 @@
 %endif
 
 type_specifier
-	: CHAR                      { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
+	: VOID                      { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
+	| CHAR                      { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
 	| SHORT                     { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
 	| INT                       { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
 	| LONG                      { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
-	| SIGNED                    { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
-	| UNSIGNED                  { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
-	| FLOAT                     { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
-	| DOUBLE                    { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
-	| VOID                      { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
+	| FLOAT                     { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); }
+	| DOUBLE                    { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 	
+	| SIGNED                    { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 	     
+	| UNSIGNED                  { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); }
+%ifdef c99
+	| _BOOL                     { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 	     
+	| _COMPLEX                  { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); }
+%endif
+%ifdef c11
+	| atomic_type_specifier     { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); }
+%endif
 	| struct_or_union_specifier { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 
 	| enum_specifier            { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); }
 	| typedef_name              { $$ = std::shared_ptr<type_specifier> (new type_specifier($1)); } 

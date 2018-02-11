@@ -56,6 +56,7 @@ void chk::v(argument_expr_list *a) { a->caccept(this); }
 void chk::v(array_declarator *a) { a->caccept(this); }
 void chk::v(assignment_expr *a) { a->caccept(this); }
 void chk::v(assignment_operator *a) { a->caccept(this); }
+void chk::v(atomic_type_specifier *a) { a->caccept(this); }
 void chk::v(cast_expr *a) { a->caccept(this); }
 
 void chk::v(compound_statement *a) {

@@ -36,6 +36,7 @@ argument_expr_list
 array_declarator
 assignment_expr
 assignment_operator
+atomic_type_specifier
 cast_expr
 compound_statement
 conditional_expr

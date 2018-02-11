@@ -57,6 +57,7 @@ public:
   virtual void v(array_declarator *a);
   virtual void v(assignment_expr *a);
   virtual void v(assignment_operator *a);
+  virtual void v(atomic_type_specifier *a);
   virtual void v(cast_expr *a);
   virtual void v(compound_statement *a);
   virtual void v(conditional_expr *a);

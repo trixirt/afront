@@ -216,6 +216,14 @@ assignment_operator::assignment_operator(lex_token a) : n(a){};
 void assignment_operator::accept(visitor *a) { a->v(this); };
 std::string assignment_operator::classname() { return "assignment_operator"; };
 
+atomic_type_specifier::atomic_type_specifier(std::shared_ptr<type_name> a) {
+  *this += a;
+}
+void atomic_type_specifier::accept(visitor *a) { a->v(this); };
+std::string atomic_type_specifier::classname() {
+  return "atomic_type_specifier";
+};
+
 equality_expr::equality_expr(std::shared_ptr<relation_expr> a) { *this += a; }
 equality_expr::equality_expr(std::shared_ptr<equality_expr> a, lex_token b,
                              std::shared_ptr<relation_expr> c)
@@ -486,6 +494,29 @@ struct_or_union::struct_or_union(lex_token a) : n(a) {}
 void struct_or_union::accept(visitor *a) { a->v(this); };
 std::string struct_or_union::classname() { return "struct_or_union"; };
 
+struct_or_union_specifier::struct_or_union_specifier(
+    std::shared_ptr<struct_or_union> a, std::shared_ptr<identifier> b,
+    std::shared_ptr<struct_declaration_list> c) {
+  *this += a;
+  *this += b;
+  *this += c;
+}
+struct_or_union_specifier::struct_or_union_specifier(
+    std::shared_ptr<struct_or_union> a,
+    std::shared_ptr<struct_declaration_list> b) {
+  *this += a;
+  *this += b;
+}
+struct_or_union_specifier::struct_or_union_specifier(
+    std::shared_ptr<struct_or_union> a, std::shared_ptr<identifier> b) {
+  *this += a;
+  *this += b;
+}
+void struct_or_union_specifier::accept(visitor *a) { a->v(this); };
+std::string struct_or_union_specifier::classname() {
+  return "struct_or_union_specifier";
+};
+
 type_qualifier::type_qualifier(lex_token a) : n(a) {}
 void type_qualifier::accept(visitor *a) { a->v(this); };
 std::string type_qualifier::classname() { return "type_qualifier"; };
@@ -498,6 +529,9 @@ type_specifier::type_specifier(std::shared_ptr<enum_specifier> a) {
   *this += a;
 }
 type_specifier::type_specifier(std::shared_ptr<typedef_name> a) { *this += a; }
+type_specifier::type_specifier(std::shared_ptr<atomic_type_specifier> a) {
+  *this += a;
+}
 void type_specifier::accept(visitor *a) { a->v(this); };
 std::string type_specifier::classname() { return "type_specifier"; };
 

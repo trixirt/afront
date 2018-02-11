@@ -106,6 +106,7 @@
 %endif
 %ifdef c11
 %include c.grammer.alignment_specifier.yy
+%include c.grammer.atomic_type_specifier.yy
 %include c.grammer.generic_association.yy
 %include c.grammer.generic_assoc_list.yy
 %include c.grammer.generic_selection.yy

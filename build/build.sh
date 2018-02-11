@@ -281,7 +281,7 @@ PT="pt direct_abstract_declarator abstract_declarator
     specifier_qualifier_list statement statement_list
     struct_declaration struct_declaration_list
     struct_declarator struct_declarator_list
-    struct_or_union_specifier type_name type_qualifier_list
+    type_name type_qualifier_list
     typedef_name"
 PT_OBJS=
 for pt in $PT; do
