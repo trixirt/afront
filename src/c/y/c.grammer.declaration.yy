@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Rix
+ * Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -45,6 +45,9 @@ declaration
 	   if ($$->find_typedefs(a)) {
 	      drv->add_typedefs(a);
 	} }
+%ifdef c11
+       | static_assert_declaration                         { $$ = std::shared_ptr<declaration> (new declaration($1)); }
+%endif
 	;
 
 

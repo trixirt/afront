@@ -89,6 +89,7 @@ shift_expr
 specifier_qualifier_list
 statement
 statement_list
+static_assert_declartation
 storage_class_specifier
 struct_declaration
 struct_declaration_list

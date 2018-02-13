@@ -261,6 +261,7 @@ void chk::v(shift_expr *a) { a->caccept(this); }
 void chk::v(specifier_qualifier_list *a) { a->caccept(this); }
 void chk::v(statement *a) { a->caccept(this); }
 void chk::v(statement_list *a) { a->caccept(this); }
+void chk::v(static_assert_declaration *a) { a->caccept(this); }
 
 void chk::v(storage_class_specifier *a) {
   if (debug) {

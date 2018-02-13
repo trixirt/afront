@@ -123,6 +123,7 @@ void typedefs::v(shift_expr *a) { /* skip */ }
 void typedefs::v(specifier_qualifier_list *a) { /* skip */ }
 void typedefs::v(statement *a) { /* skip */ }
 void typedefs::v(statement_list *a) { /* skip */ }
+void typedefs::v(static_assert_declaration *a) { /* skip */ }
 void typedefs::v(struct_declaration *a) { /* skip */ }
 void typedefs::v(struct_declaration_list *a) { /* skip */ }
 void typedefs::v(struct_declarator *a) { /* skip */ }

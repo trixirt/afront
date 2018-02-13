@@ -110,4 +110,5 @@
 %include c.grammer.generic_association.yy
 %include c.grammer.generic_assoc_list.yy
 %include c.grammer.generic_selection.yy
+%include c.grammer.static_assert_declaration.yy
 %endif

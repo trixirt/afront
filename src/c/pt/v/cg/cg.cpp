@@ -164,6 +164,8 @@ void cg::v(statement *a) { a->caccept(this); }
 
 void cg::v(statement_list *a) { a->caccept(this); }
 
+void cg::v(static_assert_declaration *a) { a->caccept(this); }
+
 void cg::v(storage_class_specifier *a) { a->caccept(this); }
 
 void cg::v(struct_declaration *a) { a->caccept(this); }

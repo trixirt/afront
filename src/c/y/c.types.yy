@@ -93,6 +93,7 @@
 %type <std::shared_ptr<specifier_qualifier_list>> specifier_qualifier_list;
 %type <std::shared_ptr<statement_list>> statement_list;
 %type <std::shared_ptr<statement>> statement;
+%type <std::shared_ptr<static_assert_declaration>> static_assert_declaration;
 %type <std::shared_ptr<storage_class_specifier>> storage_class_specifier;
 %type <std::shared_ptr<struct_declaration_list>> struct_declaration_list;
 %type <std::shared_ptr<struct_declaration>> struct_declaration;

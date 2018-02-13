@@ -33,6 +33,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "pt.h"
+#include "e.h"
+#include "v/typedefs/typedefs.h"
 
 abstract_array_declarator::abstract_array_declarator() {}
 abstract_array_declarator::abstract_array_declarator(
@@ -223,6 +225,46 @@ void atomic_type_specifier::accept(visitor *a) { a->v(this); };
 std::string atomic_type_specifier::classname() {
   return "atomic_type_specifier";
 };
+
+declaration::declaration(std::shared_ptr<declaration_specifiers> a) {
+  *this += a;
+}
+declaration::declaration(std::shared_ptr<declaration_specifiers> a,
+                         std::shared_ptr<init_declarator_list> b) {
+  *this += a;
+  *this += b;
+}
+declaration::declaration(std::shared_ptr<static_assert_declaration> a) {
+  *this += a;
+}
+void declaration::accept(visitor *a) { a->v(this); };
+std::string declaration::classname() { return "declaration"; };
+bool declaration::find_typedefs(std::vector<identifier *> &a) {
+  bool ret = false;
+  if (!a.empty())
+    throw(ice_exception(__FILE__, __LINE__, "identifier list should be empty"));
+
+  class typedefs *v = new typedefs();
+  if (v) {
+    this->accept(v);
+    if (v->is()) {
+      a = v->get();
+      if (!a.empty())
+        ret = true;
+    }
+    delete (v);
+    v = nullptr;
+  } else {
+    throw(ice_exception(__FILE__, __LINE__, "allocating typedef visitor"));
+  }
+  return ret;
+}
+
+declaration_list::declaration_list(std::shared_ptr<declaration> a) {
+  *this += a;
+};
+void declaration_list::accept(visitor *a) { a->v(this); };
+std::string declaration_list::classname() { return "declaration_list"; };
 
 equality_expr::equality_expr(std::shared_ptr<relation_expr> a) { *this += a; }
 equality_expr::equality_expr(std::shared_ptr<equality_expr> a, lex_token b,
@@ -484,11 +526,36 @@ shift_expr::shift_expr(std::shared_ptr<shift_expr> a, lex_token b,
 void shift_expr::accept(visitor *a) { a->v(this); };
 std::string shift_expr::classname() { return "shift_expr"; };
 
+//
+// 6.7.10 Static Assertions
+static_assert_declaration::static_assert_declaration(
+    std::shared_ptr<constant_expr> a, lex_token b)
+    : n(b) {
+  *this += a;
+}
+void static_assert_declaration::accept(visitor *a) { a->v(this); };
+std::string static_assert_declaration::classname() {
+  return "static_assert_declaration";
+};
+
 storage_class_specifier::storage_class_specifier(lex_token a) : n(a) {}
 void storage_class_specifier::accept(visitor *a) { a->v(this); };
 std::string storage_class_specifier::classname() {
   return "storage_class_specifier";
 };
+
+struct_declaration::struct_declaration(
+    std::shared_ptr<specifier_qualifier_list> a,
+    std::shared_ptr<struct_declarator_list> b) {
+  *this += a;
+  *this += b;
+}
+struct_declaration::struct_declaration(
+    std::shared_ptr<static_assert_declaration> a) {
+  *this += a;
+}
+void struct_declaration::accept(visitor *a) { a->v(this); };
+std::string struct_declaration::classname() { return "struct_declaration"; };
 
 struct_or_union::struct_or_union(lex_token a) : n(a) {}
 void struct_or_union::accept(visitor *a) { a->v(this); };

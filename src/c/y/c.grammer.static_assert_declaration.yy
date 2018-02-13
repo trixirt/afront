@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2017 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,21 +32,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_STRUCT_DECLARATION_H
-#define NADA_C_PT_STRUCT_DECLARATION_H
+%ifdef debug.all
+%def   debug.grammer.static_assert_declaration
+%endif
 
-#include "n.h"
+static_assert_declaration
+	: _STATIC_ASSERT OPA constant_expr COM STRING_LITERAL CPA SCO  { $$ = std::shared_ptr<static_assert_declaration> (new static_assert_declaration($3, $4)); } 
+	;
 
-class specifier_qualifier_list;
-class struct_declarator_list;
-class struct_declaration : public n {
-public:
-  struct_declaration(std::shared_ptr<specifier_qualifier_list> a,
-                     std::shared_ptr<struct_declarator_list> b);
 
-  virtual ~struct_declaration(){};
-  virtual void accept(visitor *a);
-  virtual std::string classname();
-};
 
-#endif
+

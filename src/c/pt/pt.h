@@ -36,6 +36,7 @@
 #define AFRONT_C_PT_PT_H
 
 #include "n.h"
+#include <vector>
 
 class abstract_array_declarator;
 class abstract_declarator;
@@ -99,6 +100,7 @@ class shift_expr;
 class specifier_qualifier_list;
 class statement;
 class statement_list;
+class static_assert_declaration;
 class storage_class_specifier;
 class struct_declaration;
 class struct_declaration_list;
@@ -234,8 +236,26 @@ public:
 #include "compound_statement.h"
 #include "conditional_expr.h"
 #include "constant_expr.h"
-#include "declaration.h"
-#include "declaration_list.h"
+
+class declaration : public n {
+public:
+  declaration(std::shared_ptr<declaration_specifiers> a);
+  declaration(std::shared_ptr<declaration_specifiers> a,
+              std::shared_ptr<init_declarator_list> b);
+  declaration(std::shared_ptr<static_assert_declaration> a);
+  virtual ~declaration(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+  bool find_typedefs(std::vector<identifier *> &a);
+};
+
+class declaration_list : public n {
+public:
+  declaration_list(std::shared_ptr<declaration> a);
+  virtual ~declaration_list(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
 
 class declaration_specifiers : public n {
 public:
@@ -482,6 +502,14 @@ public:
 #include "statement.h"
 #include "statement_list.h"
 
+class static_assert_declaration : public n {
+public:
+  static_assert_declaration(std::shared_ptr<constant_expr> a, lex_token b);
+  virtual ~static_assert_declaration(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 class storage_class_specifier : public n {
 public:
   storage_class_specifier(lex_token a);
@@ -490,7 +518,16 @@ public:
   virtual std::string classname();
 };
 
-#include "struct_declaration.h"
+class struct_declaration : public n {
+public:
+  struct_declaration(std::shared_ptr<specifier_qualifier_list> a,
+                     std::shared_ptr<struct_declarator_list> b);
+  struct_declaration(std::shared_ptr<static_assert_declaration> a);
+  virtual ~struct_declaration(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "struct_declaration_list.h"
 #include "struct_declarator.h"
 #include "struct_declarator_list.h"

@@ -105,6 +105,7 @@ public:
   virtual void v(specifier_qualifier_list *a);
   virtual void v(statement *a);
   virtual void v(statement_list *a);
+  virtual void v(static_assert_declaration *a);
   virtual void v(storage_class_specifier *a);
   virtual void v(struct_declaration *a);
   virtual void v(struct_declaration_list *a);
