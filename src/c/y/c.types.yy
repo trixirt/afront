@@ -42,6 +42,8 @@
 %type <std::shared_ptr<assignment_expr>> assignment_expr;
 %type <std::shared_ptr<assignment_operator>> assignment_operator;
 %type <std::shared_ptr<atomic_type_specifier>> atomic_type_specifier;
+%type <std::shared_ptr<block_item>> block_item;
+%type <std::shared_ptr<block_item_list>> block_item_list;
 %type <std::shared_ptr<cast_expr>> cast_expr;
 %type <std::shared_ptr<compound_statement>> compound_statement;
 %type <std::shared_ptr<conditional_expr>> conditional_expr;

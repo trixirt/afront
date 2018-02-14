@@ -269,7 +269,7 @@ C_OBJS="c/c.lexer.o $C_OBJS"
 PT="pt direct_abstract_declarator abstract_declarator
     abstract_function_declarator argument_expr_list
     assignment_expr cast_expr
-    compound_statement conditional_expr constant_expr
+    conditional_expr constant_expr
     direct_declarator declarator enumerator
     enumerator_list enum_specifier expr
     expression_statement external_definition translation_unit function_body
@@ -281,8 +281,7 @@ PT="pt direct_abstract_declarator abstract_declarator
     specifier_qualifier_list statement statement_list
     struct_declaration_list
     struct_declarator struct_declarator_list
-    type_name type_qualifier_list
-    typedef_name"
+    type_name typedef_name"
 PT_OBJS=
 for pt in $PT; do
     f=pt/${pt}.o

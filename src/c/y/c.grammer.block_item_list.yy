@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2017 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,25 +31,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_COMPOUND_STATEMENT_H
-#define NADA_C_PT_COMPOUND_STATEMENT_H
+%ifdef debug.all
+%def   debug.grammer.block_item_list
+%endif
 
-#include "n.h"
-#include <string>
+block_item_list
+	: block_item                 { $$ = std::shared_ptr<block_item_list> (new block_item_list($1)); }
+	| block_item_list block_item { *$1 += $2; $$ = $1; }
+	;
 
-class declaration_list;
-class statement_list;
 
-class compound_statement : public n {
-public:
-  compound_statement();
-  compound_statement(std::shared_ptr<statement_list> a);
-  compound_statement(std::shared_ptr<declaration_list> a);
-  compound_statement(std::shared_ptr<declaration_list> a,
-                     std::shared_ptr<statement_list> b);
-  virtual ~compound_statement(){};
-  virtual void accept(visitor *a);
-  virtual std::string classname();
-};
-
-#endif

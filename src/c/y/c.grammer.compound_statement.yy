@@ -37,7 +37,11 @@
 
 compound_statement
 	: OBR CBR                                 { $$ = std::shared_ptr<compound_statement> (new compound_statement()); }
+%ifdef c99
+	| OBR block_item_list CBR                 { $$ = std::shared_ptr<compound_statement> (new compound_statement($2)); }
+%else
 	| OBR statement_list CBR                  { $$ = std::shared_ptr<compound_statement> (new compound_statement($2)); }
 	| OBR declaration_list CBR                { $$ = std::shared_ptr<compound_statement> (new compound_statement($2)); }
 	| OBR declaration_list statement_list CBR { $$ = std::shared_ptr<compound_statement> (new compound_statement($2, $3)); }
+%endif	
 	;

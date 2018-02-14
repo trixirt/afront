@@ -46,6 +46,8 @@ class array_declarator;
 class assignment_expr;
 class assignment_operator;
 class atomic_type_specifier;
+class block_item;
+class block_item_list;
 class cast_expr;
 class compound_statement;
 class conditional_expr;
@@ -134,6 +136,8 @@ public:
   virtual void v(assignment_expr *a) = 0;
   virtual void v(assignment_operator *a) = 0;
   virtual void v(atomic_type_specifier *a) = 0;
+  virtual void v(block_item *a) = 0;
+  virtual void v(block_item_list *a) = 0;
   virtual void v(cast_expr *a) = 0;
   virtual void v(compound_statement *a) = 0;
   virtual void v(conditional_expr *a) = 0;

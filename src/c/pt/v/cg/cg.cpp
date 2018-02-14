@@ -60,6 +60,10 @@ void cg::v(assignment_operator *a) { a->caccept(this); }
 
 void cg::v(atomic_type_specifier *a) { a->caccept(this); }
 
+void cg::v(block_item *a) { a->caccept(this); }
+
+void cg::v(block_item_list *a) { a->caccept(this); }
+
 void cg::v(cast_expr *a) { a->caccept(this); }
 
 void cg::v(compound_statement *a) { a->caccept(this); }

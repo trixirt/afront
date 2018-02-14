@@ -102,6 +102,8 @@
 %include c.grammer.function_body.yy
 %include c.grammer.identifier.yy
 %ifdef c99
+%include c.grammer.block_item.yy
+%include c.grammer.block_item_list.yy
 %include c.grammer.function_specifier.yy
 %endif
 %ifdef c11

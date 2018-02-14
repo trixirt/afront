@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,17 +31,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_C_PT_TYPE_QUALIFIER_LIST_H
-#define NADA_C_PT_TYPE_QUALIFIER_LIST_H
+%ifdef debug.all
+%def   debug.grammer.block_item
+%endif
 
-#include "n.h"
-
-class type_qualifier_list : public n {
-public:
-  type_qualifier_list(std::shared_ptr<type_qualifier> a);
-  virtual ~type_qualifier_list(){};
-  virtual void accept(visitor *a);
-  virtual std::string classname();
-};
-
-#endif
+block_item
+	: declaration { $$ = std::shared_ptr<block_item> (new block_item($1)); }
+	| statement   { $$ = std::shared_ptr<block_item> (new block_item($1)); } 
+	;

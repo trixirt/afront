@@ -38,12 +38,18 @@
 iteration_statement
 	: WHILE OPA expr CPA statement                { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, $3, $5)); }
 	| DO statement WHILE OPA expr CPA SCO         { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, $2, $3, $5)); }
-	| FOR OPA SCO SCO CPA statement               { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, nullptr, nullptr, nullptr, $6)); }
-	| FOR OPA SCO SCO expr CPA statement          { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, nullptr, nullptr, $5, $7)); }
-	| FOR OPA SCO expr SCO CPA statement          { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, nullptr, $4, nullptr, $7)); }
-	| FOR OPA SCO expr SCO expr CPA statement     { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, nullptr, $4, $6, $8)); }
+	| FOR OPA SCO SCO CPA statement               { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, static_cast<std::shared_ptr<expr>>(nullptr), nullptr, nullptr, $6)); }
+	| FOR OPA SCO SCO expr CPA statement          { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, static_cast<std::shared_ptr<expr>>(nullptr), nullptr, $5, $7)); }
+	| FOR OPA SCO expr SCO CPA statement          { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, static_cast<std::shared_ptr<expr>>(nullptr), $4, nullptr, $7)); }
+	| FOR OPA SCO expr SCO expr CPA statement     { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, static_cast<std::shared_ptr<expr>>(nullptr), $4, $6, $8)); }
 	| FOR OPA expr SCO SCO CPA statement          { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, $3, nullptr, nullptr, $7)); }
 	| FOR OPA expr SCO SCO expr CPA statement     { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, $3, nullptr, $6, $8)); }
 	| FOR OPA expr SCO expr SCO CPA statement     { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, $3, $5, nullptr, $8)); }
 	| FOR OPA expr SCO expr SCO expr CPA statement { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, $3, $5, $7, $9)); }
+%ifdef c99
+	| FOR OPA declaration SCO SCO CPA statement          { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, $3, nullptr, nullptr, $7)); }
+	| FOR OPA declaration SCO SCO expr CPA statement     { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, $3, nullptr, $6, $8)); }
+	| FOR OPA declaration SCO expr SCO CPA statement     { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, $3, $5, nullptr, $8)); }
+	| FOR OPA declaration SCO expr SCO expr CPA statement { $$ = std::shared_ptr<iteration_statement> (new iteration_statement($1, $3, $5, $7, $9)); }
+%endif
 	;

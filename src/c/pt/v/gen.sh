@@ -37,6 +37,8 @@ array_declarator
 assignment_expr
 assignment_operator
 atomic_type_specifier
+block_item
+block_item_list
 cast_expr
 compound_statement
 conditional_expr

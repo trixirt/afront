@@ -78,6 +78,8 @@ void typedefs::v(array_declarator *a) { /* skip */ }
 void typedefs::v(assignment_expr *a) { /* skip */ }
 void typedefs::v(assignment_operator *a) { /* skip */ }
 void typedefs::v(atomic_type_specifier *a) { /* skip */ }
+void typedefs::v(block_item *a) { /* skip */ }
+void typedefs::v(block_item_list *a) { /* skip */ }
 void typedefs::v(cast_expr *a) { /* skip */ }
 void typedefs::v(compound_statement *a) { /* skip */ }
 void typedefs::v(conditional_expr *a) { /* skip */ }

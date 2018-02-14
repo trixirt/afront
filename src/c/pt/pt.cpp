@@ -226,6 +226,33 @@ std::string atomic_type_specifier::classname() {
   return "atomic_type_specifier";
 };
 
+block_item::block_item(std::shared_ptr<declaration> a) { *this += a; }
+block_item::block_item(std::shared_ptr<statement> a) { *this += a; }
+void block_item::accept(visitor *a) { a->v(this); };
+std::string block_item::classname() { return "block_item"; };
+
+block_item_list::block_item_list(std::shared_ptr<block_item> a) { *this += a; }
+void block_item_list::accept(visitor *a) { a->v(this); };
+std::string block_item_list::classname() { return "block_item_list"; };
+
+compound_statement::compound_statement() {}
+compound_statement::compound_statement(std::shared_ptr<statement_list> a) {
+  *this += a;
+}
+compound_statement::compound_statement(std::shared_ptr<declaration_list> a) {
+  *this += a;
+}
+compound_statement::compound_statement(std::shared_ptr<declaration_list> a,
+                                       std::shared_ptr<statement_list> b) {
+  *this += a;
+  *this += b;
+}
+compound_statement::compound_statement(std::shared_ptr<block_item_list> a) {
+  *this += a;
+}
+void compound_statement::accept(visitor *a) { a->v(this); };
+std::string compound_statement::classname() { return "compound_statement"; };
+
 declaration::declaration(std::shared_ptr<declaration_specifiers> a) {
   *this += a;
 }
@@ -352,6 +379,17 @@ iteration_statement::iteration_statement(lex_token a,
 }
 
 iteration_statement::iteration_statement(lex_token a, std::shared_ptr<expr> b,
+                                         std::shared_ptr<expr> c,
+                                         std::shared_ptr<expr> d,
+                                         std::shared_ptr<statement> e)
+    : n(a) {
+  *this += b;
+  *this += c;
+  *this += d;
+  *this += e;
+}
+iteration_statement::iteration_statement(lex_token a,
+                                         std::shared_ptr<declaration> b,
                                          std::shared_ptr<expr> c,
                                          std::shared_ptr<expr> d,
                                          std::shared_ptr<statement> e)
@@ -587,6 +625,12 @@ std::string struct_or_union_specifier::classname() {
 type_qualifier::type_qualifier(lex_token a) : n(a) {}
 void type_qualifier::accept(visitor *a) { a->v(this); };
 std::string type_qualifier::classname() { return "type_qualifier"; };
+
+type_qualifier_list::type_qualifier_list(std::shared_ptr<type_qualifier> a) {
+  *this += a;
+}
+void type_qualifier_list::accept(visitor *a) { a->v(this); };
+std::string type_qualifier_list::classname() { return "type_qualifier_list"; };
 
 type_specifier::type_specifier(lex_token a) : n(a) {}
 type_specifier::type_specifier(std::shared_ptr<struct_or_union_specifier> a) {

@@ -49,6 +49,8 @@ class array_declarator;
 class assignment_expr;
 class assignment_operator;
 class atomic_type_specifier;
+class block_item;
+class block_item_list;
 class cast_expr;
 class compound_statement;
 class conditional_expr;
@@ -232,8 +234,38 @@ public:
   virtual std::string classname();
 };
 
+class block_item : public n {
+public:
+  block_item(std::shared_ptr<declaration> a);
+  block_item(std::shared_ptr<statement> a);
+  virtual ~block_item(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
+class block_item_list : public n {
+public:
+  block_item_list(std::shared_ptr<block_item> a);
+  virtual ~block_item_list(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "cast_expr.h"
-#include "compound_statement.h"
+
+class compound_statement : public n {
+public:
+  compound_statement();
+  compound_statement(std::shared_ptr<statement_list> a);
+  compound_statement(std::shared_ptr<declaration_list> a);
+  compound_statement(std::shared_ptr<declaration_list> a,
+                     std::shared_ptr<statement_list> b);
+  compound_statement(std::shared_ptr<block_item_list> a);
+  virtual ~compound_statement(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "conditional_expr.h"
 #include "constant_expr.h"
 
@@ -352,6 +384,9 @@ public:
   iteration_statement(lex_token a, std::shared_ptr<statement> b, lex_token c,
                       std::shared_ptr<expr> d);
   iteration_statement(lex_token a, std::shared_ptr<expr> b,
+                      std::shared_ptr<expr> c, std::shared_ptr<expr> d,
+                      std::shared_ptr<statement> e);
+  iteration_statement(lex_token a, std::shared_ptr<declaration> b,
                       std::shared_ptr<expr> c, std::shared_ptr<expr> d,
                       std::shared_ptr<statement> e);
 
@@ -569,7 +604,14 @@ public:
   virtual std::string classname();
 };
 
-#include "type_qualifier_list.h"
+class type_qualifier_list : public n {
+public:
+  type_qualifier_list(std::shared_ptr<type_qualifier> a);
+  virtual ~type_qualifier_list(){};
+  virtual void accept(visitor *a);
+  virtual std::string classname();
+};
+
 #include "typedef_name.h"
 
 class type_specifier : public n {
