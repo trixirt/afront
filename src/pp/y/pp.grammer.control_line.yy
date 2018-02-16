@@ -32,12 +32,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 %ifdef debug.all
-%def   debug.grammer.group_part
-%endif
+%def   debug.grammer.control_line
+%control
 
-group_part
-	: if_section         { $$ = std::shared_ptr<group_part> (new group_part($1)); }
-	| control_line       { $$ = std::shared_ptr<group_part> (new group_part($1)); }
-	| text_line          { $$ = std::shared_ptr<group_part> (new group_part($1)); }
-	| HASH non_directive { $$ = std::shared_ptr<group_part> (new group_part($2)); }
+control_line
+	: HASH INCLUDE pp_tokens NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3)); }
+	| HASH DEFINE identifier replacement_list NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $4)); }
+	| HASH DEFINE identifier LPAREN CPA replacement_list NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $6)); }
+	| HASH DEFINE identifier LPAREN identifier_list CPA replacement_list NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7)); }
+	| HASH DEFINE identifier LPAREN ELIPSIS CPA replacement_list NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $6)); }
+	| HASH DEFINE identifier LPAREN identifier_list COM ELIPSIS CPA replacement_list NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7, $9)); }
+	| HASH UNDEF identifier NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3)); }
+	| HASH LINE pp_tokens NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3)); }
+	| HASH ERROR NL { $$ = std::shared_ptr<control_line> (new control_line($2)); }
+	| HASH ERROR pp_tokens NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3)); }
+	| HASH PRAGMA NL { $$ = std::shared_ptr<control_line> (new control_line($2)); }	   
+	| HASH PRAGMA pp_tokens NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3)); }
+	| HASH NL { $$ = std::shared_ptr<control_line> (new control_line()); }
 	;

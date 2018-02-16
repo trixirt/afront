@@ -32,12 +32,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 %ifdef debug.all
-%def   debug.grammer.group_part
+%def   debug.grammer.if_group
 %endif
 
-group_part
-	: if_section         { $$ = std::shared_ptr<group_part> (new group_part($1)); }
-	| control_line       { $$ = std::shared_ptr<group_part> (new group_part($1)); }
-	| text_line          { $$ = std::shared_ptr<group_part> (new group_part($1)); }
-	| HASH non_directive { $$ = std::shared_ptr<group_part> (new group_part($2)); }
+if_group
+	: HASH IF constant_expr NL        { $$ = std::shared_ptr<if_group> (new if_group($2, $3));         }
+	| HASH IF constant_expr NL group  { $$ = std::shared_ptr<if_group> (new if_group($2, $3, $5));     }
+	| HASH IFDEF identifier NL        { $$ = std::shared_ptr<if_group> (new if_group($2, $3));         }
+	| HASH IFDEF identifier NL group  { $$ = std::shared_ptr<if_group> (new if_group($2, $3, $5));     }
+  	| HASH IFNDEF identifier NL       { $$ = std::shared_ptr<if_group> (new if_group($2, $3));         }
+	| HASH IFNDEF identifier NL group { $$ = std::shared_ptr<if_group> (new if_group($2, $3, $5));     }
 	;

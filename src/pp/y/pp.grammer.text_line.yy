@@ -32,12 +32,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 %ifdef debug.all
-%def   debug.grammer.group_part
-%endif
+%def   debug.grammer.text_line
+%text
 
-group_part
-	: if_section         { $$ = std::shared_ptr<group_part> (new group_part($1)); }
-	| control_line       { $$ = std::shared_ptr<group_part> (new group_part($1)); }
-	| text_line          { $$ = std::shared_ptr<group_part> (new group_part($1)); }
-	| HASH non_directive { $$ = std::shared_ptr<group_part> (new group_part($2)); }
+text_line
+	: pp_tokens NL { $$ = std::shared_ptr<text_line> (new text_line($1)); }
+	| NL           { $$ = std::shared_ptr<text_line> (new text_line()); }
 	;
