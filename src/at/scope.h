@@ -43,6 +43,7 @@ public:
     scope();
     scope(std::string name, std::shared_ptr<n> start, std::shared_ptr<n> end);
     virtual ~scope(){};
+    virtual void notify();
     virtual std::string classname();
 private:
   std::shared_ptr<n> start, end;

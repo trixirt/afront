@@ -33,9 +33,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "pt.h"
+#include "observer.h"
 
 abi::abi(std::shared_ptr<string_constant> a) { *this += a; }
 void abi::accept(visitor *a) { a->v(this); }
+void abi::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 configuration::configuration(std::shared_ptr<data_layout> a,
                              std::shared_ptr<language_type_list> b) {
@@ -50,9 +55,17 @@ configuration::configuration(std::shared_ptr<triple> a,
   *this += c;
 }
 void configuration::accept(visitor *a) { a->v(this); }
+void configuration::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 constant::constant(lex_token a) : n(a) {}
 void constant::accept(visitor *a) { a->v(this); }
+void constant::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 data_layout::data_layout(std::shared_ptr<endian> a,
                          std::shared_ptr<object_list> b) {
@@ -67,12 +80,24 @@ data_layout::data_layout(std::shared_ptr<endian> a,
   *this += c;
 }
 void data_layout::accept(visitor *a) { a->v(this); }
+void data_layout::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 endian::endian(lex_token a) : n(a) {}
 void endian::accept(visitor *a) { a->v(this); }
+void endian::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 identifier::identifier(lex_token a) : n(a) {}
 void identifier::accept(visitor *a) { a->v(this); }
+void identifier::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 language_type::language_type(std::shared_ptr<string_constant> a,
                              std::shared_ptr<object_class> b,
@@ -91,21 +116,37 @@ language_type::language_type(std::shared_ptr<string_constant> a,
   *this += d;
 }
 void language_type::accept(visitor *a) { a->v(this); }
+void language_type::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 language_type_list::language_type_list(std::shared_ptr<language_type> a) {
   *this += a;
 }
 void language_type_list::accept(visitor *a) { a->v(this); }
+void language_type_list::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 layout_option_list::layout_option_list(std::shared_ptr<layout_option> a) {
   *this += a;
 }
 void layout_option_list::accept(visitor *a) { a->v(this); }
+void layout_option_list::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 layout_option::layout_option(std::shared_ptr<target_stack> a) { *this += a; }
 layout_option::layout_option(std::shared_ptr<mangle> a) { *this += a; }
 layout_option::layout_option(std::shared_ptr<abi> a) { *this += a; }
 void layout_option::accept(visitor *a) { a->v(this); }
+void layout_option::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 void m::accept(visitor *a) { a->v(this); };
 void m::caccept(visitor *a) {
@@ -117,14 +158,30 @@ void m::caccept(visitor *a) {
 
 mangle::mangle(std::shared_ptr<string_constant> a) { *this += a; }
 void mangle::accept(visitor *a) { a->v(this); }
+void mangle::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 void n::accept(visitor *a) { a->v(this); };
+void n::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 object_class::object_class(lex_token a) : n(a) {}
 void object_class::accept(visitor *a) { a->v(this); }
+void object_class::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 object_list::object_list(std::shared_ptr<object> a) { *this += a; }
 void object_list::accept(visitor *a) { a->v(this); }
+void object_list::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 object::object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b) {
   *this += a;
@@ -137,12 +194,28 @@ object::object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b,
   *this += c;
 }
 void object::accept(visitor *a) { a->v(this); }
+void object::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 string_constant::string_constant(lex_token a) : n(a) {}
 void string_constant::accept(visitor *a) { a->v(this); }
+void string_constant::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 target_stack::target_stack(std::shared_ptr<constant> a) { *this += a; }
 void target_stack::accept(visitor *a) { a->v(this); }
+void target_stack::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
 
 triple::triple(std::shared_ptr<string_constant> a) { *this += a; }
 void triple::accept(visitor *a) { a->v(this); }
+void triple::notify() {
+  for (auto i : observers)
+    i->update(this);
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,20 +32,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include "pt.h"
+#ifndef AFRONT_FIG_PT_V_OBSERVER_H
+#define AFRONT_FIG_PT_V_OBSERVER_H
 
-abstract_declarator::abstract_declarator(std::shared_ptr<pointer> a) {
-  *this += a;
-}
-abstract_declarator::abstract_declarator(
-    std::shared_ptr<direct_abstract_declarator> a) {
-  *this += a;
-}
-abstract_declarator::abstract_declarator(
-    std::shared_ptr<pointer> a, std::shared_ptr<direct_abstract_declarator> b) {
-  *this += a;
-  *this += b;
-}
+class observer {
+public:
+  observer() {}
+  virtual ~observer() {}
+  virtual void update(m *a) {}
+  virtual void update(identifier *a) {}
+};
 
-void abstract_declarator::accept(visitor *a) { a->v(this); };
-std::string abstract_declarator::classname() { return "abstract_declarator"; };
+#endif

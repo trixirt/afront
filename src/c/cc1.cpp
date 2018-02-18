@@ -40,7 +40,7 @@
 #include "c/pt/v/scope/scope.h"
 #include "e.h"
 
-void init_types(std::shared_ptr<scope> a) {
+void init_types() {
   // 6.7.2 Type specifiers
   const char *ctypes[] = {
       "void",
@@ -77,20 +77,12 @@ void init_types(std::shared_ptr<scope> a) {
       // TBD long double _Complex
       "",
   };
-  for (const char **c = ctypes; **c != '\0'; c++) {
-    std::shared_ptr<type> t = std::shared_ptr<type>(new type(*c, nullptr));
-    (*a) += t;
-  }
   /* Additional builtin types */
   /* XXX this should be common */
   const char *builtin_types[] = {
       "__builtin_va_list",
       "",
   };
-  for (const char **c = builtin_types; **c != '\0'; c++) {
-    std::shared_ptr<type> t = std::shared_ptr<type>(new type(*c, nullptr));
-    (*a) += t;
-  }
 }
 
 int main(int argc, char *argv[]) {
@@ -106,14 +98,8 @@ int main(int argc, char *argv[]) {
     ret = 1;
   } else {
       std::shared_ptr<n> root = drv.get_root();
-    std::shared_ptr<scope> a =
-        std::shared_ptr<scope>(new scope("cc1", nullptr, nullptr));
-    if (a == nullptr) {
-      fprintf(stderr, "Failed to allocate memory for AST");
-      ret = 1;
-    } else {
-      init_types(a);
-      vchk = new chk(a);
+      init_types();
+      vchk = new chk();
       try {
         root->accept(vchk);
 	vcg = new cg();
@@ -138,7 +124,6 @@ int main(int argc, char *argv[]) {
         ret = 1;
 	goto end;
       }
-    }
   }
 end:
   if (vchk != nullptr)

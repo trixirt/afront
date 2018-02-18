@@ -36,9 +36,7 @@
 #include "chk.h"
 #include "e.h"
 
-chk::chk(std::shared_ptr<ast> a) {
-  t = a;
-
+chk::chk() {
   // debug = true;
   debug = false;
 }
@@ -281,13 +279,11 @@ void chk::v(struct_declarator_list *a) { a->caccept(this); }
 void chk::v(struct_or_union *a) { /* terminal */ }
 void chk::v(struct_or_union_specifier *a) { a->caccept(this); }
 
-void chk::fiddle() {}
 void chk::v(translation_unit *a) {
   if (debug) {
     std::cout << std::endl;
     std::cout << indent << a->classname() << std::endl;
   }
-  fiddle();
   a->caccept(this);
 }
 

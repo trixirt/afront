@@ -61,6 +61,7 @@ public:
   abi(std::shared_ptr<string_constant> a);
   virtual ~abi(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class configuration : public n {
@@ -71,6 +72,7 @@ public:
                 std::shared_ptr<language_type_list> c);
   virtual ~configuration(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class constant : public n {
@@ -78,6 +80,7 @@ public:
   constant(lex_token a);
   virtual ~constant(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class data_layout : public n {
@@ -87,6 +90,7 @@ public:
               std::shared_ptr<object_list> c);
   virtual ~data_layout(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class endian : public n {
@@ -94,6 +98,7 @@ public:
   endian(lex_token a);
   virtual ~endian(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class identifier : public n {
@@ -101,6 +106,7 @@ public:
   identifier(lex_token a);
   virtual ~identifier(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class language_type : public n {
@@ -112,6 +118,7 @@ public:
                 std::shared_ptr<constant> d);
   virtual ~language_type(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class language_type_list : public n {
@@ -119,6 +126,7 @@ public:
   language_type_list(std::shared_ptr<language_type> a);
   virtual ~language_type_list(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class layout_option_list : public n {
@@ -126,6 +134,7 @@ public:
   layout_option_list(std::shared_ptr<layout_option> a);
   virtual ~layout_option_list(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class layout_option : public n {
@@ -135,6 +144,7 @@ public:
   layout_option(std::shared_ptr<abi> a);
   virtual ~layout_option(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class mangle : public n {
@@ -142,6 +152,7 @@ public:
   mangle(std::shared_ptr<string_constant> a);
   virtual ~mangle(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class object_class : public n {
@@ -149,6 +160,7 @@ public:
   object_class(lex_token a);
   virtual ~object_class(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class object_list : public n {
@@ -156,6 +168,7 @@ public:
   object_list(std::shared_ptr<object> a);
   virtual ~object_list(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class object : public n {
@@ -165,6 +178,7 @@ public:
          std::shared_ptr<constant> c);
   virtual ~object(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class string_constant : public n {
@@ -172,6 +186,7 @@ public:
   string_constant(lex_token a);
   virtual ~string_constant(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class target_stack : public n {
@@ -179,6 +194,7 @@ public:
   target_stack(std::shared_ptr<constant> a);
   virtual ~target_stack(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 class triple : public n {
@@ -186,6 +202,7 @@ public:
   triple(std::shared_ptr<string_constant> a);
   virtual ~triple(){};
   virtual void accept(visitor *a);
+  virtual void notify();
 };
 
 #endif

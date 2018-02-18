@@ -90,3 +90,16 @@ class m &m::operator/=(class m *rhs) {
   }
   return *this;
 }
+
+bool m::attach(std::shared_ptr<observer> a) {
+    bool ret = false;
+    auto i = std::find(observers.begin(), observers.end(), a);
+    if (i == observers.end()) {
+	observers.push_back(a);
+	ret = true;
+    }
+    return ret;
+}
+void m::clear() { observers.clear(); }
+
+std::deque<std::shared_ptr<observer>> m::observers;

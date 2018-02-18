@@ -35,13 +35,12 @@
 
 #ifndef NADA_C_PT_VIS_CHK_H
 #define NADA_C_PT_VIS_CHK_H
-#include "../../at/at.h"
 #include "../visitor.h"
 #include "parser.tab.hh"
 
 class chk : public visitor {
 public:
-  chk(std::shared_ptr<ast> t);
+  chk();
   virtual ~chk();
 
   void descend();
@@ -130,10 +129,7 @@ public:
   virtual void v(unary_operator *a);
 
 private:
-  void fiddle();
-
   std::string indent;
-  std::shared_ptr<ast> t;
 
 protected:
   // A flag set by the debugger, to improve debuggablity

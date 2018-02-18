@@ -33,17 +33,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "pt.h"
+#include "v/observer.h"
 
-    void m::accept(visitor *a) { a->v(this); };
-    void m::caccept(visitor *a) {
-	a->descend();
-	
-	for (auto i : c)
-	    i->accept(a);
+void m::accept(visitor *a) { a->v(this); };
+void m::caccept(visitor *a) {
+  a->descend();
 
-	a->ascend();
-	}
-    
+  for (auto i : c)
+    i->accept(a);
+
+  a->ascend();
+}
+
 void n::accept(visitor *a) { a->v(this); };
-
-
+void n::notify() {
+  for (auto i : observers)
+    i->update(this);
+}

@@ -46,6 +46,7 @@ public:
   n(lex_token a);
   virtual ~n(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
   /* add to children, back */
   class n &operator+=(const std::shared_ptr<n> &rhs);

@@ -45,4 +45,3 @@ scope::scope(std::string a, std::shared_ptr<n> b, std::shared_ptr<n> c) {
 
 std::string scope::classname() { return "scope"; }
 
-

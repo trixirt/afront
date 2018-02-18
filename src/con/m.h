@@ -39,32 +39,60 @@
 #include <string>
 
 class visitor;
+class observer;
+class m;
 
 class m {
 public:
   m();
   virtual ~m(){};
-  virtual void accept(visitor *a);
-  void caccept(visitor *a);
   virtual std::string classname();
+
+  //
+  // Node manipulation
+  //
+  // return a list of children
   std::deque<std::shared_ptr<m>> &children();
+  // return a list of siblings
   std::deque<std::shared_ptr<m>> &siblings();
+  // set the parent
   void parent(class m *a);
+  // return the parent
   class m *parent();
-  /* add to children, back */
+  // add to children, back 
   class m &operator+=(std::shared_ptr<m> &rhs);
-  /* add to children, front */
+  // add to children, front
   class m &operator*=(std::shared_ptr<m> &rhs);
-  /* remove child */
+  // remove child
   class m &operator-=(class m *rhs);
-  /* remove sibling */
+  // remove sibling */
   class m &operator/=(class m *rhs);
 
+  //
+  // Visitor pattern
+  //
+  // accept visitor on this node
+  virtual void accept(visitor *a);
+  // accept visitor on the children
+  void caccept(visitor *a);
+
+  //
+  // Observer pattern
+  //
+  // Add an observer
+  static bool attach(std::shared_ptr<observer> a);
+  // detach all observers
+  static void clear();
+  // notifiy the observer
+  virtual void notify() = 0;
+  
 protected:
   // The children of this node
   std::deque<std::shared_ptr<m>> c;
   // The parent
   class m *p;
+  // The list of observers
+  static std::deque<std::shared_ptr<observer>> observers;
 };
 
 #endif

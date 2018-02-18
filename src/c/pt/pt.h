@@ -35,89 +35,9 @@
 #ifndef AFRONT_C_PT_PT_H
 #define AFRONT_C_PT_PT_H
 
+#include "./pt_classes.h"
 #include "n.h"
 #include <vector>
-
-class abstract_array_declarator;
-class abstract_declarator;
-class abstract_function_declarator;
-class additive_expr;
-class alignment_specifier;
-class and_expr;
-class argument_expr_list;
-class array_declarator;
-class assignment_expr;
-class assignment_operator;
-class atomic_type_specifier;
-class block_item;
-class block_item_list;
-class cast_expr;
-class compound_statement;
-class conditional_expr;
-class constant_expr;
-class declaration;
-class declaration_list;
-class declaration_specifiers;
-class declarator;
-class direct_abstract_declarator;
-class direct_declarator;
-class enum_specifier;
-class enumerator;
-class enumerator_list;
-class equality_expr;
-class exclusive_or_expr;
-class expr;
-class expression_statement;
-class external_definition;
-class function_body;
-class function_declarator;
-class function_definition;
-class function_specifier;
-class generic_association;
-class generic_assoc_list;
-class generic_selection;
-class identifier;
-class identifier_list;
-class inclusive_or_expr;
-class init_declaration;
-class init_declarator;
-class init_declarator_list;
-class initializer;
-class initializer_list;
-class iteration_statement;
-class jump_statement;
-class labeled_statement;
-class logical_and_expr;
-class logical_or_expr;
-class multiplicative_expr;
-class parameter_declaration;
-class parameter_list;
-class parameter_type_list;
-class pointer;
-class postfix_expr;
-class primary_expr;
-class relation_expr;
-class selection_statement;
-class shift_expr;
-class specifier_qualifier_list;
-class statement;
-class statement_list;
-class static_assert_declaration;
-class storage_class_specifier;
-class struct_declaration;
-class struct_declaration_list;
-class struct_declarator;
-class struct_declarator_list;
-class struct_or_union;
-class struct_or_union_specifier;
-class translation_unit;
-class type_name;
-class type_qualifier;
-class type_qualifier_list;
-class typedef_name;
-class type_specifier;
-class unary_expr;
-class unary_operator;
 
 class abstract_array_declarator : public n {
 public:
@@ -151,11 +71,36 @@ public:
 
   virtual ~abstract_array_declarator(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "abstract_declarator.h"
-#include "abstract_function_declarator.h"
+class abstract_declarator : public n {
+public:
+  abstract_declarator(std::shared_ptr<pointer> a);
+  abstract_declarator(std::shared_ptr<direct_abstract_declarator> a);
+  abstract_declarator(std::shared_ptr<pointer> a,
+                      std::shared_ptr<direct_abstract_declarator> b);
+
+  virtual ~abstract_declarator(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class abstract_function_declarator : public n {
+public:
+  abstract_function_declarator();
+  abstract_function_declarator(std::shared_ptr<parameter_type_list> a);
+  abstract_function_declarator(std::shared_ptr<direct_abstract_declarator> a);
+  abstract_function_declarator(std::shared_ptr<direct_abstract_declarator> a,
+                               std::shared_ptr<parameter_type_list> b);
+
+  virtual ~abstract_function_declarator(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class additive_expr : public n {
 public:
@@ -165,6 +110,7 @@ public:
 
   virtual ~additive_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -174,6 +120,7 @@ public:
   alignment_specifier(std::shared_ptr<constant_expr> a);
   virtual ~alignment_specifier(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -185,10 +132,18 @@ public:
 
   virtual ~and_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "argument_expr_list.h"
+class argument_expr_list : public n {
+public:
+  argument_expr_list(std::shared_ptr<assignment_expr> a);
+  virtual ~argument_expr_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class array_declarator : public n {
 public:
@@ -213,16 +168,29 @@ public:
 
   virtual ~array_declarator(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "assignment_expr.h"
+class assignment_expr : public n {
+public:
+  assignment_expr(std::shared_ptr<conditional_expr> a);
+  assignment_expr(std::shared_ptr<unary_expr> a,
+                  std::shared_ptr<assignment_operator> b,
+                  std::shared_ptr<assignment_expr> c);
+
+  virtual ~assignment_expr(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class assignment_operator : public n {
 public:
   assignment_operator(lex_token a);
   virtual ~assignment_operator(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -231,6 +199,7 @@ public:
   atomic_type_specifier(std::shared_ptr<type_name> a);
   virtual ~atomic_type_specifier(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -240,6 +209,7 @@ public:
   block_item(std::shared_ptr<statement> a);
   virtual ~block_item(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -248,10 +218,20 @@ public:
   block_item_list(std::shared_ptr<block_item> a);
   virtual ~block_item_list(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "cast_expr.h"
+class cast_expr : public n {
+public:
+  cast_expr(std::shared_ptr<unary_expr> a);
+  cast_expr(std::shared_ptr<type_name> a, std::shared_ptr<cast_expr> b);
+
+  virtual ~cast_expr(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class compound_statement : public n {
 public:
@@ -263,11 +243,32 @@ public:
   compound_statement(std::shared_ptr<block_item_list> a);
   virtual ~compound_statement(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "conditional_expr.h"
-#include "constant_expr.h"
+class conditional_expr : public n {
+public:
+  conditional_expr(std::shared_ptr<logical_or_expr> a);
+  conditional_expr(std::shared_ptr<logical_or_expr> a,
+                   std::shared_ptr<logical_or_expr> c,
+                   std::shared_ptr<conditional_expr> e);
+
+  virtual ~conditional_expr(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class constant_expr : public n {
+public:
+  constant_expr(std::shared_ptr<conditional_expr> a);
+
+  virtual ~constant_expr(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class declaration : public n {
 public:
@@ -277,6 +278,7 @@ public:
   declaration(std::shared_ptr<static_assert_declaration> a);
   virtual ~declaration(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
   bool find_typedefs(std::vector<identifier *> &a);
 };
@@ -286,6 +288,7 @@ public:
   declaration_list(std::shared_ptr<declaration> a);
   virtual ~declaration_list(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -300,15 +303,78 @@ public:
   declaration_specifiers(std::shared_ptr<alignment_specifier> a);
   virtual ~declaration_specifiers(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "declarator.h"
-#include "direct_abstract_declarator.h"
-#include "direct_declarator.h"
-#include "enum_specifier.h"
-#include "enumerator.h"
-#include "enumerator_list.h"
+class declarator : public n {
+public:
+  declarator(std::shared_ptr<direct_declarator> a);
+  declarator(std::shared_ptr<pointer> a, std::shared_ptr<direct_declarator> b);
+
+  virtual ~declarator(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class direct_abstract_declarator : public n {
+public:
+  direct_abstract_declarator(std::shared_ptr<abstract_declarator> a);
+  direct_abstract_declarator(std::shared_ptr<abstract_array_declarator> a);
+  direct_abstract_declarator(std::shared_ptr<abstract_function_declarator> a);
+
+  virtual ~direct_abstract_declarator(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class direct_declarator : public n {
+public:
+  direct_declarator(std::shared_ptr<identifier> a);
+  direct_declarator(std::shared_ptr<declarator> a);
+  direct_declarator(std::shared_ptr<array_declarator> a);
+  direct_declarator(std::shared_ptr<function_declarator> a);
+
+  virtual ~direct_declarator(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class enum_specifier : public n {
+public:
+  enum_specifier(std::shared_ptr<enumerator_list> a);
+  enum_specifier(std::shared_ptr<identifier> a,
+                 std::shared_ptr<enumerator_list> b);
+  enum_specifier(std::shared_ptr<identifier> a);
+
+  virtual ~enum_specifier(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class enumerator : public n {
+public:
+  enumerator(std::shared_ptr<identifier> a);
+  enumerator(std::shared_ptr<identifier> a, std::shared_ptr<constant_expr> b);
+
+  virtual ~enumerator(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class enumerator_list : public n {
+public:
+  enumerator_list(std::shared_ptr<enumerator> a);
+  virtual ~enumerator_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class equality_expr : public n {
 public:
@@ -318,6 +384,7 @@ public:
 
   virtual ~equality_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -329,15 +396,78 @@ public:
 
   virtual ~exclusive_or_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "expr.h"
-#include "expression_statement.h"
-#include "external_definition.h"
-#include "function_body.h"
-#include "function_declarator.h"
-#include "function_definition.h"
+class expr : public n {
+public:
+  expr(std::shared_ptr<assignment_expr> a);
+  expr(std::shared_ptr<expr> a, std::shared_ptr<assignment_expr> b);
+
+  virtual ~expr(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class expression_statement : public n {
+public:
+  expression_statement();
+  expression_statement(std::shared_ptr<expr> a);
+  virtual ~expression_statement(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class external_definition : public n {
+public:
+  external_definition(std::shared_ptr<function_definition> a);
+  external_definition(std::shared_ptr<declaration> a);
+  virtual ~external_definition(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class function_body : public n {
+public:
+  function_body(std::shared_ptr<compound_statement> a);
+  function_body(std::shared_ptr<declaration_list> a,
+                std::shared_ptr<compound_statement> b);
+  virtual ~function_body(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class function_declarator : public n {
+public:
+  function_declarator(std::shared_ptr<direct_declarator> a);
+  function_declarator(std::shared_ptr<direct_declarator> a,
+                      std::shared_ptr<parameter_type_list> b);
+  function_declarator(std::shared_ptr<direct_declarator> a,
+                      std::shared_ptr<identifier_list> b);
+
+  virtual ~function_declarator(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class function_definition : public n {
+public:
+  function_definition(std::shared_ptr<declarator> a,
+                      std::shared_ptr<function_body> b);
+  function_definition(std::shared_ptr<declaration_specifiers> a,
+                      std::shared_ptr<declarator> b,
+                      std::shared_ptr<function_body> c);
+  virtual ~function_definition(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class function_specifier : public n {
 public:
@@ -345,22 +475,60 @@ public:
 
   virtual ~function_specifier(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "generic_assoc_list.h"
-#include "generic_association.h"
-#include "generic_selection.h"
+class generic_assoc_list : public n {
+public:
+  generic_assoc_list(std::shared_ptr<generic_association> a);
+  virtual ~generic_assoc_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class generic_association : public n {
+public:
+  generic_association(std::shared_ptr<assignment_expr> a);
+  generic_association(std::shared_ptr<type_name> a,
+                      std::shared_ptr<assignment_expr> b);
+
+  virtual ~generic_association(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class generic_selection : public n {
+public:
+  generic_selection(std::shared_ptr<assignment_expr> a,
+                    std::shared_ptr<generic_assoc_list> b);
+
+  virtual ~generic_selection(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class identifier : public n {
 public:
   identifier(lex_token a);
   virtual ~identifier(){};
   virtual void accept(visitor *a);
+
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "identifier_list.h"
+class identifier_list : public n {
+public:
+  identifier_list(std::shared_ptr<identifier> a);
+  virtual ~identifier_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class inclusive_or_expr : public n {
 public:
@@ -370,13 +538,50 @@ public:
 
   virtual ~inclusive_or_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "init_declarator.h"
-#include "init_declarator_list.h"
-#include "initializer.h"
-#include "initializer_list.h"
+class init_declarator : public n {
+public:
+  init_declarator(std::shared_ptr<declarator> a);
+  init_declarator(std::shared_ptr<declarator> a,
+                  std::shared_ptr<initializer> b);
+
+  virtual ~init_declarator(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class init_declarator_list : public n {
+public:
+  init_declarator_list(std::shared_ptr<init_declarator> a);
+  virtual ~init_declarator_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class initializer : public n {
+public:
+  initializer(std::shared_ptr<assignment_expr> a);
+  initializer(std::shared_ptr<initializer_list> a);
+  virtual ~initializer(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class initializer_list : public n {
+public:
+  initializer_list(std::shared_ptr<initializer> a);
+  virtual ~initializer_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
 class iteration_statement : public n {
 public:
   iteration_statement(lex_token a, std::shared_ptr<expr> b,
@@ -392,6 +597,7 @@ public:
 
   virtual ~iteration_statement(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -402,6 +608,7 @@ public:
   jump_statement(lex_token a, std::shared_ptr<expr> b);
   virtual ~jump_statement(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -415,6 +622,7 @@ public:
 
   virtual ~labeled_statement(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -426,6 +634,7 @@ public:
 
   virtual ~logical_and_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -437,6 +646,7 @@ public:
 
   virtual ~logical_or_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -448,11 +658,32 @@ public:
 
   virtual ~multiplicative_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "parameter_declaration.h"
-#include "parameter_list.h"
+class parameter_declaration : public n {
+public:
+  parameter_declaration(std::shared_ptr<declaration_specifiers> a,
+                        std::shared_ptr<declarator> b);
+  parameter_declaration(std::shared_ptr<declaration_specifiers> a,
+                        std::shared_ptr<abstract_declarator> b);
+  parameter_declaration(std::shared_ptr<declaration_specifiers> a);
+
+  virtual ~parameter_declaration(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class parameter_list : public n {
+public:
+  parameter_list(std::shared_ptr<parameter_declaration> a);
+  virtual ~parameter_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class parameter_type_list : public n {
 public:
@@ -461,10 +692,22 @@ public:
 
   virtual ~parameter_type_list(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "pointer.h"
+class pointer : public n {
+public:
+  pointer();
+  pointer(std::shared_ptr<type_qualifier_list> a);
+  pointer(std::shared_ptr<pointer> a);
+  pointer(std::shared_ptr<type_qualifier_list> a, std::shared_ptr<pointer> b);
+
+  virtual ~pointer(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class postfix_expr : public n {
 public:
@@ -482,6 +725,7 @@ public:
 
   virtual ~postfix_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -493,6 +737,7 @@ public:
   primary_expr(std::shared_ptr<generic_selection> a);
   virtual ~primary_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -504,6 +749,7 @@ public:
 
   virtual ~relation_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -516,6 +762,7 @@ public:
                       std::shared_ptr<statement> e);
   virtual ~selection_statement(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 
 private:
@@ -530,18 +777,50 @@ public:
 
   virtual ~shift_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "specifier_qualifier_list.h"
-#include "statement.h"
-#include "statement_list.h"
+class specifier_qualifier_list : public n {
+public:
+  specifier_qualifier_list(std::shared_ptr<type_specifier> a);
+  specifier_qualifier_list(std::shared_ptr<type_qualifier> a);
+  virtual ~specifier_qualifier_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class statement : public n {
+public:
+  statement(std::shared_ptr<labeled_statement> a);
+  statement(std::shared_ptr<compound_statement> a);
+  statement(std::shared_ptr<expression_statement> a);
+  statement(std::shared_ptr<selection_statement> a);
+  statement(std::shared_ptr<iteration_statement> a);
+  statement(std::shared_ptr<jump_statement> a);
+
+  virtual ~statement(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class statement_list : public n {
+public:
+  statement_list(std::shared_ptr<statement> a);
+  virtual ~statement_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class static_assert_declaration : public n {
 public:
   static_assert_declaration(std::shared_ptr<constant_expr> a, lex_token b);
   virtual ~static_assert_declaration(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -550,6 +829,7 @@ public:
   storage_class_specifier(lex_token a);
   virtual ~storage_class_specifier(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -560,18 +840,47 @@ public:
   struct_declaration(std::shared_ptr<static_assert_declaration> a);
   virtual ~struct_declaration(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "struct_declaration_list.h"
-#include "struct_declarator.h"
-#include "struct_declarator_list.h"
+class struct_declaration_list : public n {
+public:
+  struct_declaration_list(std::shared_ptr<struct_declaration> a);
+  virtual ~struct_declaration_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class struct_declarator : public n {
+public:
+  struct_declarator(std::shared_ptr<declarator> a);
+  struct_declarator(std::shared_ptr<constant_expr> a);
+  struct_declarator(std::shared_ptr<declarator> a,
+                    std::shared_ptr<constant_expr> b);
+
+  virtual ~struct_declarator(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class struct_declarator_list : public n {
+public:
+  struct_declarator_list(std::shared_ptr<struct_declarator> a);
+  virtual ~struct_declarator_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class struct_or_union : public n {
 public:
   struct_or_union(lex_token a);
   virtual ~struct_or_union(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -589,11 +898,30 @@ public:
 
   virtual ~struct_or_union_specifier(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "translation_unit.h"
-#include "type_name.h"
+class translation_unit : public n {
+public:
+  translation_unit(std::shared_ptr<external_definition> a);
+  virtual ~translation_unit(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class type_name : public n {
+public:
+  type_name(std::shared_ptr<specifier_qualifier_list> a);
+  type_name(std::shared_ptr<specifier_qualifier_list> a,
+            std::shared_ptr<abstract_declarator> b);
+
+  virtual ~type_name(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class type_qualifier : public n {
 public:
@@ -601,6 +929,7 @@ public:
 
   virtual ~type_qualifier(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -609,10 +938,19 @@ public:
   type_qualifier_list(std::shared_ptr<type_qualifier> a);
   virtual ~type_qualifier_list(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
-#include "typedef_name.h"
+class typedef_name : public n {
+public:
+  typedef_name(std::shared_ptr<identifier> a);
+
+  virtual ~typedef_name(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
 
 class type_specifier : public n {
 public:
@@ -624,6 +962,7 @@ public:
 
   virtual ~type_specifier(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -637,6 +976,7 @@ public:
 
   virtual ~unary_expr(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
@@ -645,8 +985,10 @@ public:
   unary_operator(lex_token a);
   virtual ~unary_operator(){};
   virtual void accept(visitor *a);
+  virtual void notify();
   virtual std::string classname();
 };
 
 #include "v/visitor.h"
+
 #endif
