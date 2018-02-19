@@ -91,7 +91,7 @@ shift_expr
 specifier_qualifier_list
 statement
 statement_list
-static_assert_declartation
+static_assert_declaration
 storage_class_specifier
 struct_declaration
 struct_declaration_list
@@ -148,6 +148,7 @@ for c in $C; do
 		is_term=1
 	    fi
 	done
+
 	if [ x$is_term = x0 ]; then
 	    echo "a->caccept(this);"                            >> $V
 	fi

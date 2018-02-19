@@ -42,6 +42,7 @@ mkdir -p ${OBJ}/ada
 mkdir -p ${OBJ}/c/pt/v/pa
 mkdir -p ${OBJ}/c/pt/v/cg
 mkdir -p ${OBJ}/c/pt/v/chk
+mkdir -p ${OBJ}/c/pt/v/ping
 mkdir -p ${OBJ}/c/pt/v/scope
 mkdir -p ${OBJ}/c/pt/v/typedefs
 mkdir -p ${OBJ}/con
@@ -293,10 +294,10 @@ fi
 CLIBS="-L${OBJ}/c -lcpt $CLIBS"
 
 #V="chk scope"
-V="cg chk typedefs"
+V_OBJS=
+V="cg chk typedefs ping"
 for v in $V; do
     VS="$v"
-    V_OBJS=
     for vs in $VS; do
 	f=pt/v/${v}/${vs}.o
 	if [ -f $f ]; then
@@ -310,16 +311,16 @@ for v in $V; do
 	V_OBJS="$f $V_OBJS"
     done 
     
-    if [ -f libcv${v}.a ]; then
-	rm libcv${v}.a
-    fi
-    $AR cr libcv${v}.a $V_OBJS
-    if [ ! -f libcv${v}.a ]; then
-	echo "Failed to build libcv${v}.a"
-	exit 1
-    fi
-    CLIBS="$CLIBS -lcv${v}"
 done
+if [ -f libcv.a ]; then
+    rm libcv.a
+fi
+$AR cr libcv.a $V_OBJS
+if [ ! -f libcv.a ]; then
+    echo "Failed to build libcv${v}.a"
+    exit 1
+fi
+CLIBS="$CLIBS -lcv"
 CLIBS="$CLIBS -lcpt"
 
 cd ..
