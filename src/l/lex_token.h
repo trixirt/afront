@@ -39,11 +39,11 @@
 
 class lex_token {
 public:
-    lex_token() {
+  lex_token() {
     t = -1;
     l = std::shared_ptr<class location>(new location());
   }
-    lex_token(std::string a, location b, unsigned c) {
+  lex_token(std::string a, location b, unsigned c) {
     s = a;
     l = std::shared_ptr<class location>(new location(b));
     t = c;
@@ -55,8 +55,8 @@ public:
   signed what() { return t; }
 
   class lex_token &operator+=(const class lex_token &rhs) {
-      *l += rhs.here();
-      return *this;
+    *l += rhs.here();
+    return *this;
   }
 
 private:

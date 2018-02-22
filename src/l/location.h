@@ -39,7 +39,7 @@
 
 class pos {
 public:
-  pos() : line(1), column(1){};
+  pos() : filename(nullptr), line(1), column(1){};
   std::string *filename;
   unsigned int line;
   unsigned int column;
