@@ -44,4 +44,4 @@ type::type(std::string a, std::shared_ptr<n> b) {
 
 std::string type::classname() { return "type"; }
 
-
+void type::notify() { }

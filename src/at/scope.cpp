@@ -35,13 +35,16 @@
 #include "at.h"
 #include "pt.h"
 
-scope::scope() { }
-    
-scope::scope(std::string a, std::shared_ptr<n> b, std::shared_ptr<n> c) {
-    name = a;
-    start = b;
-    end = c;
+scope::scope() {}
+
+scope::scope(location &l, scope *p, std::string n) {
+  loc = l;
+  super = p;
+  name = n;
+  if (super != nullptr)
+    super->sub.push_back(this);
 }
 
 std::string scope::classname() { return "scope"; }
 
+void scope::notify() {}

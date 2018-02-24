@@ -36,18 +36,22 @@
 #define NADA_AT_SCOPE_H
 
 #include "ast.h"
-class n;
+#include "l/lex_token.h"
+#include <vector>
 
 class scope : public ast {
 public:
-    scope();
-    scope(std::string name, std::shared_ptr<n> start, std::shared_ptr<n> end);
-    virtual ~scope(){};
-    virtual void notify();
-    virtual std::string classname();
+  scope();
+  scope(location &loc, scope *parent = nullptr, std::string name = "");
+  virtual ~scope(){};
+  virtual void notify();
+  virtual std::string classname();
+
 private:
-  std::shared_ptr<n> start, end;
+  location loc;
   std::string name;
+  scope *super;
+  std::vector<scope *> sub;
 };
 
 #endif

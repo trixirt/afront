@@ -35,6 +35,8 @@
 #include "pt.h"
 #include "e.h"
 #include "v/observer.h"
+#include "v/observers.h"
+#include "v/ping/ping.h"
 #include "v/typedefs/typedefs.h"
 
 abstract_array_declarator::abstract_array_declarator() {}
@@ -454,6 +456,8 @@ void declaration_list::notify() {
 }
 std::string declaration_list::classname() { return "declaration_list"; };
 
+//
+// 6.7.6 Declarators
 declarator::declarator(std::shared_ptr<direct_declarator> a) { *this += a; }
 declarator::declarator(std::shared_ptr<pointer> a,
                        std::shared_ptr<direct_declarator> b) {
@@ -466,6 +470,22 @@ void declarator::notify() {
     i->update(this);
 }
 std::string declarator::classname() { return "declarator"; };
+identifier *declarator::identifier() {
+  class identifier *ret = nullptr;
+  std::shared_ptr<single_fetch_observer<class identifier>> o =
+      std::shared_ptr<single_fetch_observer<class identifier>>(
+          new single_fetch_observer<class identifier>());
+  m::attach(o);
+  class ping *v = new ping();
+  if (v) {
+    this->accept(v);
+    ret = o->get();
+    delete v;
+    v = nullptr;
+  }
+  m::clear();
+  return ret;
+};
 
 enumerator::enumerator(std::shared_ptr<identifier> a) { *this += a; }
 enumerator::enumerator(std::shared_ptr<identifier> a,
@@ -684,17 +704,19 @@ void function_declarator::notify() {
 }
 std::string function_declarator::classname() { return "function_declarator"; };
 
+//
+// 6.9.1 Function Definition
 function_definition::function_definition(std::shared_ptr<declarator> a,
                                          std::shared_ptr<function_body> b) {
   *this += a;
   *this += b;
 }
 function_definition::function_definition(
-    std::shared_ptr<declaration_specifiers> _a, std::shared_ptr<declarator> _b,
-    std::shared_ptr<function_body> _c) {
-  *this += _a;
-  *this += _b;
-  *this += _c;
+    std::shared_ptr<declaration_specifiers> a, std::shared_ptr<declarator> b,
+    std::shared_ptr<function_body> c) {
+  *this += a;
+  *this += b;
+  *this += c;
 }
 void function_definition::accept(visitor *a) { a->v(this); };
 void function_definition::notify() {
@@ -702,6 +724,20 @@ void function_definition::notify() {
     i->update(this);
 }
 std::string function_definition::classname() { return "function_definition"; };
+std::string function_definition::functionname() {
+  std::string ret = "";
+  for (auto c : children()) {
+    declarator *d = dynamic_cast<declarator *>(c.get());
+    if (d != nullptr) {
+      identifier *i = d->identifier();
+      if (i != nullptr) {
+        ret = i->id();
+      }
+      break;
+    }
+  }
+  return ret;
+}
 
 function_specifier::function_specifier(lex_token a) : n(a) {}
 void function_specifier::accept(visitor *a) { a->v(this); };
@@ -748,6 +784,8 @@ void generic_selection::notify() {
 }
 std::string generic_selection::classname() { return "generic_selection"; };
 
+//
+// 6.4.2 Identifiers
 identifier::identifier(lex_token a) : n(a){};
 void identifier::accept(visitor *a) { a->v(this); }
 void identifier::notify() {
@@ -755,6 +793,7 @@ void identifier::notify() {
     i->update(this);
 }
 std::string identifier::classname() { return "identifier"; };
+std::string identifier::id() { return who(); }
 
 identifier_list::identifier_list(std::shared_ptr<identifier> a) { *this += a; }
 void identifier_list::accept(visitor *a) { a->v(this); };
@@ -1287,7 +1326,9 @@ void struct_or_union_specifier::notify() {
 std::string struct_or_union_specifier::classname() {
   return "struct_or_union_specifier";
 };
-
+//
+// 6.9 translation-unit
+//
 translation_unit::translation_unit(std::shared_ptr<external_definition> a) {
   *this += a;
 }
@@ -1297,6 +1338,13 @@ void translation_unit::notify() {
     i->update(this);
 }
 std::string translation_unit::classname() { return "translation_unit"; };
+std::string translation_unit::filename() {
+  std::string ret = "";
+  class location l = here();
+  if (l.begin.filename != nullptr)
+    ret = *l.begin.filename;
+  return ret;
+}
 
 type_name::type_name(std::shared_ptr<specifier_qualifier_list> a) {
   *this += a;

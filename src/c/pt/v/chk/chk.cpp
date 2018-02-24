@@ -36,7 +36,11 @@
 #include "chk.h"
 #include "e.h"
 
-chk::chk() {
+chk::chk(std::shared_ptr<scope> a) {
+  //
+  // The compiler scope
+  scope_stack.push(a);
+
   // debug = true;
   debug = false;
 }
@@ -194,9 +198,18 @@ void chk::v(function_declarator *a) {
 }
 
 void chk::v(function_definition *a) {
+  //
+  // A function definition has function scope
+  std::string f = a->functionname();
+  std::shared_ptr<scope> s =
+      std::shared_ptr<scope>(new scope(a->here(), scope_stack.top().get(), f));
+  scope_stack.push(s);
+
   if (debug)
     std::cout << indent << a->classname() << std::endl;
   a->caccept(this);
+
+  scope_stack.pop();
 }
 
 void chk::v(function_specifier *a) { a->caccept(this); }
@@ -276,15 +289,25 @@ void chk::v(struct_declaration *a) { a->caccept(this); }
 void chk::v(struct_declaration_list *a) { a->caccept(this); }
 void chk::v(struct_declarator *a) { a->caccept(this); }
 void chk::v(struct_declarator_list *a) { a->caccept(this); }
-void chk::v(struct_or_union *a) { /* terminal */ }
+void chk::v(struct_or_union *a) { /* terminal */
+}
 void chk::v(struct_or_union_specifier *a) { a->caccept(this); }
 
 void chk::v(translation_unit *a) {
+  //
+  // A translation unit is file scope
+  std::string f = a->filename();
+  std::shared_ptr<scope> s =
+      std::shared_ptr<scope>(new scope(a->here(), scope_stack.top().get(), f));
+  scope_stack.push(s);
+
   if (debug) {
     std::cout << std::endl;
     std::cout << indent << a->classname() << std::endl;
   }
   a->caccept(this);
+
+  scope_stack.pop();
 }
 
 void chk::v(type_name *a) { a->caccept(this); }
@@ -609,4 +632,5 @@ void chk::v(typedef_name *a) {
 }
 
 void chk::v(unary_expr *a) { a->caccept(this); }
-void chk::v(unary_operator *a) { /* terminal */ }
+void chk::v(unary_operator *a) { /* terminal */
+}

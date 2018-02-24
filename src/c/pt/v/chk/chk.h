@@ -35,12 +35,16 @@
 
 #ifndef NADA_C_PT_VIS_CHK_H
 #define NADA_C_PT_VIS_CHK_H
+
+#include <stack>
+
 #include "../visitor.h"
+#include "at/at.h"
 #include "parser.tab.hh"
 
 class chk : public visitor {
 public:
-  chk();
+  chk(std::shared_ptr<scope> a);
   virtual ~chk();
 
   void descend();
@@ -130,6 +134,7 @@ public:
 
 private:
   std::string indent;
+  std::stack<std::shared_ptr<scope>> scope_stack;
 
 protected:
   // A flag set by the debugger, to improve debuggablity

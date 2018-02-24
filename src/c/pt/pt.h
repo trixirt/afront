@@ -316,6 +316,7 @@ public:
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
+  identifier *identifier();
 };
 
 class direct_abstract_declarator : public n {
@@ -467,6 +468,7 @@ public:
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
+  std::string functionname();
 };
 
 class function_specifier : public n {
@@ -519,6 +521,7 @@ public:
 
   virtual void notify();
   virtual std::string classname();
+  std::string id();
 };
 
 class identifier_list : public n {
@@ -909,6 +912,7 @@ public:
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
+  std::string filename();
 };
 
 class type_name : public n {

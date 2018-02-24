@@ -32,7 +32,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include <iostream>
 #include "at/at.h"
 #include "c/c_driver.h"
 #include "c/pt/v/cg/cg.h"
@@ -40,7 +39,7 @@
 #include "c/pt/v/scope/scope.h"
 #include "e.h"
 
-void init_types() {
+void init_types(std::shared_ptr<scope> a) {
   // 6.7.2 Type specifiers
   const char *ctypes[] = {
       "void",
@@ -77,12 +76,20 @@ void init_types() {
       // TBD long double _Complex
       "",
   };
+  for (const char **c = ctypes; **c != '\0'; c++) {
+    std::shared_ptr<type> t = std::shared_ptr<type>(new type(*c, nullptr));
+    (*a) += t;
+  }
   /* Additional builtin types */
   /* XXX this should be common */
   const char *builtin_types[] = {
       "__builtin_va_list",
       "",
   };
+  for (const char **c = builtin_types; **c != '\0'; c++) {
+    std::shared_ptr<type> t = std::shared_ptr<type>(new type(*c, nullptr));
+    (*a) += t;
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -97,39 +104,47 @@ int main(int argc, char *argv[]) {
     std::cout << drv.result() << std::endl;
     ret = 1;
   } else {
-      std::shared_ptr<n> root = drv.get_root();
-      init_types();
-      vchk = new chk();
+    location loc;
+    std::shared_ptr<n> root = drv.get_root();
+    std::shared_ptr<scope> a =
+        std::shared_ptr<scope>(new scope(loc, nullptr, "cc1"));
+    if (a == nullptr) {
+      fprintf(stderr, "Failed to allocate memory for AST");
+      ret = 1;
+    } else {
+      init_types(a);
+      vchk = new chk(a);
       try {
         root->accept(vchk);
-	vcg = new cg();
-	try {
-	    root->accept(vcg);
-	    
-	} catch (ice_exception &e) {
-	    drv.ice(e.file(), e.line(), e.what());
-	    ret = 2;
-	    goto end;
-	} catch (visitor_exception &e) {
-	    drv.error(e.who()->here(), e.what());
-	    ret = 1;
-	    goto end;
-	}
+        vcg = new cg();
+        try {
+          root->accept(vcg);
+
+        } catch (ice_exception &e) {
+          drv.ice(e.file(), e.line(), e.what());
+          ret = 2;
+          goto end;
+        } catch (visitor_exception &e) {
+          drv.error(e.who()->here(), e.what());
+          ret = 1;
+          goto end;
+        }
       } catch (ice_exception &e) {
         drv.ice(e.file(), e.line(), e.what());
         ret = 2;
-	goto end;
+        goto end;
       } catch (visitor_exception &e) {
         drv.error(e.who()->here(), e.what());
         ret = 1;
-	goto end;
+        goto end;
       }
+    }
   }
 end:
   if (vchk != nullptr)
-      delete vchk;
+    delete vchk;
   if (vcg != nullptr)
-      delete vcg;
-  
+    delete vcg;
+
   return ret;
 }

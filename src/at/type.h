@@ -44,6 +44,7 @@ public:
     type(std::string name, std::shared_ptr<n> def);
     virtual ~type(){};
     virtual std::string classname();
+    virtual void notify();
 protected:
     std::shared_ptr<n> def;
     std::string name;
