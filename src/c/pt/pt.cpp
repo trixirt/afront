@@ -34,10 +34,9 @@
  */
 #include "pt.h"
 #include "e.h"
-#include "v/observer.h"
 #include "v/observers.h"
-#include "v/ping/ping.h"
-#include "v/typedefs/typedefs.h"
+#include "v/ping.h"
+#include "v/typedefs.h"
 
 abstract_array_declarator::abstract_array_declarator() {}
 abstract_array_declarator::abstract_array_declarator(
@@ -734,6 +733,25 @@ std::string function_definition::functionname() {
         ret = i->id();
       }
       break;
+    }
+  }
+  return ret;
+}
+labeled_statement *function_definition::label(labeled_statement *a) {
+  labeled_statement *ret = nullptr;
+  auto c = a->children();
+  // expecting { identifier, statement }
+  if (c.size() == 2) {
+    identifier *i = dynamic_cast<identifier *>(c.front().get());
+    if (i != nullptr) {
+      std::string s = i->id();
+      auto itr = label_map.find(s);
+      if (itr == label_map.end()) {
+        label_map[s] = a;
+        ret = a;
+      } else {
+        ret = itr->second;
+      }
     }
   }
   return ret;

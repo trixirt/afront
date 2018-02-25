@@ -58,7 +58,7 @@ class m &m::operator+=(std::shared_ptr<m> &rhs) {
 }
 /* add to children, front */
 class m &m::operator*=(std::shared_ptr<m> &rhs) {
-  // add child to childrent
+  // add child to children
   c.push_front(rhs);
   // the child gets a parent
   rhs->parent(this);

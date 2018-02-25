@@ -41,6 +41,10 @@ chk::chk(std::shared_ptr<scope> a) {
   // The compiler scope
   scope_stack.push(a);
 
+  //
+  // Keep track of the current function
+  current_function = nullptr;
+
   // debug = true;
   debug = false;
 }
@@ -64,10 +68,22 @@ void chk::v(block_item_list *a) { a->caccept(this); }
 void chk::v(cast_expr *a) { a->caccept(this); }
 
 void chk::v(compound_statement *a) {
+  //
+  // compound statements can have declarations so
+  // they need their own scope.
+  std::string pn = scope_stack.top()->name();
+  size_t num = scope_stack.top()->subscopes();
+  std::string n = pn + "." + std::to_string(num);
+  std::shared_ptr<scope> s =
+      std::shared_ptr<scope>(new scope(a->here(), scope_stack.top().get(), n));
+  scope_stack.push(s);
+
   if (debug) {
     std::cout << indent << a->classname() << std::endl;
   }
   a->caccept(this);
+
+  scope_stack.pop();
 }
 
 void chk::v(conditional_expr *a) { a->caccept(this); }
@@ -198,6 +214,7 @@ void chk::v(function_declarator *a) {
 }
 
 void chk::v(function_definition *a) {
+  current_function = a;
   //
   // A function definition has function scope
   std::string f = a->functionname();
@@ -210,6 +227,7 @@ void chk::v(function_definition *a) {
   a->caccept(this);
 
   scope_stack.pop();
+  current_function = nullptr;
 }
 
 void chk::v(function_specifier *a) { a->caccept(this); }
@@ -240,7 +258,50 @@ void chk::v(initializer *a) { a->caccept(this); }
 void chk::v(initializer_list *a) { a->caccept(this); }
 void chk::v(iteration_statement *a) { a->caccept(this); }
 void chk::v(jump_statement *a) { a->caccept(this); }
-void chk::v(labeled_statement *a) { a->caccept(this); }
+void f() {}
+void chk::v(labeled_statement *a) {
+  // 6.8.1
+  // A case or default label shall appear only in a switch statement.
+  if (a->what() >= 0) {
+    bool in_switch = false;
+    if (a->parent() != nullptr) {
+      selection_statement *ss =
+          dynamic_cast<selection_statement *>(a->parent());
+      if (ss)
+        if (ss->what() == afront::parser::token::SWITCH)
+          in_switch = true;
+    } else {
+      throw(ice_exception(__FILE__, __LINE__, "no parent node"));
+    }
+    if (!in_switch) {
+      if (a->what() == afront::parser::token::CASE)
+        throw(visitor_exception("case not contained in a switch statement", a));
+      else if (a->what() == afront::parser::token::DEFAULT)
+        throw(visitor_exception("default not contained in a switch statement",
+                                a));
+      else
+        throw(ice_exception(__FILE__, __LINE__, "unhandled node type"));
+    }
+  } else {
+    f();
+    // syntax checker should handle label at the file level
+    if (current_function == nullptr) {
+      throw(ice_exception(__FILE__, __LINE__,
+                          "current function should not be null"));
+    } else {
+      labeled_statement *r = current_function->label(a);
+      if (r == nullptr) {
+        throw(ice_exception(__FILE__, __LINE__,
+                            "problem with adding label to current function"));
+      } else if (r != a) {
+        // 6.8.1
+        // Label names shall be unique within a function
+        throw(visitor_exception("label name is not unique to function", a));
+      }
+    }
+  }
+  a->caccept(this);
+}
 void chk::v(logical_and_expr *a) { a->caccept(this); }
 void chk::v(logical_or_expr *a) { a->caccept(this); }
 void chk::v(m *a) { a->caccept(this); }

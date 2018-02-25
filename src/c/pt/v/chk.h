@@ -38,9 +38,9 @@
 
 #include <stack>
 
-#include "../visitor.h"
 #include "at/at.h"
 #include "parser.tab.hh"
+#include "visitor.h"
 
 class chk : public visitor {
 public:
@@ -135,6 +135,7 @@ public:
 private:
   std::string indent;
   std::stack<std::shared_ptr<scope>> scope_stack;
+  function_definition *current_function;
 
 protected:
   // A flag set by the debugger, to improve debuggablity

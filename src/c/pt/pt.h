@@ -35,8 +35,9 @@
 #ifndef AFRONT_C_PT_PT_H
 #define AFRONT_C_PT_PT_H
 
-#include "./pt_classes.h"
 #include "n.h"
+#include "pt_classes.h"
+#include <map>
 #include <vector>
 
 class abstract_array_declarator : public n {
@@ -469,6 +470,10 @@ public:
   virtual void notify();
   virtual std::string classname();
   std::string functionname();
+  labeled_statement *label(labeled_statement *);
+
+private:
+  std::map<std::string, labeled_statement *> label_map;
 };
 
 class function_specifier : public n {
