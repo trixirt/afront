@@ -37,10 +37,10 @@
 
 scope::scope() {}
 
-scope::scope(location &l, scope *p, std::string n) {
+scope::scope(location &l, scope *p, std::string name) {
   loc = l;
   super = p;
-  name = n;
+  n = name;
   if (super != nullptr)
     super->sub.push_back(this);
 }
@@ -48,3 +48,6 @@ scope::scope(location &l, scope *p, std::string n) {
 std::string scope::classname() { return "scope"; }
 
 void scope::notify() {}
+
+std::string scope::name() { return n; }
+size_t scope::subscopes() { return sub.size(); }

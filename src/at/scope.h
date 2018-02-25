@@ -46,10 +46,12 @@ public:
   virtual ~scope(){};
   virtual void notify();
   virtual std::string classname();
+  std::string name();
+  size_t subscopes();
 
 private:
   location loc;
-  std::string name;
+  std::string n;
   scope *super;
   std::vector<scope *> sub;
 };
