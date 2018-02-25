@@ -40,11 +40,7 @@ CLIBS=
 mkdir -p ${OBJ}/at
 mkdir -p ${OBJ}/ada
 mkdir -p ${OBJ}/c/pt/v/pa
-mkdir -p ${OBJ}/c/pt/v/cg
-mkdir -p ${OBJ}/c/pt/v/chk
-mkdir -p ${OBJ}/c/pt/v/ping
 mkdir -p ${OBJ}/c/pt/v/scope
-mkdir -p ${OBJ}/c/pt/v/typedefs
 mkdir -p ${OBJ}/con
 mkdir -p ${OBJ}/fig/pt
 mkdir -p ${OBJ}/pt
@@ -299,11 +295,11 @@ V="cg chk typedefs ping"
 for v in $V; do
     VS="$v"
     for vs in $VS; do
-	f=pt/v/${v}/${vs}.o
+	f=pt/v/${vs}.o
 	if [ -f $f ]; then
 	    rm $f
 	fi
-	$CXX $CXXFLAGS $C_INCLUDES -I${SRC}/c/pt/v  -c ${SRC}/c/pt/v/${v}/${vs}.cpp -o ${f}
+	$CXX $CXXFLAGS $C_INCLUDES -I${SRC}/c/pt/v  -c ${SRC}/c/pt/v/${vs}.cpp -o ${f}
 	if [ ! -f $f ]; then
 	    echo "Failed to build $f"
 	    exit 1

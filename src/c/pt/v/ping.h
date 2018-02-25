@@ -35,7 +35,7 @@
 
 #ifndef NADA_C_PT_VIS_PING_H
 #define NADA_C_PT_VIS_PING_H
-#include "../visitor.h"
+#include "visitor.h"
 #include "parser.tab.hh"
 class ping : public visitor {
 public:

@@ -34,9 +34,8 @@
  */
 #include "at/at.h"
 #include "c/c_driver.h"
-#include "c/pt/v/cg/cg.h"
-#include "c/pt/v/chk/chk.h"
-#include "c/pt/v/scope/scope.h"
+#include "c/pt/v/cg.h"
+#include "c/pt/v/chk.h"
 #include "e.h"
 
 void init_types(std::shared_ptr<scope> a) {

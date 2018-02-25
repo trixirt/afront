@@ -35,7 +35,7 @@
 
 #ifndef NADA_C_PT_VIS_TYPEDEFS_H
 #define NADA_C_PT_VIS_TYPEDEFS_H
-#include "../visitor.h"
+#include "visitor.h"
 #include "parser.tab.hh"
 #include <vector>
 class typedefs : public visitor {
