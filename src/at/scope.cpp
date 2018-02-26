@@ -51,3 +51,23 @@ void scope::notify() {}
 
 std::string scope::name() { return n; }
 size_t scope::subscopes() { return sub.size(); }
+
+enum_specifier *scope::enum_tag(enum_specifier *a) {
+  enum_specifier *ret = nullptr;
+  auto c = a->children();
+  // expecting { identifier, enumerator_list }
+  if (c.size() == 2) {
+    identifier *i = dynamic_cast<identifier *>(c.front().get());
+    if (i != nullptr) {
+      std::string s = i->id();
+      auto itr = enum_tag_map.find(s);
+      if (itr == enum_tag_map.end()) {
+        enum_tag_map[s] = a;
+        ret = a;
+      } else {
+        ret = itr->second;
+      }
+    }
+  }
+  return ret;
+}

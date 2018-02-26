@@ -470,7 +470,7 @@ public:
   virtual void notify();
   virtual std::string classname();
   std::string functionname();
-  labeled_statement *label(labeled_statement *);
+  labeled_statement *label(labeled_statement *a);
 
 private:
   std::map<std::string, labeled_statement *> label_map;

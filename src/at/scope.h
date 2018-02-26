@@ -32,12 +32,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_AT_SCOPE_H
-#define NADA_AT_SCOPE_H
+#ifndef AFRONT_AT_SCOPE_H
+#define AFRONT_AT_SCOPE_H
 
 #include "ast.h"
 #include "l/lex_token.h"
+#include <map>
 #include <vector>
+
+class enum_specifier;
 
 class scope : public ast {
 public:
@@ -48,12 +51,14 @@ public:
   virtual std::string classname();
   std::string name();
   size_t subscopes();
+  enum_specifier *enum_tag(enum_specifier *a);
 
 private:
   location loc;
   std::string n;
   scope *super;
   std::vector<scope *> sub;
+  std::map<std::string, enum_specifier *> enum_tag_map;
 };
 
 #endif

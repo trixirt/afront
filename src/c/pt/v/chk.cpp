@@ -192,7 +192,22 @@ void chk::v(direct_declarator *a) {
 
 void chk::v(enumerator *a) { a->caccept(this); }
 void chk::v(enumerator_list *a) { a->caccept(this); }
-void chk::v(enum_specifier *a) { a->caccept(this); }
+void chk::v(enum_specifier *a) {
+  // check that tag is unique to namespace
+  auto c = a->children();
+  if (c.size() == 2) {
+    // expecting { identifier, enumeration_list }
+    scope *s = scope_stack.top().get();
+    enum_specifier *r = s->enum_tag(a);
+    if (r == nullptr) {
+      throw(ice_exception(__FILE__, __LINE__,
+                          "problem with adding enum tag to scope"));
+    } else if (r != a) {
+      throw(visitor_exception("enum tag not unique to scope", a));
+    }
+  }
+  a->caccept(this);
+}
 void chk::v(equality_expr *a) { a->caccept(this); }
 void chk::v(exclusive_or_expr *a) { a->caccept(this); }
 void chk::v(expr *a) { a->caccept(this); }
@@ -258,7 +273,6 @@ void chk::v(initializer *a) { a->caccept(this); }
 void chk::v(initializer_list *a) { a->caccept(this); }
 void chk::v(iteration_statement *a) { a->caccept(this); }
 void chk::v(jump_statement *a) { a->caccept(this); }
-void f() {}
 void chk::v(labeled_statement *a) {
   // 6.8.1
   // A case or default label shall appear only in a switch statement.
@@ -283,7 +297,6 @@ void chk::v(labeled_statement *a) {
         throw(ice_exception(__FILE__, __LINE__, "unhandled node type"));
     }
   } else {
-    f();
     // syntax checker should handle label at the file level
     if (current_function == nullptr) {
       throw(ice_exception(__FILE__, __LINE__,
