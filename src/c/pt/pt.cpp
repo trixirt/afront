@@ -1318,6 +1318,9 @@ void struct_or_union::notify() {
 }
 std::string struct_or_union::classname() { return "struct_or_union"; };
 
+//
+// 6.7.2.1 Structure or Union Specifier
+//
 struct_or_union_specifier::struct_or_union_specifier(
     std::shared_ptr<struct_or_union> a, std::shared_ptr<identifier> b,
     std::shared_ptr<struct_declaration_list> c) {
@@ -1344,6 +1347,29 @@ void struct_or_union_specifier::notify() {
 std::string struct_or_union_specifier::classname() {
   return "struct_or_union_specifier";
 };
+bool struct_or_union_specifier::is_union() {
+  bool ret = false;
+  auto c = children();
+  // expecting { struct_or_union, identifier, struct_declaration_list }
+  // expecting { struct_or_union, struct_declaration_list }
+  // expecting { struct_or_union, identifier }
+  struct_or_union *sou = dynamic_cast<struct_or_union *>(c[0].get());
+  if (sou && sou->what() == afront::parser::token::UNION)
+    ret = true;
+  return ret;
+}
+bool struct_or_union_specifier::is_struct() {
+  bool ret = false;
+  auto c = children();
+  // expecting { struct_or_union, identifier, struct_declaration_list }
+  // expecting { struct_or_union, struct_declaration_list }
+  // expecting { struct_or_union, identifier }
+  struct_or_union *sou = dynamic_cast<struct_or_union *>(c[0].get());
+  if (sou && sou->what() == afront::parser::token::STRUCT)
+    ret = true;
+  return ret;
+}
+
 //
 // 6.9 translation-unit
 //

@@ -908,6 +908,8 @@ public:
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
+  bool is_union();
+  bool is_struct();
 };
 
 class translation_unit : public n {

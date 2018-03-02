@@ -41,6 +41,7 @@
 #include <vector>
 
 class enum_specifier;
+class struct_or_union_specifier;
 
 class scope : public ast {
 public:
@@ -52,6 +53,8 @@ public:
   std::string name();
   size_t subscopes();
   enum_specifier *enum_tag(enum_specifier *a);
+  struct_or_union_specifier *struct_or_union_tag(struct_or_union_specifier *a);
+  bool has_tag(std::string a);
 
 private:
   location loc;
@@ -59,6 +62,7 @@ private:
   scope *super;
   std::vector<scope *> sub;
   std::map<std::string, enum_specifier *> enum_tag_map;
+  std::map<std::string, struct_or_union_specifier *> struct_or_union_tag_map;
 };
 
 #endif

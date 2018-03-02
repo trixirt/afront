@@ -60,14 +60,38 @@ enum_specifier *scope::enum_tag(enum_specifier *a) {
     identifier *i = dynamic_cast<identifier *>(c.front().get());
     if (i != nullptr) {
       std::string s = i->id();
-      auto itr = enum_tag_map.find(s);
-      if (itr == enum_tag_map.end()) {
+      if (!has_tag(s)) {
         enum_tag_map[s] = a;
         ret = a;
-      } else {
-        ret = itr->second;
       }
     }
   }
+  return ret;
+}
+
+struct_or_union_specifier *
+scope::struct_or_union_tag(struct_or_union_specifier *a) {
+  struct_or_union_specifier *ret = nullptr;
+  auto c = a->children();
+  // expecting { struct_or_union, identifier, struct_declaration_list }
+  if (c.size() == 3) {
+    identifier *i = dynamic_cast<identifier *>(c[1].get());
+    if (i != nullptr) {
+      std::string s = i->id();
+      if (!has_tag(s)) {
+        struct_or_union_tag_map[s] = a;
+        ret = a;
+      }
+    }
+  }
+  return ret;
+}
+
+bool scope::has_tag(std::string a) {
+  bool ret = false;
+  if (enum_tag_map.find(a) != enum_tag_map.end())
+    ret = true;
+  else if (struct_or_union_tag_map.find(a) != struct_or_union_tag_map.end())
+    ret = true;
   return ret;
 }

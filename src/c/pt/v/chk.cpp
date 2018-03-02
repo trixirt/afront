@@ -193,16 +193,15 @@ void chk::v(direct_declarator *a) {
 void chk::v(enumerator *a) { a->caccept(this); }
 void chk::v(enumerator_list *a) { a->caccept(this); }
 void chk::v(enum_specifier *a) {
-  // check that tag is unique to namespace
+  // 6.7.2.3 Tags
+  // Where two declarations that use the same tag declare the same type,
+  // they shall both use the same choice of struct, union, or enum.
   auto c = a->children();
   if (c.size() == 2) {
     // expecting { identifier, enumeration_list }
     scope *s = scope_stack.top().get();
     enum_specifier *r = s->enum_tag(a);
-    if (r == nullptr) {
-      throw(ice_exception(__FILE__, __LINE__,
-                          "problem with adding enum tag to scope"));
-    } else if (r != a) {
+    if (r != a) {
       throw(visitor_exception("enum tag not unique to scope", a));
     }
   }
@@ -365,7 +364,29 @@ void chk::v(struct_declarator *a) { a->caccept(this); }
 void chk::v(struct_declarator_list *a) { a->caccept(this); }
 void chk::v(struct_or_union *a) { /* terminal */
 }
-void chk::v(struct_or_union_specifier *a) { a->caccept(this); }
+void chk::v(struct_or_union_specifier *a) {
+  // 6.7.2.3 Tags
+  // Where two declarations that use the same tag declare the same type,
+  // they shall both use the same choice of struct, union, or enum.
+  auto c = a->children();
+  if (c.size() == 3) {
+    // expecting { struct_or_union, identifier, struct_declaration_list }
+    scope *s = scope_stack.top().get();
+    struct_or_union_specifier *r = s->struct_or_union_tag(a);
+    if (r != a) {
+      if (a->is_struct()) {
+        throw(visitor_exception("struct tag not unique to scope", a));
+      } else if (a->is_union()) {
+        throw(visitor_exception("union tag not unique to scope", a));
+      } else {
+        // confused
+        throw(ice_exception(__FILE__, __LINE__,
+                            "misconfigured struct_or_union_specifier"));
+      }
+    }
+  }
+  a->caccept(this);
+}
 
 void chk::v(translation_unit *a) {
   //
