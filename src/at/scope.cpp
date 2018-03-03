@@ -69,18 +69,49 @@ enum_specifier *scope::enum_tag(enum_specifier *a) {
   return ret;
 }
 
+//
+// Add a struct/union tag to map
+//
+// Returns nullptr on failure, that tag is already defined
+// Returns the contents of the map for the input on success
 struct_or_union_specifier *
 scope::struct_or_union_tag(struct_or_union_specifier *a) {
   struct_or_union_specifier *ret = nullptr;
   auto c = a->children();
   // expecting { struct_or_union, identifier, struct_declaration_list }
-  if (c.size() == 3) {
-    identifier *i = dynamic_cast<identifier *>(c[1].get());
-    if (i != nullptr) {
-      std::string s = i->id();
-      if (!has_tag(s)) {
+  // expecting { struct_or_union, struct_declaration_list }
+  // expecting { struct_or_union, identifier }
+  identifier *i = dynamic_cast<identifier *>(c[1].get());
+  if (i != nullptr) {
+    std::string s = i->id();
+    // not already an enum
+    if (enum_tag_map.find(s) == enum_tag_map.end()) {
+      auto sou = struct_or_union_tag_map.find(s);
+      if (sou == struct_or_union_tag_map.end()) {
+        // easy, first time..
         struct_or_union_tag_map[s] = a;
         ret = a;
+      } else {
+        // previous
+        if ((a->is_struct() == sou->second->is_struct()) ||
+            (a->is_union() == sou->second->is_union())) {
+          // make sure struct/union matches
+          if (a->children().size() == 2) {
+            // redundant incomplete
+            // do not save
+            // return current contents
+            ret = sou->second;
+          } else {
+            // 'a' size == 3
+            if (sou->second->children().size() == 2) {
+              // replace existing incomplete with complete
+              struct_or_union_tag_map[s] = a;
+              ret = a;
+            } else {
+              // both existing and input have struct_declaration_list
+            }
+          }
+        }
       }
     }
   }

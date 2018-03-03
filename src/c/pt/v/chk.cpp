@@ -369,11 +369,16 @@ void chk::v(struct_or_union_specifier *a) {
   // Where two declarations that use the same tag declare the same type,
   // they shall both use the same choice of struct, union, or enum.
   auto c = a->children();
-  if (c.size() == 3) {
-    // expecting { struct_or_union, identifier, struct_declaration_list }
+  // expecting { struct_or_union, identifier, struct_declaration_list }
+  // expecting { struct_or_union, struct_declaration_list }
+  // expecting { struct_or_union, identifier }
+  //
+  // the tag is the identifier
+  class identifier *i = dynamic_cast<identifier *>(c[1].get());
+  if (i != nullptr) {
     scope *s = scope_stack.top().get();
     struct_or_union_specifier *r = s->struct_or_union_tag(a);
-    if (r != a) {
+    if (r == nullptr) {
       if (a->is_struct()) {
         throw(visitor_exception("struct tag not unique to scope", a));
       } else if (a->is_union()) {
