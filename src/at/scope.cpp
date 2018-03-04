@@ -52,17 +52,45 @@ void scope::notify() {}
 std::string scope::name() { return n; }
 size_t scope::subscopes() { return sub.size(); }
 
+//
+// Add an enum tag to map
+//
+// Returns nullptr on failure, that tag is already defined
+// Returns the contents of the map for the input on success
 enum_specifier *scope::enum_tag(enum_specifier *a) {
   enum_specifier *ret = nullptr;
   auto c = a->children();
-  // expecting { identifier, enumerator_list }
-  if (c.size() == 2) {
-    identifier *i = dynamic_cast<identifier *>(c.front().get());
-    if (i != nullptr) {
-      std::string s = i->id();
-      if (!has_tag(s)) {
+  // expecting { identifier, enumeration_list }
+  // expecting { identifier }
+  identifier *i = dynamic_cast<identifier *>(c[0].get());
+  if (i != nullptr) {
+    std::string s = i->id();
+    // not already a struct/union
+    if (struct_or_union_tag_map.find(s) == struct_or_union_tag_map.end()) {
+      auto e = enum_tag_map.find(s);
+      if (e == enum_tag_map.end()) {
+        // easy, first time
         enum_tag_map[s] = a;
         ret = a;
+      } else {
+        if (a->children().size() == 1) {
+          // redundant incomplete enum
+          // do not save
+          // return current contents
+          ret = e->second;
+        } else {
+          // an enum definition
+          if (e->second->children().size() == 1) {
+            // replace existing incomplete with complete
+            enum_tag_map[s] = a;
+            ret = a;
+          } else {
+            // both existing and input have an enumeration_list
+            // let redef check catch this
+            // return current;
+            ret = e->second;
+          }
+        }
       }
     }
   }
@@ -109,6 +137,9 @@ scope::struct_or_union_tag(struct_or_union_specifier *a) {
               ret = a;
             } else {
               // both existing and input have struct_declaration_list
+              // let type redef checker catch this
+              // return current
+              ret = sou->second;
             }
           }
         }
@@ -118,11 +149,16 @@ scope::struct_or_union_tag(struct_or_union_specifier *a) {
   return ret;
 }
 
-bool scope::has_tag(std::string a) {
-  bool ret = false;
-  if (enum_tag_map.find(a) != enum_tag_map.end())
-    ret = true;
-  else if (struct_or_union_tag_map.find(a) != struct_or_union_tag_map.end())
-    ret = true;
+//
+// Add a user type to map
+//
+// Returns nullptr on failure, that type is already defined
+// Returns input on success
+class n *scope::user_type(std::string a, class n *b) {
+  class n *ret = nullptr;
+  if (user_type_map.find(a) == user_type_map.end()) {
+    user_type_map[a] = b;
+    ret = b;
+  }
   return ret;
 }

@@ -41,6 +41,7 @@
 #include <vector>
 
 class enum_specifier;
+class n;
 class struct_or_union_specifier;
 
 class scope : public ast {
@@ -53,8 +54,9 @@ public:
   std::string name();
   size_t subscopes();
   enum_specifier *enum_tag(enum_specifier *a);
-  struct_or_union_specifier *struct_or_union_tag(struct_or_union_specifier *a);
   bool has_tag(std::string a);
+  struct_or_union_specifier *struct_or_union_tag(struct_or_union_specifier *a);
+  n *user_type(std::string a, n *b);
 
 private:
   location loc;
@@ -63,6 +65,7 @@ private:
   std::vector<scope *> sub;
   std::map<std::string, enum_specifier *> enum_tag_map;
   std::map<std::string, struct_or_union_specifier *> struct_or_union_tag_map;
+  std::map<std::string, class n *> user_type_map;
 };
 
 #endif

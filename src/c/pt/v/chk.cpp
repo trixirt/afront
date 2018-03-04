@@ -197,13 +197,29 @@ void chk::v(enum_specifier *a) {
   // Where two declarations that use the same tag declare the same type,
   // they shall both use the same choice of struct, union, or enum.
   auto c = a->children();
-  if (c.size() == 2) {
-    // expecting { identifier, enumeration_list }
+  // expecting { identifier, enumeration_list }
+  // expecting { identifier }
+  identifier *i = dynamic_cast<identifier *>(c[0].get());
+  if (i != nullptr) {
     scope *s = scope_stack.top().get();
     enum_specifier *r = s->enum_tag(a);
-    if (r != a) {
+    if (r == nullptr) {
       throw(visitor_exception("enum tag not unique to scope", a));
+    } else {
+      // passed unique tag
+      if (c.size() == 2) {
+        // a user type definition
+        // check if the type is unique
+        class n *r;
+        r = s->user_type(i->id(), a);
+        if (r == nullptr) {
+          throw(visitor_exception("type redefined", a));
+        }
+      }
     }
+  } else {
+    // confused
+    throw(ice_exception(__FILE__, __LINE__, "misconfigured enum_specifier"));
   }
   a->caccept(this);
 }
@@ -387,6 +403,17 @@ void chk::v(struct_or_union_specifier *a) {
         // confused
         throw(ice_exception(__FILE__, __LINE__,
                             "misconfigured struct_or_union_specifier"));
+      }
+    } else {
+      // passed unique tag
+      if (c.size() == 3) {
+        // A user type definition
+        // check if the type is unique
+        class n *r;
+        r = s->user_type(i->id(), a);
+        if (r == nullptr) {
+          throw(visitor_exception("type redefined", a));
+        }
       }
     }
   }
