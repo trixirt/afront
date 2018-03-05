@@ -86,6 +86,7 @@ void typedefs::v(conditional_expr *a) { /* skip */ }
 void typedefs::v(constant_expr *a) { /* skip */ }
 void typedefs::v(declaration_list *a) { /* skip */ }
 void typedefs::v(direct_abstract_declarator *a) { /* skip */ }
+void typedefs::v(enumeration_constant *a) { /* skip */ }
 void typedefs::v(enumerator *a) { /* skip */ }
 void typedefs::v(enumerator_list *a) { /* skip */ }
 void typedefs::v(enum_specifier *a) { /* skip */ }

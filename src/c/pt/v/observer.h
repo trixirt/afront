@@ -63,6 +63,7 @@ public:
   virtual void update(declarator *a) {}
   virtual void update(direct_abstract_declarator *a) {}
   virtual void update(direct_declarator *a) {}
+  virtual void update(enumeration_constant *a) {}
   virtual void update(enumerator *a) {}
   virtual void update(enumerator_list *a) {}
   virtual void update(enum_specifier *a) {}

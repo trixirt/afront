@@ -486,8 +486,20 @@ identifier *declarator::identifier() {
   return ret;
 };
 
-enumerator::enumerator(std::shared_ptr<identifier> a) { *this += a; }
-enumerator::enumerator(std::shared_ptr<identifier> a,
+enumeration_constant::enumeration_constant(std::shared_ptr<identifier> a) {
+  *this += a;
+}
+void enumeration_constant::accept(visitor *a) { a->v(this); };
+void enumeration_constant::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string enumeration_constant::classname() {
+  return "enumeration_constant";
+};
+
+enumerator::enumerator(std::shared_ptr<enumeration_constant> a) { *this += a; }
+enumerator::enumerator(std::shared_ptr<enumeration_constant> a,
                        std::shared_ptr<constant_expr> b) {
   *this += a;
   *this += b;
@@ -506,6 +518,43 @@ void enumerator_list::notify() {
     i->update(this);
 }
 std::string enumerator_list::classname() { return "enumerator_list"; };
+//
+// Add enumerator to map
+//
+// Returns nullptr on failure, that enumerator is already defined
+// Returns input on success
+enumerator *enumerator_list::update_map(enumerator *a) {
+  enumerator *ret = nullptr;
+  auto c = a->children();
+  // expecting { enumeration-constant }
+  // expecting { enumeration-constant constant-expression }
+  enumeration_constant *ec = dynamic_cast<enumeration_constant *>(c[0].get());
+  if (ec != nullptr) {
+    auto c = ec->children();
+    // expecting { identifier }
+    identifier *i = dynamic_cast<identifier *>(c[0].get());
+    if (i != nullptr) {
+      std::string s = i->id();
+      if (enumerator_map.find(s) == enumerator_map.end()) {
+        enumerator_map[s] = a;
+        ret = a;
+      } else {
+        // identifier is already in the map
+        // the input is a redefinition of an existing
+        // enumerator.
+        //
+        // return nullptr
+      }
+
+    } else {
+      throw(
+          ice_exception(__FILE__, __LINE__, "malformed enumeration constant"));
+    }
+  } else {
+    throw(ice_exception(__FILE__, __LINE__, "malformed enumerator"));
+  }
+  return ret;
+}
 
 equality_expr::equality_expr(std::shared_ptr<relation_expr> a) { *this += a; }
 equality_expr::equality_expr(std::shared_ptr<equality_expr> a, lex_token b,
@@ -742,7 +791,7 @@ labeled_statement *function_definition::label(labeled_statement *a) {
   auto c = a->children();
   // expecting { identifier, statement }
   if (c.size() == 2) {
-    identifier *i = dynamic_cast<identifier *>(c.front().get());
+    identifier *i = dynamic_cast<identifier *>(c[0].get());
     if (i != nullptr) {
       std::string s = i->id();
       auto itr = label_map.find(s);

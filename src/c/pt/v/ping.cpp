@@ -222,6 +222,14 @@ void ping::v(direct_declarator *a) {
     a->notify();
 }
 
+void ping::v(enumeration_constant *a) {
+  if (preorder)
+    a->notify();
+  a->caccept(this);
+  if (!preorder)
+    a->notify();
+}
+
 void ping::v(enumerator *a) {
   if (preorder)
     a->notify();

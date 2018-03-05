@@ -358,10 +358,21 @@ public:
   virtual std::string classname();
 };
 
+class enumeration_constant : public n {
+public:
+  enumeration_constant(std::shared_ptr<identifier> a);
+
+  virtual ~enumeration_constant(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
 class enumerator : public n {
 public:
-  enumerator(std::shared_ptr<identifier> a);
-  enumerator(std::shared_ptr<identifier> a, std::shared_ptr<constant_expr> b);
+  enumerator(std::shared_ptr<enumeration_constant> a);
+  enumerator(std::shared_ptr<enumeration_constant> a,
+             std::shared_ptr<constant_expr> b);
 
   virtual ~enumerator(){};
   virtual void accept(visitor *a);
@@ -376,6 +387,15 @@ public:
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
+  //
+  // Add an enumerator to map
+  //
+  // Returns nullptr on failure, that enumerator is already defined
+  // Returns input on success
+  enumerator *update_map(enumerator *);
+
+private:
+  std::map<std::string, enumerator *> enumerator_map;
 };
 
 class equality_expr : public n {

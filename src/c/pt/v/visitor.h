@@ -34,6 +34,7 @@ public:
   virtual void v(declarator *a) = 0;
   virtual void v(direct_abstract_declarator *a) = 0;
   virtual void v(direct_declarator *a) = 0;
+  virtual void v(enumeration_constant *a) = 0;
   virtual void v(enumerator *a) = 0;
   virtual void v(enumerator_list *a) = 0;
   virtual void v(enum_specifier *a) = 0;

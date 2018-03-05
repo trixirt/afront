@@ -54,6 +54,7 @@
 %type <std::shared_ptr<declarator>> declarator;
 %type <std::shared_ptr<direct_abstract_declarator>> direct_abstract_declarator;
 %type <std::shared_ptr<direct_declarator>> direct_declarator;
+%type <std::shared_ptr<enumeration_constant>> enumeration_constant;
 %type <std::shared_ptr<enumerator>> enumerator;
 %type <std::shared_ptr<enumerator_list>> enumerator_list;
 %type <std::shared_ptr<enum_specifier>> enum_specifier;

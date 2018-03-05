@@ -190,8 +190,24 @@ void chk::v(direct_declarator *a) {
   a->caccept(this);
 }
 
+void chk::v(enumeration_constant *a) { a->caccept(this); }
 void chk::v(enumerator *a) { a->caccept(this); }
-void chk::v(enumerator_list *a) { a->caccept(this); }
+void chk::v(enumerator_list *a) {
+  for (auto c : a->children()) {
+    // expecting { enumerator }
+    enumerator *e = dynamic_cast<enumerator *>(c.get());
+    if (e != nullptr) {
+      // check that the enumerator is unique
+      enumerator *r = a->update_map(e);
+      if (r == nullptr) {
+        throw(visitor_exception("enumerator redefined", a));
+      }
+    } else {
+      throw(ice_exception(__FILE__, __LINE__, "malformed enumerator list"));
+    }
+  }
+  a->caccept(this);
+}
 void chk::v(enum_specifier *a) {
   // 6.7.2.3 Tags
   // Where two declarations that use the same tag declare the same type,

@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,11 +32,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 %ifdef debug.all
-%def   debug.grammer.enumerator
+%def   debug.grammer.enumeration_constant
 %endif
 
 
-enumerator
-	: enumeration_constant                   { $$ = std::shared_ptr<enumerator> (new enumerator($1)); }
-	| enumeration_constant EQ constant_expr  { $$ = std::shared_ptr<enumerator> (new enumerator($1,$3)); }
+enumeration_constant
+	: identifier                   { $$ = std::shared_ptr<enumeration_constant> (new enumeration_constant($1)); }
 	;

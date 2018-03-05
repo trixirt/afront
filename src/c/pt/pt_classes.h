@@ -58,6 +58,7 @@ class declaration_specifiers;
 class declarator;
 class direct_abstract_declarator;
 class direct_declarator;
+class enumeration_constant;
 class enumerator;
 class enumerator_list;
 class enum_specifier;

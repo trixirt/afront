@@ -49,6 +49,7 @@ declaration_specifiers
 declarator
 direct_abstract_declarator
 direct_declarator
+enumeration_constant
 enumerator
 enumerator_list
 enum_specifier

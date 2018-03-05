@@ -84,6 +84,8 @@ void cg::v(direct_abstract_declarator *a) { a->caccept(this); }
 
 void cg::v(direct_declarator *a) { a->caccept(this); }
 
+void cg::v(enumeration_constant *a) { a->caccept(this); }
+
 void cg::v(enumerator *a) { a->caccept(this); }
 
 void cg::v(enumerator_list *a) { a->caccept(this); }

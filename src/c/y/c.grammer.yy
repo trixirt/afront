@@ -68,6 +68,7 @@
 %include c.grammer.struct_declarator_list.yy
 %include c.grammer.struct_declarator.yy
 %include c.grammer.enum_specifier.yy
+%include c.grammer.enumeration_constant.yy
 %include c.grammer.enumerator.yy
 %include c.grammer.enumerator_list.yy
 %include c.grammer.declarator.yy
