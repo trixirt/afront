@@ -914,22 +914,34 @@ public:
 
 class struct_or_union_specifier : public n {
 public:
-  struct_or_union_specifier(std::shared_ptr<struct_or_union> a,
-                            std::shared_ptr<identifier> b,
-                            std::shared_ptr<struct_declaration_list> c);
+  struct_or_union_specifier(std::shared_ptr<struct_or_union>,
+                            std::shared_ptr<identifier>,
+                            std::shared_ptr<struct_declaration_list>);
 
-  struct_or_union_specifier(std::shared_ptr<struct_or_union> a,
-                            std::shared_ptr<struct_declaration_list> b);
+  struct_or_union_specifier(std::shared_ptr<struct_or_union>,
+                            std::shared_ptr<struct_declaration_list>);
 
-  struct_or_union_specifier(std::shared_ptr<struct_or_union> a,
-                            std::shared_ptr<identifier> b);
+  struct_or_union_specifier(std::shared_ptr<struct_or_union>,
+                            std::shared_ptr<identifier>);
 
   virtual ~struct_or_union_specifier(){};
-  virtual void accept(visitor *a);
+  virtual void accept(visitor *);
   virtual void notify();
   virtual std::string classname();
   bool is_union();
   bool is_struct();
+  //
+  // Add a declarator to map
+  //
+  // Returns nullptr on failure, that declarator's identifier is already defined
+  // Returns input on success
+  declarator *update_map(declarator *);
+  //
+  // Fetch all of the declarators
+  void declarators(std::vector<declarator *> *);
+
+private:
+  std::map<std::string, declarator *> declarator_map;
 };
 
 class translation_unit : public n {

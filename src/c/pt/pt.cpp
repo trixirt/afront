@@ -1420,6 +1420,48 @@ bool struct_or_union_specifier::is_struct() {
 }
 
 //
+// Add declarator to map
+//
+// Returns nullptr on failure, that declarator's identifier is already defined
+// Returns input on success
+declarator *struct_or_union_specifier::update_map(declarator *a) {
+  declarator *ret = nullptr;
+  identifier *i = a->identifier();
+  if (i != nullptr) {
+    std::string s = i->id();
+    if (declarator_map.find(s) == declarator_map.end()) {
+      declarator_map[s] = a;
+      ret = a;
+    } else {
+      // identifier is already in the map
+      // the input is a redefinition of an existing
+      // declarator's identifier.
+      //
+      // return nullptr
+    }
+  } else {
+    throw(ice_exception(__FILE__, __LINE__, "malformed declarator"));
+  }
+  return ret;
+}
+
+//
+// Fetch all of the declarators
+void struct_or_union_specifier::declarators(std::vector<declarator *> *a) {
+  std::shared_ptr<fetch_observer<class declarator>> o =
+      std::shared_ptr<fetch_observer<class declarator>>(
+          new fetch_observer<class declarator>(a));
+  m::attach(o);
+  class ping *v = new ping();
+  if (v) {
+    this->accept(v);
+    delete v;
+    v = nullptr;
+  }
+  m::clear();
+};
+
+//
 // 6.9 translation-unit
 //
 translation_unit::translation_unit(std::shared_ptr<external_definition> a) {

@@ -433,6 +433,17 @@ void chk::v(struct_or_union_specifier *a) {
       }
     }
   }
+  //
+  // check that declarators are unique
+  std::vector<declarator *> dl;
+  a->declarators(&dl);
+  for (auto d : dl) {
+    declarator *r = a->update_map(d);
+    if (r == nullptr) {
+      throw(visitor_exception("element redefined", d));
+    }
+  }
+
   a->caccept(this);
 }
 
