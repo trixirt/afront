@@ -1,0 +1,55 @@
+Fig, a grammer for configuring the language to llvm ir interface
+
+configuration
+  triple,opt data-layout language-type-list
+
+triple
+  TRIPLE string-constant
+
+  ex/
+    triple "i386-unknown-linux-gnu"
+
+data-layout
+  endian layout_option_list,opt object-list
+
+endian
+  LITTLE
+  BIG
+
+layout_option_list
+  layout_option
+  layout_option_list layout_option
+
+layout_option
+  stack
+  mangle
+  abi
+
+stack
+  STACK constant
+
+mangle
+  MANGLE string-constant
+
+abi
+  ABI string-constant
+
+language-type-list
+  language-type
+  language-type-list language-type
+
+language-type
+  string-constant object-class constant constant,opt
+
+  ex/
+    "short" integer 16
+     maps the c type 'short' to the llvm ir type i16
+
+    "float _Complex" real 32 2
+     maps the c type 'float _Complex' to the llvm ir type [ 2 x f32 ]
+
+object-class
+  INTEGER
+  REAL
+  VECTOR
+
