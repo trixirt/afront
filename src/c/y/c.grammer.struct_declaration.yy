@@ -36,7 +36,8 @@
 %endif
 
 struct_declaration
-	: specifier_qualifier_list struct_declarator_list SCO  { $$ = std::shared_ptr<struct_declaration> (new struct_declaration($1,$2)); }
+	: specifier_qualifier_list SCO                         { $$ = std::shared_ptr<struct_declaration> (new struct_declaration($1)); }
+	| specifier_qualifier_list struct_declarator_list SCO  { $$ = std::shared_ptr<struct_declaration> (new struct_declaration($1,$2)); }
 %ifdef c11
 	| static_assert_declaration                            { $$ = std::shared_ptr<struct_declaration> (new struct_declaration($1)); }
 %endif
