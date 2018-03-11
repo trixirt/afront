@@ -36,657 +36,101 @@
 #include "ping.h"
 #include "e.h"
 #include "pt.h"
-ping::ping(bool pre) { preorder = pre; }
+ping::ping(bool pre, int max) : preorder(pre), max_depth(max), depth(0) {}
 ping::~ping() {}
-void ping::v(abstract_array_declarator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
 
-void ping::v(abstract_declarator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(abstract_function_declarator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(additive_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(alignment_specifier *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(and_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(argument_expr_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(array_declarator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(assignment_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(assignment_operator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(atomic_type_specifier *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(block_item *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(block_item_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(cast_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(compound_statement *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(conditional_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(constant_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(declaration *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(declaration_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(declaration_specifiers *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(declarator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(direct_abstract_declarator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(direct_declarator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(enumeration_constant *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(enumerator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(enumerator_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(enum_specifier *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(equality_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(exclusive_or_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(expression_statement *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(external_definition *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(function_body *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(function_declarator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(function_definition *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(function_specifier *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(generic_association *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(generic_assoc_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(generic_selection *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(identifier *a) {
-  if (preorder)
-    a->notify();
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(identifier_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(inclusive_or_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(init_declarator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(init_declarator_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(initializer *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(initializer_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(iteration_statement *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(jump_statement *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(labeled_statement *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(logical_and_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(logical_or_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(multiplicative_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(m *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(n *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(parameter_declaration *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(parameter_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(parameter_type_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(pointer *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(postfix_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(primary_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(relation_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(selection_statement *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(shift_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(specifier_qualifier_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(statement *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(statement_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(static_assert_declaration *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(storage_class_specifier *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(struct_declaration *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(struct_declaration_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(struct_declarator *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(struct_declarator_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(struct_or_union *a) {
-  if (preorder)
-    a->notify();
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(struct_or_union_specifier *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(translation_unit *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(type_name *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(type_qualifier *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(type_qualifier_list *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(type_specifier *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(typedef_name *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(unary_expr *a) {
-  if (preorder)
-    a->notify();
-  a->caccept(this);
-  if (!preorder)
-    a->notify();
-}
-
-void ping::v(unary_operator *a) {
-  if (preorder)
-    a->notify();
-  if (!preorder)
-    a->notify();
-}
+void ping::descend() { depth++; }
+void ping::ascend() { depth--; }
+#define V(C)                                                                   \
+  void ping::v(C *a) {                                                         \
+    if (max_depth > 0 && depth > 0 && depth > max_depth)                       \
+      return;                                                                  \
+    if (preorder)                                                              \
+      a->notify();                                                             \
+    a->caccept(this);                                                          \
+    if (!preorder)                                                             \
+      a->notify();                                                             \
+  }
+
+V(abstract_array_declarator)
+V(abstract_declarator)
+V(abstract_function_declarator)
+V(additive_expr)
+V(alignment_specifier)
+V(and_expr)
+V(argument_expr_list)
+V(array_declarator)
+V(assignment_expr)
+V(assignment_operator)
+V(atomic_type_specifier)
+V(block_item)
+V(block_item_list)
+V(cast_expr)
+V(compound_statement)
+V(conditional_expr)
+V(constant_expr)
+V(declaration)
+V(declaration_list)
+V(declaration_specifiers)
+V(declarator)
+V(direct_abstract_declarator)
+V(direct_declarator)
+V(enumeration_constant)
+V(enumerator)
+V(enumerator_list)
+V(enum_specifier)
+V(equality_expr)
+V(exclusive_or_expr)
+V(expr)
+V(expression_statement)
+V(external_definition)
+V(function_body)
+V(function_declarator)
+V(function_definition)
+V(function_specifier)
+V(generic_association)
+V(generic_assoc_list)
+V(generic_selection)
+V(identifier)
+V(identifier_list)
+V(inclusive_or_expr)
+V(init_declarator)
+V(init_declarator_list)
+V(initializer)
+V(initializer_list)
+V(iteration_statement)
+V(jump_statement)
+V(labeled_statement)
+V(logical_and_expr)
+V(logical_or_expr)
+V(m)
+V(multiplicative_expr)
+V(n)
+V(parameter_declaration)
+V(parameter_list)
+V(parameter_type_list)
+V(pointer)
+V(postfix_expr)
+V(primary_expr)
+V(relation_expr)
+V(selection_statement)
+V(shift_expr)
+V(specifier_qualifier_list)
+V(statement)
+V(statement_list)
+V(static_assert_declaration)
+V(storage_class_specifier)
+V(struct_declaration)
+V(struct_declaration_list)
+V(struct_declarator)
+V(struct_declarator_list)
+V(struct_or_union)
+V(struct_or_union_specifier)
+V(translation_unit)
+V(type_name)
+V(type_qualifier)
+V(type_qualifier_list)
+V(type_specifier)
+V(typedef_name)
+V(unary_expr)
+V(unary_operator)

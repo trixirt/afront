@@ -35,11 +35,13 @@
 
 #ifndef NADA_C_PT_VIS_PING_H
 #define NADA_C_PT_VIS_PING_H
-#include "visitor.h"
 #include "parser.tab.hh"
+#include "visitor.h"
 class ping : public visitor {
 public:
-  ping(bool pre = true);
+  ping(bool pre = true, int max = -1);
+  virtual void descend();
+  virtual void ascend();
   virtual ~ping();
   virtual void v(abstract_array_declarator *a);
   virtual void v(abstract_declarator *a);
@@ -126,5 +128,6 @@ public:
 
 private:
   bool preorder;
+  int depth, max_depth;
 };
 #endif

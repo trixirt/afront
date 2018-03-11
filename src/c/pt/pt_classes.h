@@ -67,7 +67,6 @@ class exclusive_or_expr;
 class expr;
 class expression_statement;
 class external_definition;
-class translation_unit;
 class function_body;
 class function_declarator;
 class function_definition;
