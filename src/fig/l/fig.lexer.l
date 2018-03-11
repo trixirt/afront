@@ -132,8 +132,6 @@ letter			[a-zA-Z_]
 "integer"                   { LEXTOK(INTEGER); }
 "real"                      { LEXTOK(REAL); }
 "vector"                    { LEXTOK(VECTOR); }
-"pointer"                   { LEXTOK(POINTER); }
-"aggregate"                 { LEXTOK(AGGREGATE); }
 {letter}({letter}|{digit})* { LEXTOK(IDENTIFIER);  }
 {decimal_constant}          { LEXTOK(CONSTANT);   }
 .                           {                     }
