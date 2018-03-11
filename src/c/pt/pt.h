@@ -78,15 +78,16 @@ public:
 
 class abstract_declarator : public n {
 public:
-  abstract_declarator(std::shared_ptr<pointer> a);
-  abstract_declarator(std::shared_ptr<direct_abstract_declarator> a);
-  abstract_declarator(std::shared_ptr<pointer> a,
-                      std::shared_ptr<direct_abstract_declarator> b);
+  abstract_declarator(std::shared_ptr<pointer>);
+  abstract_declarator(std::shared_ptr<direct_abstract_declarator>);
+  abstract_declarator(std::shared_ptr<pointer>,
+                      std::shared_ptr<direct_abstract_declarator>);
 
   virtual ~abstract_declarator(){};
-  virtual void accept(visitor *a);
+  virtual void accept(visitor *);
   virtual void notify();
   virtual std::string classname();
+  bool has_pointer();
 };
 
 class abstract_function_declarator : public n {
@@ -295,17 +296,22 @@ public:
 
 class declaration_specifiers : public n {
 public:
-  declaration_specifiers(std::shared_ptr<storage_class_specifier> a);
-  declaration_specifiers(std::shared_ptr<type_specifier> a);
-  declaration_specifiers(std::shared_ptr<type_qualifier> a);
+  declaration_specifiers(std::shared_ptr<storage_class_specifier>);
+  declaration_specifiers(std::shared_ptr<type_specifier>);
+  declaration_specifiers(std::shared_ptr<type_qualifier>);
   /* c99 */
-  declaration_specifiers(std::shared_ptr<function_specifier> a);
+  declaration_specifiers(std::shared_ptr<function_specifier>);
   /* c11 */
-  declaration_specifiers(std::shared_ptr<alignment_specifier> a);
+  declaration_specifiers(std::shared_ptr<alignment_specifier>);
   virtual ~declaration_specifiers(){};
-  virtual void accept(visitor *a);
+  virtual void accept(visitor *);
   virtual void notify();
   virtual std::string classname();
+  void storage_class_specifiers(std::vector<storage_class_specifier *> *);
+  void type_specifiers(std::vector<type_specifier *> *);
+  void type_qualifiers(std::vector<type_qualifier *> *);
+  void function_specifiers(std::vector<function_specifier *> *);
+  void alignment_specifiers(std::vector<alignment_specifier *> *);
 };
 
 class declarator : public n {
@@ -318,6 +324,7 @@ public:
   virtual void notify();
   virtual std::string classname();
   identifier *identifier();
+  bool has_pointer();
 };
 
 class direct_abstract_declarator : public n {
@@ -584,11 +591,12 @@ public:
 
 class init_declarator_list : public n {
 public:
-  init_declarator_list(std::shared_ptr<init_declarator> a);
+  init_declarator_list(std::shared_ptr<init_declarator>);
   virtual ~init_declarator_list(){};
-  virtual void accept(visitor *a);
+  virtual void accept(visitor *);
   virtual void notify();
   virtual std::string classname();
+  void declarators(std::vector<declarator *> *);
 };
 
 class initializer : public n {
@@ -722,6 +730,7 @@ public:
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
+  bool has_vararg();
 };
 
 class pointer : public n {
@@ -817,6 +826,8 @@ public:
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
+  void type_specifiers(std::vector<type_specifier *> *);
+  void type_qualifiers(std::vector<type_qualifier *> *);
 };
 
 class statement : public n {
@@ -863,11 +874,12 @@ public:
 
 class struct_declaration : public n {
 public:
-  struct_declaration(std::shared_ptr<specifier_qualifier_list> a,
-                     std::shared_ptr<struct_declarator_list> b);
-  struct_declaration(std::shared_ptr<static_assert_declaration> a);
+  struct_declaration(std::shared_ptr<specifier_qualifier_list>);
+  struct_declaration(std::shared_ptr<specifier_qualifier_list>,
+                     std::shared_ptr<struct_declarator_list>);
+  struct_declaration(std::shared_ptr<static_assert_declaration>);
   virtual ~struct_declaration(){};
-  virtual void accept(visitor *a);
+  virtual void accept(visitor *);
   virtual void notify();
   virtual std::string classname();
 };
@@ -896,11 +908,12 @@ public:
 
 class struct_declarator_list : public n {
 public:
-  struct_declarator_list(std::shared_ptr<struct_declarator> a);
+  struct_declarator_list(std::shared_ptr<struct_declarator>);
   virtual ~struct_declarator_list(){};
-  virtual void accept(visitor *a);
+  virtual void accept(visitor *);
   virtual void notify();
   virtual std::string classname();
+  void declarators(std::vector<declarator *> *);
 };
 
 class struct_or_union : public n {
@@ -1007,6 +1020,7 @@ public:
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
+  bool is_void();
 };
 
 class unary_expr : public n {
