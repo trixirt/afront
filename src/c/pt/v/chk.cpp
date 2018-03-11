@@ -90,8 +90,46 @@ void chk::v(conditional_expr *a) { a->caccept(this); }
 void chk::v(constant_expr *a) { a->caccept(this); }
 
 void chk::v(declaration *a) {
-  if (debug)
-    std::cout << indent << a->classname() << std::endl;
+  auto c = a->children();
+  // expecting { declaration-specifiers }
+  // expecting { declaration-specifiers,  init-declarator-list }
+  // expecting { static_assert-declaration }
+  declaration_specifiers *ds =
+      dynamic_cast<declaration_specifiers *>(c[0].get());
+  if (ds != nullptr) {
+    std::vector<type_specifier *> v;
+    ds->type_specifiers(&v);
+    for (auto i : v) {
+      if (i->is_void()) {
+        // make sure this is really a bare void
+        bool void_pointer = false;
+        if (c.size() == 2) {
+          init_declarator_list *idl =
+              dynamic_cast<init_declarator_list *>(c[1].get());
+          if (idl != nullptr) {
+            std::vector<declarator *> vv;
+            idl->declarators(&vv);
+            for (auto ii : vv) {
+              if (ii->has_pointer()) {
+                void_pointer = true;
+              } else {
+                // found at least 1 bad
+                // no point continuing
+                void_pointer = false;
+                break;
+              }
+            }
+          } else {
+            throw(ice_exception(__FILE__, __LINE__, "malformed declaration"));
+          }
+        }
+        if (!void_pointer) {
+          // No bare void's
+          throw(visitor_exception("invalid void usage", i));
+        }
+      }
+    }
+  }
   a->caccept(this);
 }
 
@@ -358,15 +396,79 @@ void chk::v(parameter_declaration *a) {
   a->caccept(this);
 }
 
-void chk::v(parameter_list *a) {
-  if (debug)
-    std::cout << indent << a->classname() << std::endl;
-  a->caccept(this);
-}
+void chk::v(parameter_list *a) { a->caccept(this); }
 
 void chk::v(parameter_type_list *a) {
-  if (debug)
-    std::cout << indent << a->classname() << std::endl;
+  auto c = a->children();
+  // expecting { parameter-list }
+  parameter_list *pl = dynamic_cast<parameter_list *>(c[0].get());
+  if (pl != nullptr) {
+    unsigned parameters_checked = a->has_vararg() ? 1 : 0;
+    type_specifier *bare_void = nullptr;
+    for (auto gc : pl->children()) {
+      // expecting { parameter-declaration }
+      parameter_declaration *pd =
+          dynamic_cast<parameter_declaration *>(gc.get());
+      if (pd != nullptr) {
+        auto ggc = pd->children();
+        // expecting { declaration-specifiers declarator }
+        // expecting { declaration-specifiers abstract-declarator }
+        // expecting { declaration-specifiers }
+        declaration_specifiers *ds =
+            dynamic_cast<declaration_specifiers *>(ggc[0].get());
+        if (ds != nullptr) {
+          if (bare_void != nullptr) {
+            // a bare void is only valid if it is the only parameter
+            throw(visitor_exception("invalid void usage", bare_void));
+          } else {
+            std::vector<type_specifier *> v;
+            ds->type_specifiers(&v);
+            for (auto i : v) {
+              if (i->is_void()) {
+                // make sure this is really a bare void
+                bool void_pointer = false;
+                if (ggc.size() == 2) {
+                  abstract_declarator *ad =
+                      dynamic_cast<abstract_declarator *>(ggc[1].get());
+                  if (ad != nullptr) {
+                    if (ad->has_pointer())
+                      void_pointer = true;
+                  } else {
+                    declarator *d = dynamic_cast<declarator *>(ggc[1].get());
+                    if (d != nullptr) {
+                      if (d->has_pointer())
+                        void_pointer = true;
+                    } else {
+                      throw(ice_exception(__FILE__, __LINE__,
+                                          "malformed parameter-declaration"));
+                    }
+                  }
+                }
+                if (!void_pointer) {
+                  if (parameters_checked != 0) {
+                    // Only 1 bare void per parameter type list
+                    throw(visitor_exception("invalid void usage", i));
+                  } else {
+                    bare_void = i;
+                  }
+                }
+              }
+            }
+          }
+        } else {
+          throw(ice_exception(__FILE__, __LINE__,
+                              "malformed parameter declaration"));
+        }
+
+      } else {
+        throw(ice_exception(__FILE__, __LINE__, "malformed parameter list"));
+      }
+      parameters_checked++;
+    }
+  } else {
+    throw(ice_exception(__FILE__, __LINE__, "malformed parameter type list"));
+  }
+
   a->caccept(this);
 }
 
@@ -391,7 +493,60 @@ void chk::v(storage_class_specifier *a) {
 }
 
 void chk::v(struct_declaration *a) { a->caccept(this); }
-void chk::v(struct_declaration_list *a) { a->caccept(this); }
+
+void chk::v(struct_declaration_list *a) {
+  for (auto c : a->children()) {
+    // expecting { struct-declaration }
+    struct_declaration *sd = dynamic_cast<struct_declaration *>(c.get());
+    if (sd != nullptr) {
+      auto gc = sd->children();
+      // expecting { specifier-qualifier-list }
+      // expecting { specifier-qualifier-list struct-declarator-list }
+      // expecting { static-assert-declaration }
+      specifier_qualifier_list *sql =
+          dynamic_cast<specifier_qualifier_list *>(gc[0].get());
+      if (sql != nullptr) {
+        std::vector<type_specifier *> v;
+        sql->type_specifiers(&v);
+        for (auto i : v) {
+          if (i->is_void()) {
+            // make sure this is really a bare void
+            bool void_pointer = false;
+            if (gc.size() == 2) {
+              struct_declarator_list *sdl =
+                  dynamic_cast<struct_declarator_list *>(gc[1].get());
+              if (sdl != nullptr) {
+                std::vector<declarator *> vv;
+                sdl->declarators(&vv);
+                for (auto ii : vv) {
+                  if (ii->has_pointer()) {
+                    void_pointer = true;
+                  } else {
+                    // found at least 1 bad
+                    // no point continuing
+                    void_pointer = false;
+                    break;
+                  }
+                }
+              } else {
+                throw(ice_exception(__FILE__, __LINE__,
+                                    "malformed struct-declaration"));
+              }
+            }
+            if (!void_pointer) {
+              // No bare void's
+              throw(visitor_exception("invalid void usage", i));
+            }
+          }
+        }
+      }
+    } else {
+      throw(ice_exception(__FILE__, __LINE__,
+                          "malformed struct-declaration-list"));
+    }
+  }
+  a->caccept(this);
+}
 void chk::v(struct_declarator *a) { a->caccept(this); }
 void chk::v(struct_declarator_list *a) { a->caccept(this); }
 void chk::v(struct_or_union *a) { /* terminal */
