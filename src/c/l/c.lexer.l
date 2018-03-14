@@ -132,7 +132,10 @@ static void comment();
 %x COMMENT CPP_COMMENT PP_DIRECTIVE
 
 
+%include c.digit.l
+%include c.identifier.l
 %include c.constant.l
+%include c.whitespace.l
 
 letter			[a-zA-Z_]
 
@@ -179,13 +182,13 @@ letter			[a-zA-Z_]
 "??-"      { LEXTOK(TIL); }
 "!"        { LEXTOK(EXL); }
 "."        { LEXTOK(DOT); }
-"*"        { LEXTOK(MUL); }
-"*="       { LEXTOK(MUL_ASSIGN); }
-"%"        { LEXTOK(MOD); }
-"%="       { LEXTOK(MOD_ASSIGN); }
-"?"        { LEXTOK(QUE); }
-"["        { LEXTOK(OBK); }
-"??("        { LEXTOK(OBK); }
+"*"                         { LEXTOK(MUL); }
+"*="                        { LEXTOK(MUL_ASSIGN); }
+"%"                         { LEXTOK(MOD); }
+"%="                        { LEXTOK(MOD_ASSIGN); }
+"?"                         { LEXTOK(QUE); }
+"["                         { LEXTOK(OBK); }
+"??("                       { LEXTOK(OBK); }
 "]"                         { LEXTOK(CBK); }
 "??)"                       { LEXTOK(CBK); }
 "{"                         { LEXTOK(OBR); }
@@ -266,7 +269,7 @@ letter			[a-zA-Z_]
 "_Static_assert"            { LEXTOK(_STATIC_ASSERT); }
 "_Thread_local"             { LEXTOK(_THREAD_LOCAL); }
 %endif
-{letter}({letter}|{digit})* { if (tn.count(yytext)) {
+{identifier}                { if (tn.count(yytext)) {
                                 LEXTOK(TYPENAME_IDENTIFIER); 
                               } else {
                                 LEXTOK(IDENTIFIER); 
@@ -275,6 +278,7 @@ letter			[a-zA-Z_]
 {decimal_constant}          { LEXTOK(CONSTANT);   }
 {octal_constant}            { LEXTOK(CONSTANT);   }
 {hexadecimal_constant}      { LEXTOK(CONSTANT);   }
-
+{whitespace}                { }
+.                           { LEXTOK(UNSUPPORTED_INPUT_CHAR);   }
 %%
 

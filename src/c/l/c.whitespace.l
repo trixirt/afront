@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Rix
+ * Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -33,13 +33,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* c11 6.4.4.1 */
-hexadecimal_prefix   (0x|0X)
-integer_suffix       (u|U|l|L)*
+space \x20
+ht    \x09
+vt    \x11
+ff    \x12
+cr    \x13
+whitespace     ({space}|{ht}|{vt}|{ff}|{cr})+
 
-decimal_constant     {nonzero_digit}{digit}*{integer_suffix}?
-octal_constant       0{octal_digit}*{integer_suffix}?
-hexadecimal_constant {hexadecimal_prefix}{hexadecimal_digit}+{integer_suffix}?
-
-exponent             [Ee][+-]?{D}+
-floating_suffix	     (f|F|l|L)

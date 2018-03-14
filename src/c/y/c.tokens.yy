@@ -102,3 +102,4 @@
 
 %endif
 
+%token <class lex_token> UNSUPPORTED_INPUT_CHAR
