@@ -189,12 +189,16 @@ letter			[a-zA-Z_]
 "?"                         { LEXTOK(QUE); }
 "["                         { LEXTOK(OBK); }
 "??("                       { LEXTOK(OBK); }
+"<:"                        { LEXTOK(OBK); }
 "]"                         { LEXTOK(CBK); }
 "??)"                       { LEXTOK(CBK); }
+":>"                        { LEXTOK(CBK); }
 "{"                         { LEXTOK(OBR); }
 "??<"                       { LEXTOK(OBR); }
+"<%"                        { LEXTOK(OBR); }
 "}"                         { LEXTOK(CBR); }
 "??>"                       { LEXTOK(CBR); }
+"%>"                        { LEXTOK(CBR); }
 "("                         { LEXTOK(OPA); }
 ")"                         { LEXTOK(CPA); }
 ":"                         { LEXTOK(COL); }
