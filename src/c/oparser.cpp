@@ -69,7 +69,7 @@ void oparser::error(const class location &loc, const std::string &msg) {
     size_t l = strlen(cs);
     for (size_t i = 0; i < l; i++) {
       if ((cs[i] >= 0x20 && cs[i] < 0x7f) || cs[i] == '\n' || cs[i] == '\r' ||
-          cs[i] == '\t' || cs[i] == '\v' || cs[i] == '\f' || cs[i] == '\h') {
+          cs[i] == '\t' || cs[i] == '\v' || cs[i] == '\f') {
         fputc(cs[i], stderr);
       } else {
         if (cs[i] > 077)

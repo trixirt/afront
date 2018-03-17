@@ -278,10 +278,10 @@ letter			[a-zA-Z_]
                               } else {
                                 LEXTOK(IDENTIFIER); 
                               }
-                            }
-{decimal_constant}          { LEXTOK(CONSTANT);   }
-{octal_constant}            { LEXTOK(CONSTANT);   }
-{hexadecimal_constant}      { LEXTOK(CONSTANT);   }
+		            }
+{integer_constant}          { LEXTOK(INTEGER_CONSTANT);   }
+{floating_constant}         { LEXTOK(FLOATING_CONSTANT);   }
+{character_constant}        { LEXTOK(CHARACTER_CONSTANT);   }
 {whitespace}                { }
 .                           { LEXTOK(UNSUPPORTED_INPUT_CHAR);   }
 %%

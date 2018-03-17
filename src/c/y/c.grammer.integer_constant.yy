@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,29 +31,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%ifdef debug.all
+%def   debug.grammer.integer_constant
+%endif
 
-/* c11 6.4.4.1 */
-hexadecimal_prefix   (0x|0X)
-integer_suffix       (u|U|l|L)*
-
-decimal_constant     {nonzero_digit}{digit}*{integer_suffix}?
-octal_constant       0{octal_digit}*{integer_suffix}?
-hexadecimal_constant {hexadecimal_prefix}{hexadecimal_digit}+{integer_suffix}?
-integer_constant ({decimal_constant}|{octal_constant}|{hexadecimal_constant})
-
-exponent             [Ee][+-]?{digit}+
-floating_suffix	     (f|F|l|L)
-floating_constant    {digit}+{exponent}{floating_suffix}?
-
-constant_char_prefix  (u|U|L)?
-c_char_graphic_char       ("!"|";"|"\""|"<"|"#"|"="|"%"|">"|"&"|"?"|"["|"("|"/"|"~"|":"|" "|"\t"|"\v"|"\r")
-simple_escape_sequence ("\\'"|"\\\""|"\\\?"|"\\\\"|"\\a"|"\\b"|"\\f"|"\\n"|"\\r"|"\\t"|"\\v")
-octal_escape_sequence "\\"{octal_digit}+
-hexadecimal_escape_sequence "\\x"{hexadecimal_digit}+
-hex_quad {hexadecimal_digit}{4}
-universal_character_name ("\\u"{hex_quad}|"\\U"{hex_quad}{hex_quad})
-escape_sequence ({simple_escape_sequence}|{octal_escape_sequence}|{hexadecimal_escape_sequence}|{universal_character_name})
-c_char  [a-zA-Z0-9]|{c_char_graphic_char}|{escape_sequence}
-c_char_sequence  {c_char}
-character_constant {constant_char_prefix}"'"{c_char_sequence}"'"
-		       
+integer_constant
+	: INTEGER_CONSTANT { $$ = std::shared_ptr<integer_constant> (new integer_constant($1)); }
+	;

@@ -57,8 +57,10 @@ public:
   virtual void v(block_item *a);
   virtual void v(block_item_list *a);
   virtual void v(cast_expr *a);
+  virtual void v(character_constant *a);
   virtual void v(compound_statement *a);
   virtual void v(conditional_expr *a);
+  virtual void v(constant *a);
   virtual void v(constant_expr *a);
   virtual void v(declaration *a);
   virtual void v(declaration_list *a);
@@ -75,6 +77,7 @@ public:
   virtual void v(expr *a);
   virtual void v(expression_statement *a);
   virtual void v(external_definition *a);
+  virtual void v(floating_constant *a);
   virtual void v(function_body *a);
   virtual void v(function_declarator *a);
   virtual void v(function_definition *a);
@@ -85,6 +88,7 @@ public:
   virtual void v(identifier *a);
   virtual void v(identifier_list *a);
   virtual void v(inclusive_or_expr *a);
+  virtual void v(integer_constant *a);
   virtual void v(init_declarator *a);
   virtual void v(init_declarator_list *a);
   virtual void v(initializer *a);

@@ -54,8 +54,10 @@ public:
   virtual void update(block_item *a) {}
   virtual void update(block_item_list *a) {}
   virtual void update(cast_expr *a) {}
+  virtual void update(character_constant *a) {}
   virtual void update(compound_statement *a) {}
   virtual void update(conditional_expr *a) {}
+  virtual void update(constant *a) {}
   virtual void update(constant_expr *a) {}
   virtual void update(declaration *a) {}
   virtual void update(declaration_list *a) {}
@@ -72,6 +74,7 @@ public:
   virtual void update(expr *a) {}
   virtual void update(expression_statement *a) {}
   virtual void update(external_definition *a) {}
+  virtual void update(floating_constant *a) {}
   virtual void update(function_body *a) {}
   virtual void update(function_declarator *a) {}
   virtual void update(function_definition *a) {}
@@ -86,6 +89,7 @@ public:
   virtual void update(init_declarator_list *a) {}
   virtual void update(initializer *a) {}
   virtual void update(initializer_list *a) {}
+  virtual void update(integer_constant *a) {}
   virtual void update(iteration_statement *a) {}
   virtual void update(jump_statement *a) {}
   virtual void update(labeled_statement *a) {}

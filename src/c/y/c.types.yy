@@ -45,9 +45,11 @@
 %type <std::shared_ptr<block_item>> block_item;
 %type <std::shared_ptr<block_item_list>> block_item_list;
 %type <std::shared_ptr<cast_expr>> cast_expr;
+%type <std::shared_ptr<character_constant>> character_constant;
 %type <std::shared_ptr<compound_statement>> compound_statement;
 %type <std::shared_ptr<conditional_expr>> conditional_expr;
 %type <std::shared_ptr<constant_expr>> constant_expr;
+%type <std::shared_ptr<constant>> constant;
 %type <std::shared_ptr<declaration>> declaration;
 %type <std::shared_ptr<declaration_list>> declaration_list;
 %type <std::shared_ptr<declaration_specifiers>> declaration_specifiers;
@@ -63,6 +65,7 @@
 %type <std::shared_ptr<expression_statement>> expression_statement;
 %type <std::shared_ptr<expr>> expr;
 %type <std::shared_ptr<external_definition>> external_definition;
+%type <std::shared_ptr<floating_constant>> floating_constant;
 %type <std::shared_ptr<function_body>> function_body;
 %type <std::shared_ptr<function_declarator>> function_declarator;
 %type <std::shared_ptr<function_definition>> function_definition;
@@ -78,6 +81,7 @@
 %type <std::shared_ptr<init_declarator_list>> init_declarator_list;
 %type <std::shared_ptr<initializer>> initializer;
 %type <std::shared_ptr<initializer_list>> initializer_list;
+%type <std::shared_ptr<integer_constant>> integer_constant;
 %type <std::shared_ptr<iteration_statement>> iteration_statement;
 %type <std::shared_ptr<jump_statement>> jump_statement;
 %type <std::shared_ptr<labeled_statement>> labeled_statement;

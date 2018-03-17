@@ -55,89 +55,95 @@ void typedefs::v(init_declarator *a) { a->caccept(this); }
 void typedefs::v(declarator *a) { a->caccept(this); }
 void typedefs::v(direct_declarator *a) { a->caccept(this); }
 void typedefs::v(identifier *a) {
-    if (a->parent() != nullptr) {
-	if (dynamic_cast<direct_declarator *>(a->parent())) {
-	    i.push_back(a);
-	    if (i.empty()) {
-		throw(ice_exception(__FILE__, __LINE__, "empty identifier list"));
-	    }
-	}
+  if (a->parent() != nullptr) {
+    if (dynamic_cast<direct_declarator *>(a->parent())) {
+      i.push_back(a);
+      if (i.empty()) {
+        throw(ice_exception(__FILE__, __LINE__, "empty identifier list"));
+      }
     }
-    /* terminal */
+  }
+  /* terminal */
 }
 
+#define V(C)                                                                   \
+  void typedefs::v(C *a) {}
 
-void typedefs::v(abstract_array_declarator *a) { /* skip */ }
-void typedefs::v(abstract_declarator *a) { /* skip */ }
-void typedefs::v(abstract_function_declarator *a) { /* skip */ }
-void typedefs::v(additive_expr *a) { /* skip */ }
-void typedefs::v(alignment_specifier *a) { /* skip */ }
-void typedefs::v(and_expr *a) { /* skip */ }
-void typedefs::v(argument_expr_list *a) { /* skip */ }
-void typedefs::v(array_declarator *a) { /* skip */ }
-void typedefs::v(assignment_expr *a) { /* skip */ }
-void typedefs::v(assignment_operator *a) { /* skip */ }
-void typedefs::v(atomic_type_specifier *a) { /* skip */ }
-void typedefs::v(block_item *a) { /* skip */ }
-void typedefs::v(block_item_list *a) { /* skip */ }
-void typedefs::v(cast_expr *a) { /* skip */ }
-void typedefs::v(compound_statement *a) { /* skip */ }
-void typedefs::v(conditional_expr *a) { /* skip */ }
-void typedefs::v(constant_expr *a) { /* skip */ }
-void typedefs::v(declaration_list *a) { /* skip */ }
-void typedefs::v(direct_abstract_declarator *a) { /* skip */ }
-void typedefs::v(enumeration_constant *a) { /* skip */ }
-void typedefs::v(enumerator *a) { /* skip */ }
-void typedefs::v(enumerator_list *a) { /* skip */ }
-void typedefs::v(enum_specifier *a) { /* skip */ }
-void typedefs::v(equality_expr *a) { /* skip */ }
-void typedefs::v(exclusive_or_expr *a) { /* skip */ }
-void typedefs::v(expr *a) { /* skip */ }
-void typedefs::v(expression_statement *a) { /* skip */ }
-void typedefs::v(external_definition *a) { /* skip */ }
-void typedefs::v(function_body *a) { /* skip */ }
-void typedefs::v(function_declarator *a) { /* skip */ }
-void typedefs::v(function_definition *a) { /* skip */ }
-void typedefs::v(function_specifier *a) { /* skip */ }
-void typedefs::v(generic_association *a) { /* skip */ }
-void typedefs::v(generic_assoc_list *a) { /* skip */ }
-void typedefs::v(generic_selection *a) { /* skip */ }
-void typedefs::v(identifier_list *a) { /* skip */ }
-void typedefs::v(inclusive_or_expr *a) { /* skip */ }
-void typedefs::v(initializer *a) { /* skip */ }
-void typedefs::v(initializer_list *a) { /* skip */ }
-void typedefs::v(iteration_statement *a) { /* skip */ }
-void typedefs::v(jump_statement *a) { /* skip */ }
-void typedefs::v(labeled_statement *a) { /* skip */ }
-void typedefs::v(logical_and_expr *a) { /* skip */ }
-void typedefs::v(logical_or_expr *a) { /* skip */ }
-void typedefs::v(multiplicative_expr *a) { /* skip */ }
-void typedefs::v(m *a) { /* skip */ }
-void typedefs::v(n *a) { /* skip */ }
-void typedefs::v(parameter_declaration *a) { /* skip */ }
-void typedefs::v(parameter_list *a) { /* skip */ }
-void typedefs::v(parameter_type_list *a) { /* skip */ }
-void typedefs::v(pointer *a) { /* skip */ }
-void typedefs::v(postfix_expr *a) { /* skip */ }
-void typedefs::v(primary_expr *a) { /* skip */ }
-void typedefs::v(relation_expr *a) { /* skip */ }
-void typedefs::v(selection_statement *a) { /* skip */ }
-void typedefs::v(shift_expr *a) { /* skip */ }
-void typedefs::v(specifier_qualifier_list *a) { /* skip */ }
-void typedefs::v(statement *a) { /* skip */ }
-void typedefs::v(statement_list *a) { /* skip */ }
-void typedefs::v(static_assert_declaration *a) { /* skip */ }
-void typedefs::v(struct_declaration *a) { /* skip */ }
-void typedefs::v(struct_declaration_list *a) { /* skip */ }
-void typedefs::v(struct_declarator *a) { /* skip */ }
-void typedefs::v(struct_declarator_list *a) { /* skip */ }
-void typedefs::v(struct_or_union *a) { /* terminal */ }
-void typedefs::v(struct_or_union_specifier *a) { /* skip */ }
-void typedefs::v(translation_unit *a) { /* no possible */ }
-void typedefs::v(type_name *a) { /* skip */ }
-void typedefs::v(type_qualifier *a) { /* skip */ }
-void typedefs::v(type_qualifier_list *a) { /* skip */ }
-void typedefs::v(type_specifier *a) { /* skip */ }
-void typedefs::v(typedef_name *a) { /* skip */ }
-void typedefs::v(unary_expr *a) { /* skip */ }
-void typedefs::v(unary_operator *a) { /* terminal */ }
+V(abstract_array_declarator)
+V(abstract_declarator)
+V(abstract_function_declarator)
+V(additive_expr)
+V(alignment_specifier)
+V(and_expr)
+V(argument_expr_list)
+V(array_declarator)
+V(assignment_expr)
+V(assignment_operator)
+V(atomic_type_specifier)
+V(block_item)
+V(block_item_list)
+V(cast_expr)
+V(character_constant)
+V(compound_statement)
+V(conditional_expr)
+V(constant)
+V(constant_expr)
+V(declaration_list)
+V(direct_abstract_declarator)
+V(enumeration_constant)
+V(enumerator)
+V(enumerator_list)
+V(enum_specifier)
+V(equality_expr)
+V(exclusive_or_expr)
+V(expr)
+V(expression_statement)
+V(external_definition)
+V(floating_constant)
+V(function_body)
+V(function_declarator)
+V(function_definition)
+V(function_specifier)
+V(generic_association)
+V(generic_assoc_list)
+V(generic_selection)
+V(identifier_list)
+V(inclusive_or_expr)
+V(initializer)
+V(initializer_list)
+V(integer_constant)
+V(iteration_statement)
+V(jump_statement)
+V(labeled_statement)
+V(logical_and_expr)
+V(logical_or_expr)
+V(multiplicative_expr)
+V(m)
+V(n)
+V(parameter_declaration)
+V(parameter_list)
+V(parameter_type_list)
+V(pointer)
+V(postfix_expr)
+V(primary_expr)
+V(relation_expr)
+V(selection_statement)
+V(shift_expr)
+V(specifier_qualifier_list)
+V(statement)
+V(statement_list)
+V(static_assert_declaration)
+V(struct_declaration)
+V(struct_declaration_list)
+V(struct_declarator)
+V(struct_declarator_list)
+V(struct_or_union)
+V(struct_or_union_specifier)
+V(translation_unit)
+V(type_name)
+V(type_qualifier)
+V(type_qualifier_list)
+V(type_specifier)
+V(typedef_name)
+V(unary_expr)
+V(unary_operator)

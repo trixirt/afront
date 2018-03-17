@@ -51,6 +51,10 @@
 %include c.grammer.assignment_expr.yy
 %include c.grammer.assignment_operator.yy
 %include c.grammer.expr.yy
+%include c.grammer.character_constant.yy
+%include c.grammer.integer_constant.yy
+%include c.grammer.floating_constant.yy
+%include c.grammer.constant.yy
 %include c.grammer.constant_expr.yy
 %include c.grammer.declaration.yy
 %include c.grammer.declaration_specifiers.yy

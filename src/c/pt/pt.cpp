@@ -305,12 +305,12 @@ std::string array_declarator::classname() { return "array_declarator"; }
 assignment_expr::assignment_expr(std::shared_ptr<conditional_expr> a) {
   *this += a;
 }
-assignment_expr::assignment_expr(std::shared_ptr<unary_expr> _a,
-                                 std::shared_ptr<assignment_operator> _b,
-                                 std::shared_ptr<assignment_expr> _c) {
-  *this += _a;
-  *this += _b;
-  *this += _c;
+assignment_expr::assignment_expr(std::shared_ptr<unary_expr> a,
+                                 std::shared_ptr<assignment_operator> b,
+                                 std::shared_ptr<assignment_expr> c) {
+  *this += a;
+  *this += b;
+  *this += c;
 }
 void assignment_expr::accept(visitor *a) { a->v(this); }
 void assignment_expr::notify() {
@@ -369,6 +369,16 @@ void cast_expr::notify() {
 }
 std::string cast_expr::classname() { return "cast_expr"; }
 
+//
+// character-constant
+character_constant::character_constant(lex_token a) : n(a) {}
+void character_constant::accept(visitor *a) { a->v(this); }
+void character_constant::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string character_constant::classname() { return "character_constant"; }
+
 compound_statement::compound_statement() {}
 compound_statement::compound_statement(std::shared_ptr<statement_list> a) {
   *this += a;
@@ -394,12 +404,12 @@ std::string compound_statement::classname() { return "compound_statement"; }
 conditional_expr::conditional_expr(std::shared_ptr<logical_or_expr> a) {
   *this += a;
 }
-conditional_expr::conditional_expr(std::shared_ptr<logical_or_expr> _a,
-                                   std::shared_ptr<logical_or_expr> _b,
-                                   std::shared_ptr<conditional_expr> _c) {
-  *this += _a;
-  *this += _b;
-  *this += _c;
+conditional_expr::conditional_expr(std::shared_ptr<logical_or_expr> a,
+                                   std::shared_ptr<logical_or_expr> b,
+                                   std::shared_ptr<conditional_expr> c) {
+  *this += a;
+  *this += b;
+  *this += c;
 }
 void conditional_expr::accept(visitor *a) { a->v(this); }
 void conditional_expr::notify() {
@@ -407,6 +417,19 @@ void conditional_expr::notify() {
     i->update(this);
 }
 std::string conditional_expr::classname() { return "conditional_expr"; }
+
+//
+// constant
+constant::constant(std::shared_ptr<character_constant> a) { *this += a; }
+constant::constant(std::shared_ptr<enumeration_constant> a) { *this += a; }
+constant::constant(std::shared_ptr<floating_constant> a) { *this += a; }
+constant::constant(std::shared_ptr<integer_constant> a) { *this += a; }
+void constant::accept(visitor *a) { a->v(this); }
+void constant::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string constant::classname() { return "constant"; }
 
 constant_expr::constant_expr(std::shared_ptr<conditional_expr> a) {
   *this += a;
@@ -808,6 +831,16 @@ void external_definition::notify() {
 }
 std::string external_definition::classname() { return "external_definition"; }
 
+//
+// floating-constant
+floating_constant::floating_constant(lex_token a) : n(a) {}
+void floating_constant::accept(visitor *a) { a->v(this); }
+void floating_constant::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string floating_constant::classname() { return "floating_constant"; }
+
 function_body::function_body(std::shared_ptr<compound_statement> a) {
   *this += a;
 }
@@ -937,7 +970,7 @@ generic_selection::generic_selection(std::shared_ptr<assignment_expr> a,
   *this += a;
   *this += b;
 }
-void generic_selection::accept(visitor *_a) { _a->v(this); }
+void generic_selection::accept(visitor *a) { a->v(this); }
 void generic_selection::notify() {
   for (auto i : observers)
     i->update(this);
@@ -979,6 +1012,16 @@ void inclusive_or_expr::notify() {
     i->update(this);
 }
 std::string inclusive_or_expr::classname() { return "inclusive_or_expr"; }
+
+//
+// integer-constant
+integer_constant::integer_constant(lex_token a) : n(a) {}
+void integer_constant::accept(visitor *a) { a->v(this); }
+void integer_constant::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string integer_constant::classname() { return "integer_constant"; }
 
 iteration_statement::iteration_statement(lex_token a, std::shared_ptr<expr> b,
                                          std::shared_ptr<statement> c)
@@ -1171,21 +1214,20 @@ void multiplicative_expr::notify() {
 std::string multiplicative_expr::classname() { return "multiplicative_expr"; }
 
 parameter_declaration::parameter_declaration(
-    std::shared_ptr<declaration_specifiers> _a,
-    std::shared_ptr<declarator> _b) {
-  *this += _a;
-  *this += _b;
+    std::shared_ptr<declaration_specifiers> a, std::shared_ptr<declarator> b) {
+  *this += a;
+  *this += b;
 }
 parameter_declaration::parameter_declaration(
-    std::shared_ptr<declaration_specifiers> _a,
-    std::shared_ptr<abstract_declarator> _b) {
-  *this += _a;
-  *this += _b;
+    std::shared_ptr<declaration_specifiers> a,
+    std::shared_ptr<abstract_declarator> b) {
+  *this += a;
+  *this += b;
 }
 
 parameter_declaration::parameter_declaration(
-    std::shared_ptr<declaration_specifiers> _a) {
-  *this += _a;
+    std::shared_ptr<declaration_specifiers> a) {
+  *this += a;
 }
 
 void parameter_declaration::accept(visitor *a) { a->v(this); }
@@ -1285,6 +1327,7 @@ void postfix_expr::notify() {
 std::string postfix_expr::classname() { return "postfix_expr"; }
 
 primary_expr::primary_expr(lex_token a) : n(a) {}
+primary_expr::primary_expr(std::shared_ptr<constant> a) { *this += a; }
 primary_expr::primary_expr(std::shared_ptr<identifier> a) { *this += a; }
 primary_expr::primary_expr(std::shared_ptr<expr> a) { *this += a; }
 primary_expr::primary_expr(std::shared_ptr<generic_selection> a) { *this += a; }
@@ -1705,8 +1748,8 @@ bool type_specifier::is_void() {
   return ret;
 }
 
-typedef_name::typedef_name(std::shared_ptr<identifier> _a) { *this += _a; }
-void typedef_name::accept(visitor *_a) { _a->v(this); }
+typedef_name::typedef_name(std::shared_ptr<identifier> a) { *this += a; }
+void typedef_name::accept(visitor *a) { a->v(this); }
 void typedef_name::notify() {
   for (auto i : observers)
     i->update(this);

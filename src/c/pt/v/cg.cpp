@@ -36,168 +36,96 @@
 #include "cg.h"
 #include "e.h"
 #include "pt.h"
+
+#define V(C)                                                                   \
+  void cg::v(C *a) { a->caccept(this); }
+
 cg::cg() {}
 cg::~cg() {}
-void cg::v(abstract_array_declarator *a) { a->caccept(this); }
 
-void cg::v(abstract_declarator *a) { a->caccept(this); }
-
-void cg::v(abstract_function_declarator *a) { a->caccept(this); }
-
-void cg::v(additive_expr *a) { a->caccept(this); }
-
-void cg::v(alignment_specifier *a) { a->caccept(this); }
-
-void cg::v(and_expr *a) { a->caccept(this); }
-
-void cg::v(argument_expr_list *a) { a->caccept(this); }
-
-void cg::v(array_declarator *a) { a->caccept(this); }
-
-void cg::v(assignment_expr *a) { a->caccept(this); }
-
-void cg::v(assignment_operator *a) { a->caccept(this); }
-
-void cg::v(atomic_type_specifier *a) { a->caccept(this); }
-
-void cg::v(block_item *a) { a->caccept(this); }
-
-void cg::v(block_item_list *a) { a->caccept(this); }
-
-void cg::v(cast_expr *a) { a->caccept(this); }
-
-void cg::v(compound_statement *a) { a->caccept(this); }
-
-void cg::v(conditional_expr *a) { a->caccept(this); }
-
-void cg::v(constant_expr *a) { a->caccept(this); }
-
-void cg::v(declaration *a) { a->caccept(this); }
-
-void cg::v(declaration_list *a) { a->caccept(this); }
-
-void cg::v(declaration_specifiers *a) { a->caccept(this); }
-
-void cg::v(declarator *a) { a->caccept(this); }
-
-void cg::v(direct_abstract_declarator *a) { a->caccept(this); }
-
-void cg::v(direct_declarator *a) { a->caccept(this); }
-
-void cg::v(enumeration_constant *a) { a->caccept(this); }
-
-void cg::v(enumerator *a) { a->caccept(this); }
-
-void cg::v(enumerator_list *a) { a->caccept(this); }
-
-void cg::v(enum_specifier *a) { a->caccept(this); }
-
-void cg::v(equality_expr *a) { a->caccept(this); }
-
-void cg::v(exclusive_or_expr *a) { a->caccept(this); }
-
-void cg::v(expr *a) { a->caccept(this); }
-
-void cg::v(expression_statement *a) { a->caccept(this); }
-
-void cg::v(external_definition *a) { a->caccept(this); }
-
-void cg::v(function_body *a) { a->caccept(this); }
-
-void cg::v(function_declarator *a) { a->caccept(this); }
-
-void cg::v(function_definition *a) { a->caccept(this); }
-
-void cg::v(function_specifier *a) { a->caccept(this); }
-
-void cg::v(generic_association *a) { a->caccept(this); }
-
-void cg::v(generic_assoc_list *a) { a->caccept(this); }
-
-void cg::v(generic_selection *a) { a->caccept(this); }
-
-void cg::v(identifier *a) {}
-
-void cg::v(identifier_list *a) { a->caccept(this); }
-
-void cg::v(inclusive_or_expr *a) { a->caccept(this); }
-
-void cg::v(init_declarator *a) { a->caccept(this); }
-
-void cg::v(init_declarator_list *a) { a->caccept(this); }
-
-void cg::v(initializer *a) { a->caccept(this); }
-
-void cg::v(initializer_list *a) { a->caccept(this); }
-
-void cg::v(iteration_statement *a) { a->caccept(this); }
-
-void cg::v(jump_statement *a) { a->caccept(this); }
-
-void cg::v(labeled_statement *a) { a->caccept(this); }
-
-void cg::v(logical_and_expr *a) { a->caccept(this); }
-
-void cg::v(logical_or_expr *a) { a->caccept(this); }
-
-void cg::v(multiplicative_expr *a) { a->caccept(this); }
-
-void cg::v(m *a) { a->caccept(this); }
-
-void cg::v(n *a) { a->caccept(this); }
-
-void cg::v(parameter_declaration *a) { a->caccept(this); }
-
-void cg::v(parameter_list *a) { a->caccept(this); }
-
-void cg::v(parameter_type_list *a) { a->caccept(this); }
-
-void cg::v(pointer *a) { a->caccept(this); }
-
-void cg::v(postfix_expr *a) { a->caccept(this); }
-
-void cg::v(primary_expr *a) { a->caccept(this); }
-
-void cg::v(relation_expr *a) { a->caccept(this); }
-
-void cg::v(selection_statement *a) { a->caccept(this); }
-
-void cg::v(shift_expr *a) { a->caccept(this); }
-
-void cg::v(specifier_qualifier_list *a) { a->caccept(this); }
-
-void cg::v(statement *a) { a->caccept(this); }
-
-void cg::v(statement_list *a) { a->caccept(this); }
-
-void cg::v(static_assert_declaration *a) { a->caccept(this); }
-
-void cg::v(storage_class_specifier *a) { a->caccept(this); }
-
-void cg::v(struct_declaration *a) { a->caccept(this); }
-
-void cg::v(struct_declaration_list *a) { a->caccept(this); }
-
-void cg::v(struct_declarator *a) { a->caccept(this); }
-
-void cg::v(struct_declarator_list *a) { a->caccept(this); }
-
-void cg::v(struct_or_union *a) {}
-
-void cg::v(struct_or_union_specifier *a) { a->caccept(this); }
-
-void cg::v(translation_unit *a) { a->caccept(this); }
-
-void cg::v(type_name *a) { a->caccept(this); }
-
-void cg::v(type_qualifier *a) { a->caccept(this); }
-
-void cg::v(type_qualifier_list *a) { a->caccept(this); }
-
-void cg::v(type_specifier *a) { a->caccept(this); }
-
-void cg::v(typedef_name *a) { a->caccept(this); }
-
-void cg::v(unary_expr *a) { a->caccept(this); }
-
-void cg::v(unary_operator *a) {}
+V(abstract_array_declarator)
+V(abstract_declarator)
+V(abstract_function_declarator)
+V(additive_expr)
+V(alignment_specifier)
+V(and_expr)
+V(argument_expr_list)
+V(array_declarator)
+V(assignment_expr)
+V(assignment_operator)
+V(atomic_type_specifier)
+V(block_item)
+V(block_item_list)
+V(cast_expr)
+V(character_constant)
+V(compound_statement)
+V(conditional_expr)
+V(constant)
+V(constant_expr)
+V(declaration)
+V(declaration_list)
+V(declaration_specifiers)
+V(declarator)
+V(direct_abstract_declarator)
+V(direct_declarator)
+V(enumeration_constant)
+V(enumerator)
+V(enumerator_list)
+V(enum_specifier)
+V(equality_expr)
+V(exclusive_or_expr)
+V(expr)
+V(expression_statement)
+V(external_definition)
+V(floating_constant)
+V(function_body)
+V(function_declarator)
+V(function_definition)
+V(function_specifier)
+V(generic_association)
+V(generic_assoc_list)
+V(generic_selection)
+V(identifier)
+V(identifier_list)
+V(inclusive_or_expr)
+V(init_declarator)
+V(init_declarator_list)
+V(initializer)
+V(initializer_list)
+V(integer_constant)
+V(iteration_statement)
+V(jump_statement)
+V(labeled_statement)
+V(logical_and_expr)
+V(logical_or_expr)
+V(multiplicative_expr)
+V(m)
+V(n)
+V(parameter_declaration)
+V(parameter_list)
+V(parameter_type_list)
+V(pointer)
+V(postfix_expr)
+V(primary_expr)
+V(relation_expr)
+V(selection_statement)
+V(shift_expr)
+V(specifier_qualifier_list)
+V(statement)
+V(statement_list)
+V(static_assert_declaration)
+V(storage_class_specifier)
+V(struct_declaration)
+V(struct_declaration_list)
+V(struct_declarator)
+V(struct_declarator_list)
+V(struct_or_union)
+V(struct_or_union_specifier)
+V(translation_unit)
+V(type_name)
+V(type_qualifier)
+V(type_qualifier_list)
+V(type_specifier)
+V(typedef_name)
+V(unary_expr)
+V(unary_operator)

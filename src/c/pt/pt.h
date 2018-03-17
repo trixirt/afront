@@ -235,6 +235,16 @@ public:
   virtual std::string classname();
 };
 
+class character_constant : public n {
+public:
+  character_constant(lex_token);
+
+  virtual ~character_constant(){};
+  virtual void accept(visitor *);
+  virtual void notify();
+  virtual std::string classname();
+};
+
 class compound_statement : public n {
 public:
   compound_statement();
@@ -262,6 +272,18 @@ public:
   virtual std::string classname();
 };
 
+class constant : public n {
+public:
+  constant(std::shared_ptr<character_constant>);
+  constant(std::shared_ptr<enumeration_constant>);
+  constant(std::shared_ptr<floating_constant>);
+  constant(std::shared_ptr<integer_constant>);
+
+  virtual ~constant(){};
+  virtual void accept(visitor *);
+  virtual void notify();
+  virtual std::string classname();
+};
 class constant_expr : public n {
 public:
   constant_expr(std::shared_ptr<conditional_expr> a);
@@ -460,6 +482,16 @@ public:
   virtual std::string classname();
 };
 
+class floating_constant : public n {
+public:
+  floating_constant(lex_token);
+
+  virtual ~floating_constant(){};
+  virtual void accept(visitor *);
+  virtual void notify();
+  virtual std::string classname();
+};
+
 class function_body : public n {
 public:
   function_body(std::shared_ptr<compound_statement> a);
@@ -618,6 +650,16 @@ public:
   virtual std::string classname();
 };
 
+class integer_constant : public n {
+public:
+  integer_constant(lex_token);
+
+  virtual ~integer_constant(){};
+  virtual void accept(visitor *);
+  virtual void notify();
+  virtual std::string classname();
+};
+
 class iteration_statement : public n {
 public:
   iteration_statement(lex_token a, std::shared_ptr<expr> b,
@@ -769,6 +811,7 @@ public:
 class primary_expr : public n {
 public:
   primary_expr(lex_token a);
+  primary_expr(std::shared_ptr<constant> a);
   primary_expr(std::shared_ptr<identifier> a);
   primary_expr(std::shared_ptr<expr> a);
   primary_expr(std::shared_ptr<generic_selection> a);

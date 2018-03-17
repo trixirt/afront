@@ -42,6 +42,7 @@ block_item_list
 cast_expr
 compound_statement
 conditional_expr
+constant
 constant_expr
 declaration
 declaration_list
@@ -58,6 +59,7 @@ exclusive_or_expr
 expr
 expression_statement
 external_definition
+floating_constant
 function_body
 function_declarator
 function_definition
@@ -72,6 +74,7 @@ init_declarator
 init_declarator_list
 initializer
 initializer_list
+integer_constant
 iteration_statement
 jump_statement
 labeled_statement

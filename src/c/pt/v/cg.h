@@ -35,8 +35,8 @@
 
 #ifndef NADA_C_PT_VIS_CG_H
 #define NADA_C_PT_VIS_CG_H
-#include "visitor.h"
 #include "parser.tab.hh"
+#include "visitor.h"
 class cg : public visitor {
 public:
   cg();
@@ -55,8 +55,10 @@ public:
   virtual void v(block_item *a);
   virtual void v(block_item_list *a);
   virtual void v(cast_expr *a);
+  virtual void v(character_constant *a);
   virtual void v(compound_statement *a);
   virtual void v(conditional_expr *a);
+  virtual void v(constant *a);
   virtual void v(constant_expr *a);
   virtual void v(declaration *a);
   virtual void v(declaration_list *a);
@@ -73,6 +75,7 @@ public:
   virtual void v(expr *a);
   virtual void v(expression_statement *a);
   virtual void v(external_definition *a);
+  virtual void v(floating_constant *a);
   virtual void v(function_body *a);
   virtual void v(function_declarator *a);
   virtual void v(function_definition *a);
@@ -87,6 +90,7 @@ public:
   virtual void v(init_declarator_list *a);
   virtual void v(initializer *a);
   virtual void v(initializer_list *a);
+  virtual void v(integer_constant *a);
   virtual void v(iteration_statement *a);
   virtual void v(jump_statement *a);
   virtual void v(labeled_statement *a);

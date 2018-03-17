@@ -48,12 +48,14 @@ public:
   T *get() { return f; }
 };
 
-template <class T>
-class fetch_observer: public observer {
+template <class T> class fetch_observer : public observer {
 public:
-    fetch_observer(std::vector<T *> *a) { lp = a; }
-    virtual void update(T *a) { if (lp) lp->push_back(a); }
-    std::vector<T *> *lp;
+  fetch_observer(std::vector<T *> *a) { lp = a; }
+  virtual void update(T *a) {
+    if (lp)
+      lp->push_back(a);
+  }
+  std::vector<T *> *lp;
 };
 
 #endif
