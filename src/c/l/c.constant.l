@@ -33,7 +33,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* c11 6.4.4.1 */
 hexadecimal_prefix   (0x|0X)
 
 unsigned_suffix (u|U)
@@ -46,9 +45,15 @@ octal_constant       0{octal_digit}*{integer_suffix}?
 hexadecimal_constant {hexadecimal_prefix}{hexadecimal_digit}+{integer_suffix}?
 integer_constant ({decimal_constant}|{octal_constant}|{hexadecimal_constant})
 
-exponent             [Ee][+-]?{digit}+
-floating_suffix	     (f|F|l|L)
-floating_constant    {digit}+{exponent}{floating_suffix}?
+floating_suffix	(f|F|l|L)
+sign [-+]
+exponent [eE]
+digit_sequence {digit}+
+exponent_part {exponent}{sign}?{digit_sequence}
+fractional_constant (({digit_sequence}?"."{digit_sequence})|({digit_sequence}"."))
+decimal_floating_constant (({fractional_constant}{exponent_part}?{floating_suffix}?)|({digit_sequence}{exponent_part}{floating_suffix}?))
+
+floating_constant    {decimal_floating_constant}
 
 constant_char_prefix  (u|U|L)?
 c_char_graphic_char       ("!"|";"|"\""|"<"|"#"|"="|"%"|">"|"&"|"?"|"["|"("|"/"|"~"|":"|" "|"\t"|"\v"|"\r")
