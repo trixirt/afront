@@ -35,7 +35,11 @@
 
 /* c11 6.4.4.1 */
 hexadecimal_prefix   (0x|0X)
-integer_suffix       (u|U|l|L)*
+
+unsigned_suffix (u|U)
+long_suffix (l|L)
+long_long_suffix (ll|LL)
+integer_suffix  (({unsigned_suffix}{long_suffix}?)|({unsigned_suffix}{long_long_suffix})|({long_suffix}{unsigned_suffix}?)|({long_long_suffix}{unsigned_suffix}?))
 
 decimal_constant     {nonzero_digit}{digit}*{integer_suffix}?
 octal_constant       0{octal_digit}*{integer_suffix}?
