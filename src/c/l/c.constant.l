@@ -53,7 +53,13 @@ exponent_part {exponent}{sign}?{digit_sequence}
 fractional_constant (({digit_sequence}?"."{digit_sequence})|({digit_sequence}"."))
 decimal_floating_constant (({fractional_constant}{exponent_part}?{floating_suffix}?)|({digit_sequence}{exponent_part}{floating_suffix}?))
 
-floating_constant    {decimal_floating_constant}
+binary_exponent [pP]
+binary_exponent_part {binary_exponent}{sign}?{digit_sequence}
+hexadecimal_digit_sequence {hexadecimal_digit}+
+hexadecimal_fractional_constant (({hexadecimal_digit_sequence}?"."{hexadecimal_digit_sequence})|({hexadecimal_digit_sequence}"."))
+hexadecimal_floating_constant (({hexadecimal_prefix}{hexadecimal_fractional_constant}{binary_exponent_part}{floating_suffix}?)|({hexadecimal_prefix}{hexadecimal_digit_sequence}{binary_exponent_part}{floating_suffix}?))
+
+floating_constant    ({decimal_floating_constant}|{hexadecimal_floating_constant})
 
 constant_char_prefix  (u|U|L)?
 c_char_graphic_char       ("!"|";"|"\""|"<"|"#"|"="|"%"|">"|"&"|"?"|"["|"("|"/"|"~"|":"|" "|"\t"|"\v"|"\r")
