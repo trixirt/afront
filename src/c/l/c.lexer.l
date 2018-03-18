@@ -135,6 +135,7 @@ static void comment();
 %include c.digit.l
 %include c.identifier.l
 %include c.constant.l
+%include c.string_literal.l
 %include c.whitespace.l
 
 letter			[a-zA-Z_]
@@ -178,10 +179,10 @@ letter			[a-zA-Z_]
 "+="       { LEXTOK(ADD_ASSIGN); }
 "-"        { LEXTOK(SUB); }
 "-="       { LEXTOK(SUB_ASSIGN); }
-"~"        { LEXTOK(TIL); }
-"??-"      { LEXTOK(TIL); }
-"!"        { LEXTOK(EXL); }
-"."        { LEXTOK(DOT); }
+"~"                         { LEXTOK(TIL); }
+"??-"                       { LEXTOK(TIL); }
+"!"                         { LEXTOK(EXL); }
+"."                         { LEXTOK(DOT); }
 "*"                         { LEXTOK(MUL); }
 "*="                        { LEXTOK(MUL_ASSIGN); }
 "%"                         { LEXTOK(MOD); }
@@ -282,6 +283,7 @@ letter			[a-zA-Z_]
 {integer_constant}          { LEXTOK(INTEGER_CONSTANT);   }
 {floating_constant}         { LEXTOK(FLOATING_CONSTANT);   }
 {character_constant}        { LEXTOK(CHARACTER_CONSTANT);   }
+{string_literal}            { LEXTOK(STRING_LITERAL);   }
 {whitespace}                { }
 .                           { LEXTOK(UNSUPPORTED_INPUT_CHAR);   }
 %%
