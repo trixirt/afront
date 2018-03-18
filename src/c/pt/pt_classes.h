@@ -107,6 +107,7 @@ class statement;
 class statement_list;
 class static_assert_declaration;
 class storage_class_specifier;
+class string_literal;
 class struct_declaration;
 class struct_declaration_list;
 class struct_declarator;

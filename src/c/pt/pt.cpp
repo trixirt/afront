@@ -1326,7 +1326,9 @@ void postfix_expr::notify() {
 }
 std::string postfix_expr::classname() { return "postfix_expr"; }
 
-primary_expr::primary_expr(lex_token a) : n(a) {}
+//
+// primary-expression
+primary_expr::primary_expr(std::shared_ptr<string_literal> a) { *this += a; }
 primary_expr::primary_expr(std::shared_ptr<constant> a) { *this += a; }
 primary_expr::primary_expr(std::shared_ptr<identifier> a) { *this += a; }
 primary_expr::primary_expr(std::shared_ptr<expr> a) { *this += a; }
@@ -1484,6 +1486,16 @@ void storage_class_specifier::notify() {
 std::string storage_class_specifier::classname() {
   return "storage_class_specifier";
 }
+
+//
+// string-literal
+string_literal::string_literal(lex_token a) : n(a) {}
+void string_literal::accept(visitor *a) { a->v(this); }
+void string_literal::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string string_literal::classname() { return "string_literal"; }
 
 struct_declaration::struct_declaration(
     std::shared_ptr<specifier_qualifier_list> a) {

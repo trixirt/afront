@@ -101,11 +101,12 @@
 %include c.grammer.selection_statement.yy
 %include c.grammer.iteration_statement.yy
 %include c.grammer.jump_statement.yy
-%include c.grammer.translation_unit.yy
 %include c.grammer.external_definition.yy
 %include c.grammer.function_definition.yy
 %include c.grammer.function_body.yy
 %include c.grammer.identifier.yy
+%include c.grammer.string_literal.yy
+%include c.grammer.translation_unit.yy
 %ifdef c99
 %include c.grammer.block_item.yy
 %include c.grammer.block_item_list.yy

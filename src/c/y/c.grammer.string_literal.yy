@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,18 +31,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%ifdef debug.all
+%def   debug.grammer.string_literal
+%endif
 
-#ifndef AFRONT_C_PT_VIS_CG_H
-#define AFRONT_C_PT_VIS_CG_H
-#include "parser.tab.hh"
-#include "visitor.h"
-class cg : public visitor {
-public:
-  cg();
-  virtual ~cg();
-
-#include "visitor_methods.h"
-
-private:
-};
-#endif
+string_literal
+	: STRING_LITERAL { $$ = std::shared_ptr<string_literal> (new string_literal($1)); }
+	;

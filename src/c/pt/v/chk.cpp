@@ -500,6 +500,7 @@ void chk::v(storage_class_specifier *a) {
   /* terminal */
 }
 
+V(string_literal)
 V(struct_declaration)
 
 void chk::v(struct_declaration_list *a) {

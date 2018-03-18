@@ -102,6 +102,7 @@
 %type <std::shared_ptr<statement>> statement;
 %type <std::shared_ptr<static_assert_declaration>> static_assert_declaration;
 %type <std::shared_ptr<storage_class_specifier>> storage_class_specifier;
+%type <std::shared_ptr<string_literal>> string_literal;
 %type <std::shared_ptr<struct_declaration_list>> struct_declaration_list;
 %type <std::shared_ptr<struct_declaration>> struct_declaration;
 %type <std::shared_ptr<struct_declarator_list>> struct_declarator_list;

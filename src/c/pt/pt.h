@@ -810,7 +810,7 @@ public:
 
 class primary_expr : public n {
 public:
-  primary_expr(lex_token a);
+  primary_expr(std::shared_ptr<string_literal> a);
   primary_expr(std::shared_ptr<constant> a);
   primary_expr(std::shared_ptr<identifier> a);
   primary_expr(std::shared_ptr<expr> a);
@@ -911,6 +911,16 @@ public:
   storage_class_specifier(lex_token a);
   virtual ~storage_class_specifier(){};
   virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class string_literal : public n {
+public:
+  string_literal(lex_token);
+
+  virtual ~string_literal(){};
+  virtual void accept(visitor *);
   virtual void notify();
   virtual std::string classname();
 };
