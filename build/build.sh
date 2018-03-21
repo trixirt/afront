@@ -12,6 +12,11 @@ AFL_CC="afl-clang"
 AFL_CXX="afl-clang++"
 
 CXX_STD=c++17
+LLVM_INCLUDEDIR=`llvm-config --includedir`
+LLVM_LIBDIR=`llvm-config --libdir`
+LLVM_LIBS=`llvm-config --libs`
+LLVM_SYSTEM_LIBS=`llvm-config --system-libs`
+
 CXXFLAGS="-frtti -fno-limit-debug-info"
 #CXXFLAGS="$CXXFLAGS -DWARNING_TRAINING"
 
@@ -33,9 +38,9 @@ YACC=$TOOLS/bin/bison
 LYPP=$TOOLS/bin/lypp
 LYPP_FLAGS="-DDEBUG"
 CXXFLAGS="$CXXFLAGS -std=$CXX_STD -I${SRC} -I${TOOLS}/include -I${OBJ} -g -O0"
-C_INCLUDES="-I${SRC}/c -I${SRC}/c/pt -I${SRC}/l -I${SRC}/c/l -I${OBJ}/c -I${SRC}/pt -I${SRC}/at"
+C_INCLUDES="-I${LLVM_INCLUDEDIR} -I${SRC}/c -I${SRC}/c/pt -I${SRC}/l -I${SRC}/c/l -I${OBJ}/c -I${SRC}/pt -I${SRC}/at"
 FIG_INCLUDES="-I${SRC}/fig -I${SRC}/fig/pt -I${SRC}/l -I${SRC}/fig/l -I${OBJ}/fig -I${SRC}/pt -I${SRC}/at"
-CLIBS=
+CLIBS="-L${LLVM_LIBDIR} $LLVM_LIBS $LLVM_SYSTEM_LIBS"
 
 mkdir -p ${OBJ}/at
 mkdir -p ${OBJ}/ada
@@ -299,6 +304,7 @@ for v in $V; do
 	if [ -f $f ]; then
 	    rm $f
 	fi
+	$CXX $CXXFLAGS $C_INCLUDES -I${SRC}/c/pt/v  -E ${SRC}/c/pt/v/${vs}.cpp -o ${f}.ii
 	$CXX $CXXFLAGS $C_INCLUDES -I${SRC}/c/pt/v  -c ${SRC}/c/pt/v/${vs}.cpp -o ${f}
 	if [ ! -f $f ]; then
 	    echo "Failed to build $f"

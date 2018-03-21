@@ -32,11 +32,33 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 #include "at/at.h"
 #include "c/c_driver.h"
 #include "c/pt/v/cg.h"
 #include "c/pt/v/chk.h"
 #include "e.h"
+#include "llvm/Support/CommandLine.h"
+
+class cmdline_options {
+public:
+  std::string input_filename;
+  std::string output_filename;
+  bool syntax_only;
+} opt;
+
+llvm::cl::opt<std::string, true>
+    OutputFilename("o", llvm::cl::desc("Specify output filename"),
+                   llvm::cl::value_desc("filename"),
+                   llvm::cl::location(opt.output_filename));
+llvm::cl::opt<std::string, true>
+    InputFilename(llvm::cl::Positional, llvm::cl::desc("<input file>"),
+                  llvm::cl::Required, llvm::cl::location(opt.input_filename));
+
+llvm::cl::opt<bool, true> SyntaxOnly("fsyntax-only",
+                                     llvm::cl::desc("Syntax-check only"),
+                                     llvm::cl::location(opt.syntax_only),
+                                     llvm::cl::init(false));
 
 void init_types(std::shared_ptr<scope> a) {
   // 6.7.2 Type specifiers
@@ -94,12 +116,10 @@ void init_types(std::shared_ptr<scope> a) {
 int main(int argc, char *argv[]) {
   int ret = 0;
   c_driver drv;
-  char *f = nullptr;
   chk *vchk = nullptr;
   cg *vcg = nullptr;
-  if (argc == 2)
-    f = argv[1];
-  if (!drv.parse(f)) {
+  llvm::cl::ParseCommandLineOptions(argc, argv);
+  if (!drv.parse(opt.input_filename.c_str())) {
     std::cout << drv.result() << std::endl;
     ret = 1;
   } else {
@@ -115,19 +135,6 @@ int main(int argc, char *argv[]) {
       vchk = new chk(a);
       try {
         root->accept(vchk);
-        vcg = new cg();
-        try {
-          root->accept(vcg);
-
-        } catch (ice_exception &e) {
-          drv.ice(e.file(), e.line(), e.what());
-          ret = 2;
-          goto end;
-        } catch (visitor_exception &e) {
-          drv.error(e.who()->here(), e.what());
-          ret = 1;
-          goto end;
-        }
       } catch (ice_exception &e) {
         drv.ice(e.file(), e.line(), e.what());
         ret = 2;
@@ -137,6 +144,22 @@ int main(int argc, char *argv[]) {
         ret = 1;
         goto end;
       }
+    }
+    if (opt.syntax_only)
+      goto end;
+
+    vcg = new cg();
+    try {
+      root->accept(vcg);
+
+    } catch (ice_exception &e) {
+      drv.ice(e.file(), e.line(), e.what());
+      ret = 2;
+      goto end;
+    } catch (visitor_exception &e) {
+      drv.error(e.who()->here(), e.what());
+      ret = 1;
+      goto end;
     }
   }
 end:
