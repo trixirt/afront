@@ -66,60 +66,13 @@
 #include <string>
 #include "scanner.h"
 
-#undef YY_DECL
-#define	YY_DECL			 	\
-    int		\
-    scanner::yylex( afront::parser::semantic_type* lval \
-	)
-
-#define YY_USER_ACTION user_action();
-void scanner::user_action () {
-  if (s == nullptr)
-    s = std::shared_ptr<std::string> (new std::string());
-  if (s != nullptr)
-    *s += yytext;
-  loc->step();
-  loc->columns(yyleng);
-}
-void scanner::line () {
-  loc->lines();
-  ln.push_back(s);
-  s = nullptr;
-}
-
-std::shared_ptr<std::string> scanner::get_line(size_t a) {
-  std::shared_ptr<std::string> r = nullptr;
-  if (a > 0) {
-    /* input line is 1 base, vector is 0 based, so subtract 1*/
-    a--;
-    if (a < ln.size()) {
-      r = ln[a];
-    } else if (a == ln.size()) {
-      r = s;
-    }
-  }
-  return r;  
-}
-
-int scanner::yylex(afront::parser::semantic_type* lval, location* loc) {
-  *loc = *this->loc;
-  return yylex(lval);
-}
-
 void scanner::add_typename(std::string a) {
   tn.insert(a);
 }
 
-#define LEXTOK(A) lval->build<lex_token>(lex_token(yytext, *this->loc, afront::parser::token::A)); return (afront::parser::token::A)
-
-/* TBD */
-#define RESERVED(A) 
-
-int yyFlexLexer::yylex() { return -1; /* to silence undefined reference in yyFlexLex class */ }
-
 using token = afront::parser::token;
 
-#define yyterminate() return afront::parser::token::END;
+int yyFlexLexer::yylex() { return -1; /* to silence undefined reference in yyFlexLex class */ }
 
 static void comment();
 
