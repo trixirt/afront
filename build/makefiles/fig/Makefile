@@ -11,6 +11,10 @@ all: dirs $(OBJDIR)/figc1
 dirs:
 	mkdir -p $(OBJDIR)
 
+.PHONY: clean
+clean: dirs
+	- rm $(OBJDIR)/*
+
 OBJS = 	$(TOPOBJDIR)/con/m.o \
 	$(TOPOBJDIR)/pt/n.o \
 	$(OBJDIR)/driver.o \

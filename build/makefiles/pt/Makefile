@@ -15,7 +15,7 @@ dirs:
 
 .PHONY: clean
 clean: dirs
-	rm $(OBJS)
+	- rm $(OBJDIR)/*
 
 $(OBJDIR)/n.o : $(SRCDIR)/n.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -c $<

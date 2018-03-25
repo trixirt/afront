@@ -15,7 +15,7 @@ dirs:
 
 .PHONY: clean
 clean: dirs
-	rm $(OBJDIR)/*
+	- rm $(OBJDIR)/*
 
 OBJS =	$(OBJDIR)/driver.o \
 	$(OBJDIR)/c.lexer.o \
