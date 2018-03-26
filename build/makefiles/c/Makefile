@@ -63,7 +63,7 @@ $(OBJDIR)/parser.tab.cc : $(OBJDIR)/parser.yy
 	mv $(OBJDIR)/parser.tab.hh.s $(OBJDIR)/parser.tab.hh
 
 $(OBJDIR)/parser.yy : $(SRCDIR)/y/c.parser.yy
-	$(LYPP) -I $(SRCDIR)/y $(LYPP_FLAGS) $< > $@
+	$(LYPP) -I $(TOPSRCDIR)/y -I $(SRCDIR)/y $(LYPP_FLAGS) $< > $@
 
 $(OBJDIR)/n.o : $(SRCDIR)/pt/n.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<

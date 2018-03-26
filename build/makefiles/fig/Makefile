@@ -49,7 +49,7 @@ $(OBJDIR)/parser.tab.cc : $(OBJDIR)/parser.yy
 	$(YACC) -o $@ $(YACC_FLAGS) -d -v $<
 
 $(OBJDIR)/parser.yy : $(SRCDIR)/y/fig.parser.yy
-	$(LYPP) -I $(SRCDIR)/y $(LYPP_FLAGS) $< > $@
+	$(LYPP) -I $(TOPSRCDIR)/y -I $(SRCDIR)/y $(LYPP_FLAGS) $< > $@
 
 $(OBJDIR)/pt.o : $(SRCDIR)/pt/pt.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
