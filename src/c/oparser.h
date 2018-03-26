@@ -43,7 +43,7 @@ typedef std::map<int, std::shared_ptr<hs_map>> sh_map;
 
 class oparser : public afront::parser {
 public:
-  oparser(c_driver *drv);
+  oparser(lang_driver *drv);
   virtual void error(const class location &loc, const std::string &msg);
   virtual std::string yysyntax_error_(state_type yystate,
                                       const symbol_type &yyla) const;

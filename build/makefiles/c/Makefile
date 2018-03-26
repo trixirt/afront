@@ -20,7 +20,7 @@ clean: dirs
 OBJS =	$(OBJDIR)/driver.o \
 	$(OBJDIR)/c.lexer.o \
 	$(OBJDIR)/cc1.o \
-	$(OBJDIR)/c_driver.o \
+	$(OBJDIR)/lang_driver.o \
 	$(OBJDIR)/parser.o \
 	$(OBJDIR)/oparser.o \
 	$(OBJDIR)/ping.o \
@@ -51,7 +51,7 @@ $(OBJDIR)/c.lexer.l : $(SRCDIR)/l/c.lexer.l $(OBJDIR)/parser.tab.cc
 $(OBJDIR)/cc1.o : $(SRCDIR)/cc1.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
-$(OBJDIR)/c_driver.o : $(SRCDIR)/c_driver.cpp
+$(OBJDIR)/lang_driver.o : $(SRCDIR)/lang_driver.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/parser.o : $(OBJDIR)/parser.tab.cc

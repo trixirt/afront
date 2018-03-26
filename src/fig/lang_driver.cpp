@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -33,38 +33,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "c_driver.h"
-#include "oparser.h"
+#include "lang_driver.h"
+#include "parser.tab.hh"
 #include "scanner.h"
 
-void c_driver::add_typedefs(std::vector<identifier *> a) {
-  for (auto i : a) {
-    Scanner->add_typename(i->who());
-  }
-}
-
-bool c_driver::initialize_scanner(std::istream *i) {
-  bool ret = false;
-  Scanner = new scanner(i, &Filename);
-  if (Scanner) {
-    /* Additional builtin types */
-    /* XXX this should be common */
-    const char *builtin_types[] = {
-        "__builtin_va_list",
-        "",
-    };
-    for (const char **c = builtin_types; **c != '\0'; c++) {
-      Scanner->add_typename(*c);
+bool lang_driver::initialize_scanner(std::istream *i) {
+    bool ret = false;
+    Scanner = new scanner(i, &Filename);
+    if (Scanner) {
+	ret = true;
     }
-    ret = true;
-  }
-  return ret;
+    return ret;
 }
-bool c_driver::initialize_parser() {
-  bool ret = false;
-  Parser = new oparser(this);
-  if (Parser) {
-    ret = true;
-  }
-  return ret;
+bool lang_driver::initialize_parser() {
+    bool ret = false;
+    Parser = new afront::parser(this);
+    if (Parser) {
+	ret = true;
+    }
+    return ret;
 }

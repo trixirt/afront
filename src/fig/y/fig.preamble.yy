@@ -44,19 +44,12 @@
 %define parse.error verbose
 
 %code requires {
-      #include "fig_driver.h"
+      #include "lang_driver.h"
 }
 
-%parse-param { fig_driver *drv }
+%parse-param { lang_driver *drv }
 
 %code{
-   #include <iostream>
-   #include <cstdlib>
-   #include <fstream>
-   #include <string>
-   
-   /* include for all driver functions */
-   #include "fig_driver.h"
    #include "scanner.h"
 
 #undef yylex

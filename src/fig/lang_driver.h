@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,21 +31,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef AFRONT_C_DRIVER
-#define AFRONT_C_DRIVER
+#ifndef AFRONT_LANG_DRIVER
+#define AFRONT_LANG_DRIVER
 
 #include "con/driver.h"
 #include "pt/pt.h"
 
-class oparser;
-
-class c_driver : public driver {
+class lang_driver : public driver {
 public:
-  c_driver() = default;
-  virtual bool initialize_scanner(std::istream *a);
-  virtual bool initialize_parser();
-  void add_typedefs(std::vector<identifier *> a);
-  friend class oparser;
+    lang_driver() = default;
+    virtual bool initialize_scanner(std::istream *a);
+    virtual bool initialize_parser();
 };
 
 #endif

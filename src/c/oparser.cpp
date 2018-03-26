@@ -47,7 +47,7 @@
 // Clinton Jeffery, jeffery@cs.uidaho.edu
 // http://www.unicon.org/merr/
 
-oparser::oparser(c_driver *drv) : parser(drv) {
+oparser::oparser(lang_driver *drv) : parser(drv) {
 #include "oparser_warn.h"
 }
 

@@ -1,4 +1,5 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/*
+ * Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,21 +32,39 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-%include fig.grammer.configuration.yy
 
-%include fig.grammer.abi.yy
-%include fig.grammer.constant.yy
-%include fig.grammer.data_layout.yy
-%include fig.grammer.endian.yy
-%include fig.grammer.identifier.yy
-%include fig.grammer.language_type.yy
-%include fig.grammer.language_type_list.yy
-%include fig.grammer.layout_option_list.yy
-%include fig.grammer.layout_option.yy
-%include fig.grammer.mangle.yy
-%include fig.grammer.object_class.yy
-%include fig.grammer.object_list.yy
-%include fig.grammer.object.yy
-%include fig.grammer.stack.yy
-%include fig.grammer.string_constant.yy
-%include fig.grammer.triple.yy
+#include "lang_driver.h"
+#include "oparser.h"
+#include "scanner.h"
+
+void lang_driver::add_typedefs(std::vector<identifier *> a) {
+  for (auto i : a) {
+    Scanner->add_typename(i->who());
+  }
+}
+
+bool lang_driver::initialize_scanner(std::istream *i) {
+  bool ret = false;
+  Scanner = new scanner(i, &Filename);
+  if (Scanner) {
+    /* Additional builtin types */
+    /* XXX this should be common */
+    const char *builtin_types[] = {
+        "__builtin_va_list",
+        "",
+    };
+    for (const char **c = builtin_types; **c != '\0'; c++) {
+      Scanner->add_typename(*c);
+    }
+    ret = true;
+  }
+  return ret;
+}
+bool lang_driver::initialize_parser() {
+  bool ret = false;
+  Parser = new oparser(this);
+  if (Parser) {
+    ret = true;
+  }
+  return ret;
+}

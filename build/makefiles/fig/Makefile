@@ -20,7 +20,7 @@ OBJS = 	$(TOPOBJDIR)/con/m.o \
 	$(OBJDIR)/driver.o \
 	$(OBJDIR)/fig.lexer.o \
 	$(OBJDIR)/figc1.o \
-	$(OBJDIR)/fig_driver.o \
+	$(OBJDIR)/lang_driver.o \
 	$(OBJDIR)/parser.o \
 	$(OBJDIR)/pt.o \
 
@@ -39,7 +39,7 @@ $(OBJDIR)/fig.lexer.l : $(SRCDIR)/l/fig.lexer.l
 $(OBJDIR)/figc1.o : $(SRCDIR)/figc1.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
 
-$(OBJDIR)/fig_driver.o : $(SRCDIR)/fig_driver.cpp
+$(OBJDIR)/lang_driver.o : $(SRCDIR)/lang_driver.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/parser.o : $(OBJDIR)/parser.tab.cc

@@ -31,6 +31,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%include c.grammer.translation_unit.yy
+
 %include c.grammer.primary_expr.yy
 %include c.grammer.postfix_expr.yy
 %include c.grammer.argument_expr_list.yy
@@ -106,7 +108,6 @@
 %include c.grammer.function_body.yy
 %include c.grammer.identifier.yy
 %include c.grammer.string_literal.yy
-%include c.grammer.translation_unit.yy
 %ifdef c99
 %include c.grammer.block_item.yy
 %include c.grammer.block_item_list.yy

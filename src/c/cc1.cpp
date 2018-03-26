@@ -34,7 +34,7 @@
  */
 
 #include "at/at.h"
-#include "c/c_driver.h"
+#include "c/lang_driver.h"
 #include "c/pt/v/cg.h"
 #include "c/pt/v/chk.h"
 #include "e.h"
@@ -115,7 +115,7 @@ void init_types(std::shared_ptr<scope> a) {
 
 int main(int argc, char *argv[]) {
   int ret = 0;
-  c_driver drv;
+  lang_driver drv;
   chk *vchk = nullptr;
   cg *vcg = nullptr;
   llvm::cl::ParseCommandLineOptions(argc, argv);

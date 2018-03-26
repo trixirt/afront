@@ -1,5 +1,5 @@
 %locations
-%start configuration
+
 %initial-action
 {
 %ifdef DEBUG

@@ -31,21 +31,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-%include fig.grammer.configuration.yy
+#ifndef AFRONT_LANG_DRIVER
+#define AFRONT_LANG_DRIVER
 
-%include fig.grammer.abi.yy
-%include fig.grammer.constant.yy
-%include fig.grammer.data_layout.yy
-%include fig.grammer.endian.yy
-%include fig.grammer.identifier.yy
-%include fig.grammer.language_type.yy
-%include fig.grammer.language_type_list.yy
-%include fig.grammer.layout_option_list.yy
-%include fig.grammer.layout_option.yy
-%include fig.grammer.mangle.yy
-%include fig.grammer.object_class.yy
-%include fig.grammer.object_list.yy
-%include fig.grammer.object.yy
-%include fig.grammer.stack.yy
-%include fig.grammer.string_constant.yy
-%include fig.grammer.triple.yy
+#include "con/driver.h"
+#include "pt/pt.h"
+
+class oparser;
+
+class lang_driver : public driver {
+public:
+  lang_driver() = default;
+  virtual bool initialize_scanner(std::istream *a);
+  virtual bool initialize_parser();
+  void add_typedefs(std::vector<identifier *> a);
+  friend class oparser;
+};
+
+#endif
