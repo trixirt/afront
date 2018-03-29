@@ -40,27 +40,8 @@ string_literal ([\"](graphic_character)*[\"])
 
 %%
 
-"<"  { LEXTOK(LT); }
-">"  { LEXTOK(GT); }
-"="  { LEXTOK(EQ); }
-","  { LEXTOK(COM); }
-"&"  { LEXTOK(AMP); }
-"+"  { LEXTOK(PLU); }
-"-"  { LEXTOK(MIN); }
-"."  { LEXTOK(DOT); }
-"*"  { LEXTOK(MUL); }
-"["  { LEXTOK(OBR); }
-"("  { LEXTOK(OPA); }
-")"  { LEXTOK(CPA); }
-":"  { LEXTOK(COL); }
-";"  { LEXTOK(SCO); }
-"'"  { LEXTOK(SQU); }
-"|"  { LEXTOK(VER); }
-"/"  { LEXTOK(SL); }
-"<<" { LEXTOK(LTLT); }
-">>" { LEXTOK(GTGT); }
-"<=" { LEXTOK(LTE); }
-">=" { LEXTOK(GTE); }
+%include lexer.l
+
 "/=" { LEXTOK(NEQ); }
 "**" { LEXTOK(MULMUL); }
 "=>" { LEXTOK(ARROW); }

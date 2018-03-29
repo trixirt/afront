@@ -25,6 +25,20 @@ OBJS =	$(OBJDIR)/ada.lexer.o \
 	$(TOPOBJDIR)/pt/n.o \
 	$(TOPOBJDIR)/con/m.o
 
+YYS =	$(TOPSRCDIR)/y/directives.yy \
+	$(TOPSRCDIR)/y/error.yy \
+	$(TOPSRCDIR)/y/override.yy \
+	$(TOPSRCDIR)/y/preamble.yy \
+	$(TOPSRCDIR)/y/tokens.yy \
+	$(SRCDIR)/y/ada.directives.yy \
+	$(SRCDIR)/y/ada.error.yy \
+	$(SRCDIR)/y/ada.grammer.yy \
+	$(SRCDIR)/y/ada.override.yy \
+	$(SRCDIR)/y/ada.parser.yy \
+	$(SRCDIR)/y/ada.preamble.yy \
+	$(SRCDIR)/y/ada.tokens.yy \
+	$(SRCDIR)/y/ada.types.yy
+
 $(OBJDIR)/ada.lexer.o : $(OBJDIR)/ada.lexer.yy.cc
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
@@ -32,7 +46,7 @@ $(OBJDIR)/ada.lexer.yy.cc : $(OBJDIR)/ada.lexer.l
 	$(LEX) --outfile=$@ $<
 
 $(OBJDIR)/ada.lexer.l : $(SRCDIR)/l/ada.lexer.l $(OBJDIR)/parser.tab.cc
-	$(LYPP) -I$(TOPSRCDIR)/l -I$(SRCDIR)/l $< > $@
+	$(LYPP) -q -I$(TOPSRCDIR)/l -I$(SRCDIR)/l $< > $@
 
 $(OBJDIR)/ac1.o : $(SRCDIR)/ac1.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
@@ -51,8 +65,8 @@ $(OBJDIR)/parser.tab.cc : $(OBJDIR)/parser.yy
 	sed -e "s#private:#public:#g" < $(OBJDIR)/parser.tab.hh > $(OBJDIR)/parser.tab.hh.s
 	mv $(OBJDIR)/parser.tab.hh.s $(OBJDIR)/parser.tab.hh
 
-$(OBJDIR)/parser.yy : $(SRCDIR)/y/ada.parser.yy
-	$(LYPP) -I $(TOPSRCDIR)/y -I $(SRCDIR)/y $(LYPP_FLAGS) $< > $@
+$(OBJDIR)/parser.yy : $(YYS)
+	$(LYPP) -I $(TOPSRCDIR)/y -I $(SRCDIR)/y $(LYPP_FLAGS) $(SRCDIR)/y/ada.parser.yy > $@
 
 $(OBJDIR)/ac1: $(OBJS)
 	$(LD) -o $@ $(LDFLAGS) $(OBJS) $(LLVM_LIBS) $(LLVM_SYSTEM_LIBS) $(LIBS)

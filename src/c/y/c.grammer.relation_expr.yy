@@ -39,7 +39,7 @@ relation_expr
 	: shift_expr                    { $$ = std::shared_ptr<relation_expr> (new relation_expr($1)); } 
 	| relation_expr LT shift_expr   { $$ = std::shared_ptr<relation_expr> (new relation_expr($1,$2,$3)); } 
 	| relation_expr GT shift_expr   { $$ = std::shared_ptr<relation_expr> (new relation_expr($1,$2,$3)); } 
-	| relation_expr LTE shift_expr  { $$ = std::shared_ptr<relation_expr> (new relation_expr($1,$2,$3)); } 
-	| relation_expr GTE shift_expr  { $$ = std::shared_ptr<relation_expr> (new relation_expr($1,$2,$3)); } 
+	| relation_expr LTEQ shift_expr  { $$ = std::shared_ptr<relation_expr> (new relation_expr($1,$2,$3)); } 
+	| relation_expr GTEQ shift_expr  { $$ = std::shared_ptr<relation_expr> (new relation_expr($1,$2,$3)); } 
 	;
 

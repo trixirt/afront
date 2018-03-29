@@ -38,6 +38,6 @@
 
 additive_expr
 	: multiplicative_expr                    { $$ = std::shared_ptr<additive_expr> (new additive_expr($1)); } 
-	| additive_expr ADD multiplicative_expr  { $$ = std::shared_ptr<additive_expr> (new additive_expr($1,$2,$3)); } 
-	| additive_expr SUB multiplicative_expr  { $$ = std::shared_ptr<additive_expr> (new additive_expr($1,$2,$3)); } 
+	| additive_expr PLU multiplicative_expr  { $$ = std::shared_ptr<additive_expr> (new additive_expr($1,$2,$3)); } 
+	| additive_expr MIN multiplicative_expr  { $$ = std::shared_ptr<additive_expr> (new additive_expr($1,$2,$3)); } 
 	;

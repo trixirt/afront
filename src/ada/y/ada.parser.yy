@@ -32,6 +32,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 %include preamble.yy
+%include tokens.yy
 %include ada.tokens.yy
 %include ada.types.yy
 %include directives.yy

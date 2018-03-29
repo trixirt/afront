@@ -37,5 +37,5 @@
 
 inclusive_or_expr
 	: exclusive_or_expr                        { $$ = std::shared_ptr<inclusive_or_expr> (new inclusive_or_expr($1)); } 
-	| inclusive_or_expr OR exclusive_or_expr  { $$ = std::shared_ptr<inclusive_or_expr> (new inclusive_or_expr($1,$2,$3)); } 
+	| inclusive_or_expr VER exclusive_or_expr  { $$ = std::shared_ptr<inclusive_or_expr> (new inclusive_or_expr($1,$2,$3)); } 
 	;

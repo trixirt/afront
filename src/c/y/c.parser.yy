@@ -1,4 +1,5 @@
 %include preamble.yy
+%include tokens.yy
 %include c.tokens.yy
 %include c.types.yy
 %include directives.yy

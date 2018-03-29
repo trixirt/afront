@@ -38,7 +38,7 @@
 multiplicative_expr
 	: cast_expr                          { $$ = std::shared_ptr<multiplicative_expr> (new multiplicative_expr($1)); } 
 	| multiplicative_expr MUL cast_expr  { $$ = std::shared_ptr<multiplicative_expr> (new multiplicative_expr($1,$2,$3)); } 
-	| multiplicative_expr DIV cast_expr  { $$ = std::shared_ptr<multiplicative_expr> (new multiplicative_expr($1,$2,$3)); } 
-	| multiplicative_expr MOD cast_expr  { $$ = std::shared_ptr<multiplicative_expr> (new multiplicative_expr($1,$2,$3)); } 
+	| multiplicative_expr SL cast_expr  { $$ = std::shared_ptr<multiplicative_expr> (new multiplicative_expr($1,$2,$3)); } 
+	| multiplicative_expr PCT cast_expr  { $$ = std::shared_ptr<multiplicative_expr> (new multiplicative_expr($1,$2,$3)); } 
 	;
 

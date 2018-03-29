@@ -38,8 +38,8 @@
 unary_operator
 	: AMP { $$ = std::shared_ptr<unary_operator> (new unary_operator($1)); }
 	| MUL { $$ = std::shared_ptr<unary_operator> (new unary_operator($1)); }
-	| ADD { $$ = std::shared_ptr<unary_operator> (new unary_operator($1)); }
-	| SUB { $$ = std::shared_ptr<unary_operator> (new unary_operator($1)); }
+	| PLU { $$ = std::shared_ptr<unary_operator> (new unary_operator($1)); }
+	| MIN { $$ = std::shared_ptr<unary_operator> (new unary_operator($1)); }
 	| TIL { $$ = std::shared_ptr<unary_operator> (new unary_operator($1)); }
 	| EXL { $$ = std::shared_ptr<unary_operator> (new unary_operator($1)); }
 	;

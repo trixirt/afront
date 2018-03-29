@@ -1,33 +1,5 @@
-%token END 0
-%token <class lex_token> LT
 %token <class lex_token> PTR
-%token <class lex_token> GT
-%token <class lex_token> EQ
-%token <class lex_token> COM
-%token <class lex_token> ADD
-%token <class lex_token> SUB
-%token <class lex_token> DOT
-%token <class lex_token> MUL
-%token <class lex_token> DIV
-%token <class lex_token> TIL
-%token <class lex_token> EXL
-%token <class lex_token> QUE
-%token <class lex_token> OPA CPA
-%token <class lex_token> OBK CBK
-%token <class lex_token> OBR CBR
-%token <class lex_token> COL
-%token <class lex_token> MOD
-%token <class lex_token> XOR
-%token <class lex_token> SCO
-%token <class lex_token> SQU
-%token <class lex_token> AMP
-%token <class lex_token> AMPAMP
-%token <class lex_token> OR
 %token <class lex_token> OROR
-%token <class lex_token> LTLT
-%token <class lex_token> GTGT
-%token <class lex_token> LTE
-%token <class lex_token> GTE
 %token <class lex_token> ADD_ASSIGN
 %token <class lex_token> AND_ASSIGN
 %token <class lex_token> AUTO
@@ -39,7 +11,6 @@
 %token <class lex_token> DIV_ASSIGN
 %token <class lex_token> DOUBLE
 %token <class lex_token> ELIPSIS
-%token <class lex_token> EQEQ
 %token <class lex_token> ENUM
 %token <class lex_token> EXTERN
 %token <class lex_token> FLOAT

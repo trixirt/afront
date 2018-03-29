@@ -37,5 +37,5 @@
 
 exclusive_or_expr
 	: and_expr                        { $$ = std::shared_ptr<exclusive_or_expr> (new exclusive_or_expr($1)); } 
-	| exclusive_or_expr XOR and_expr  { $$ = std::shared_ptr<exclusive_or_expr> (new exclusive_or_expr($1,$2,$3)); } 
+	| exclusive_or_expr CIR and_expr  { $$ = std::shared_ptr<exclusive_or_expr> (new exclusive_or_expr($1,$2,$3)); } 
 	;

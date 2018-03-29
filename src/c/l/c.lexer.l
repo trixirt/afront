@@ -116,68 +116,44 @@ letter			[a-zA-Z_]
 "\n"       { this->line(); }
 "\\\n"     { this->line(); }
 "??/\n"    { this->line(); }
-"<"        { LEXTOK(LT); }
+
+%include lexer.l
+
 "->"       { LEXTOK(PTR); }
-">"        { LEXTOK(GT); }
-"="        { LEXTOK(EQ); }
-"=="       { LEXTOK(EQEQ); }
 "!="       { LEXTOK(NE); }
-","        { LEXTOK(COM); }
-"&"        { LEXTOK(AMP); }
-"&&"       { LEXTOK(AMPAMP); }
 "&="       { LEXTOK(AND_ASSIGN); }
-"+"        { LEXTOK(ADD); }
-"++"       { LEXTOK(INC); }
-"--"       { LEXTOK(DEC); }
-"+="       { LEXTOK(ADD_ASSIGN); }
-"-"        { LEXTOK(SUB); }
-"-="       { LEXTOK(SUB_ASSIGN); }
-"~"                         { LEXTOK(TIL); }
+"++"                        { LEXTOK(INC); }
+"--"                        { LEXTOK(DEC); }
+"+="                        { LEXTOK(ADD_ASSIGN); }
+"-="                        { LEXTOK(SUB_ASSIGN); }
 "??-"                       { LEXTOK(TIL); }
-"!"                         { LEXTOK(EXL); }
-"."                         { LEXTOK(DOT); }
-"*"                         { LEXTOK(MUL); }
 "*="                        { LEXTOK(MUL_ASSIGN); }
-"%"                         { LEXTOK(MOD); }
 "%="                        { LEXTOK(MOD_ASSIGN); }
-"?"                         { LEXTOK(QUE); }
-"["                         { LEXTOK(OBK); }
 "??("                       { LEXTOK(OBK); }
 "<:"                        { LEXTOK(OBK); }
-"]"                         { LEXTOK(CBK); }
 "??)"                       { LEXTOK(CBK); }
 ":>"                        { LEXTOK(CBK); }
-"{"                         { LEXTOK(OBR); }
 "??<"                       { LEXTOK(OBR); }
 "<%"                        { LEXTOK(OBR); }
-"}"                         { LEXTOK(CBR); }
 "??>"                       { LEXTOK(CBR); }
 "%>"                        { LEXTOK(CBR); }
-"("                         { LEXTOK(OPA); }
-")"                         { LEXTOK(CPA); }
-":"                         { LEXTOK(COL); }
-";"                         { LEXTOK(SCO); }
-"'"                         { LEXTOK(SQU); }
-"|"                         { LEXTOK(OR); }
-"??!"                       { LEXTOK(OR); }
+"??!"                       { LEXTOK(VER); }
 "||"                        { LEXTOK(OROR); }
 "??!|"                      { LEXTOK(OROR); }
 "|??!"                      { LEXTOK(OROR); }
 "??!??!"                    { LEXTOK(OROR); }
 "|="                        { LEXTOK(OR_ASSIGN); }
 "??!="                      { LEXTOK(OR_ASSIGN); }
-"/"                         { LEXTOK(DIV); }
+
 "/="                        { LEXTOK(DIV_ASSIGN); }
-"^"                         { LEXTOK(XOR); }
-"??'"                       { LEXTOK(XOR); }
+"??'"                       { LEXTOK(CIR); }
 "^="                        { LEXTOK(XOR_ASSIGN); }
 "??'="                      { LEXTOK(XOR_ASSIGN); }
-"<<"                        { LEXTOK(LTLT); }
+
 "<<="                       { LEXTOK(LEFT_ASSIGN); }
-">>"                        { LEXTOK(GTGT); }
+
 ">>="                       { LEXTOK(RIGHT_ASSIGN); }
-"<="                        { LEXTOK(LTE); }
-">="                        { LEXTOK(GTE); }
+
 "..."                       { LEXTOK(ELIPSIS); }
 "auto"                      { LEXTOK(AUTO); }
 "break"                     { LEXTOK(BREAK); }
