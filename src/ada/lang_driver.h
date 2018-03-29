@@ -31,18 +31,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-%include preamble.yy
-%include ada.tokens.yy
-%include ada.types.yy
-%include directives.yy
+#ifndef AFRONT_LANG_DRIVER
+#define AFRONT_LANG_DRIVER
 
-%%
+#include "con/driver.h"
+#include "pt/pt.h"
 
-%include ada.grammer.yy
+class lang_driver : public driver {
+public:
+    lang_driver() = default;
+    virtual ~lang_driver();
+    
+    bool parse(const char *filename);
+    void add_char();
+    
+    std::string result();
+    int yylex(void *a, void *b);
+    
+};
 
-%%
-
-%include error.yy
-
-
-
+#endif

@@ -1,7 +1,7 @@
-%include c.preamble.yy
+%include preamble.yy
 %include c.tokens.yy
 %include c.types.yy
-%include c.directives.yy
+%include directives.yy
 
 %%
 
@@ -9,5 +9,5 @@
 
 %%
 
-%include c.error.yy
-%include c.override.yy
+%include error.yy
+%include override.yy

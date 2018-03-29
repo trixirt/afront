@@ -1,7 +1,7 @@
-%include fig.preamble.yy
+%include preamble.yy
 %include fig.tokens.yy
 %include fig.types.yy
-%include fig.directives.yy
+%include directives.yy
 
 %%
 
@@ -9,4 +9,4 @@
 
 %%
 
-%include fig.error.yy
+%include error.yy

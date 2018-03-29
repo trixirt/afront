@@ -1,7 +1,7 @@
 TOP=../..
 include $(TOP)/build/makefiles/Makefile.pre.inc
 
-SUBDIRS = con pt fig c
+SUBDIRS = con pt fig c ada
 
 include $(TOP)/build/makefiles/Makefile.inc
 

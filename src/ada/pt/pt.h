@@ -1,4 +1,5 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/*
+ * Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,18 +32,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-%include preamble.yy
-%include ada.tokens.yy
-%include ada.types.yy
-%include directives.yy
+#ifndef AFRONT_ADA_PT_PT_H
+#define AFRONT_ADA_PT_PT_H
 
-%%
+#include "n.h"
+#include "v/visitor.h"
 
-%include ada.grammer.yy
-
-%%
-
-%include error.yy
-
-
-
+#endif

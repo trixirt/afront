@@ -31,18 +31,5 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-%include preamble.yy
-%include ada.tokens.yy
-%include ada.types.yy
-%include directives.yy
-
-%%
-
-%include ada.grammer.yy
-
-%%
-
-%include error.yy
-
-
-
+#include "lang_driver.h"
+#include "scanner.h"

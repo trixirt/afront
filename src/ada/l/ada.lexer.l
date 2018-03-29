@@ -1,9 +1,11 @@
 %{
 
 #include "scanner.h"
-#include "ada.parser.tab.hh"
+#include "parser.tab.hh"
 
-using token = Ada::Parser::token;
+using token = afront::parser::token;
+int yyFlexLexer::yylex() { return -1; /* to silence undefined reference in yyFlexLex class */ }
+
 
 %}
 
@@ -73,7 +75,7 @@ string_literal ([\"](graphic_character)*[\"])
 "and"      { LEXTOK(AND); }
 "array"    { LEXTOK(ARRAY); }
 "at"       { LEXTOK(AT); }
-"begin"    { LEXTOK(BEGIN); }
+"begin"    { LEXTOK(KEYWORD_BEGIN); }
 "body"     { LEXTOK(BODY); }
 "case"     { LEXTOK(CASE); }
 "constant" { LEXTOK(CONSTANT); }
@@ -100,7 +102,7 @@ string_literal ([\"](graphic_character)*[\"])
 "mod" { LEXTOK(MOD); }
 "new" { LEXTOK(NEW); }
 "not" { LEXTOK(NOT); }
-"null" { LEXTOK(NULL); }
+"null" { LEXTOK(KEYWORD_NULL); }
 "of" { LEXTOK(OF); }
 "or" { LEXTOK(OR); }
 "others" { LEXTOK(OTHERS); }

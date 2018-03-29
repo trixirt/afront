@@ -1,4 +1,5 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/*
+ * Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,18 +32,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-%include preamble.yy
-%include ada.tokens.yy
-%include ada.types.yy
-%include directives.yy
+#include "pt.h"
+#include "v/observer.h"
 
-%%
+void m::accept(visitor *a) { a->v(this); };
+void m::caccept(visitor *a) {
+  a->descend();
 
-%include ada.grammer.yy
+  for (auto i : c)
+    i->accept(a);
 
-%%
+  a->ascend();
+}
 
-%include error.yy
-
-
-
+void n::accept(visitor *a) { a->v(this); };
+void n::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
