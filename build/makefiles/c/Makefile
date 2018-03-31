@@ -131,6 +131,13 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(SRCDIR)/y/c.tokens.yy \
 	$(SRCDIR)/y/c.types.yy
 
+LS = 	$(TOPSRCDIR)/l/digit.l \
+	$(TOPSRCDIR)/l/lexer.l \
+	$(SRCDIR)/l/c.constant.l \
+	$(SRCDIR)/l/c.identifier.l \
+	$(SRCDIR)/l/c.lexer.l \
+	$(SRCDIR)/l/c.string_literal.l \
+	$(SRCDIR)/l/c.whitespace.l
 
 $(OBJDIR)/driver.o : $(TOPSRCDIR)/con/driver.cpp $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
@@ -141,8 +148,8 @@ $(OBJDIR)/c.lexer.o : $(OBJDIR)/c.lexer.yy.cc
 $(OBJDIR)/c.lexer.yy.cc : $(OBJDIR)/c.lexer.l 
 	$(LEX) --outfile=$@ $<
 
-$(OBJDIR)/c.lexer.l : $(SRCDIR)/l/c.lexer.l $(OBJDIR)/parser.tab.cc
-	$(LYPP) -q -I$(TOPSRCDIR)/l -I$(SRCDIR)/l $< > $@
+$(OBJDIR)/c.lexer.l : $(LS) $(OBJDIR)/parser.tab.cc
+	$(LYPP) -q -I$(TOPSRCDIR)/l -I$(SRCDIR)/l $(SRCDIR)/l/c.lexer.l > $@
 
 $(OBJDIR)/cc1.o : $(SRCDIR)/cc1.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<

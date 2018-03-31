@@ -39,14 +39,20 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(SRCDIR)/y/ada.tokens.yy \
 	$(SRCDIR)/y/ada.types.yy
 
+LS = 	$(TOPSRCDIR)/l/digit.l \
+	$(TOPSRCDIR)/l/lexer.l \
+	$(SRCDIR)/l/ada.identifier.l \
+	$(SRCDIR)/l/ada.lexer.l \
+	$(SRCDIR)/l/ada.numeric_literal.l
+
 $(OBJDIR)/ada.lexer.o : $(OBJDIR)/ada.lexer.yy.cc
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/ada.lexer.yy.cc : $(OBJDIR)/ada.lexer.l 
 	$(LEX) --outfile=$@ $<
 
-$(OBJDIR)/ada.lexer.l : $(SRCDIR)/l/ada.lexer.l $(OBJDIR)/parser.tab.cc
-	$(LYPP) -q -I$(TOPSRCDIR)/l -I$(SRCDIR)/l $< > $@
+$(OBJDIR)/ada.lexer.l : $(LS) $(OBJDIR)/parser.tab.cc
+	$(LYPP) -q -I$(TOPSRCDIR)/l -I$(SRCDIR)/l $(SRCDIR)/l/ada.lexer.l > $@
 
 $(OBJDIR)/ac1.o : $(SRCDIR)/ac1.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<

@@ -13,28 +13,21 @@ int yyFlexLexer::yylex() { return -1; /* to silence undefined reference in yyFle
 %option noyywrap
 %option c++
 
-digit                   [0-9]
-dot                     [.]
+%include digit.l
+%include ada.identifier.l
+%include ada.numeric_literal.l
+
 lower_case_letter       [a-z]
 other_special_character [!$%?@[\]^`{}~]
 space_character         [ ]
 special_character       ["#&'()*+,-./:;<=>_|]
-underline               [_]
 upper_case_letter       [A-Z]
 
 graphic_character ((basic_graphic_character) | (lower_case_letter) | (other_special_character))
 basic_graphic_character ((upper_case_letter) | (digit) | (special_character) | (space_character))
 basic_character (basic_graphic_character)
-letter ((upper_case_letter) | (lower_case_letter))
 letter_or_digit ((letter) | (digit))
-identifier letter ((underline)?(letter_or_digit))*
-integer digit ((unerline)?(digit))*
-exponent ((E [+]? integer) | (E - integer))
-decimal_literal ((integer) (dot integer)? (exponent))
-extended_digit ((digit) | (letter))
-based_integer ((extended_digit)((underline)?(extended_digit))*
-base (integer)
-based_literal ((base) # (based_integer)((dot)(based_integer))?) # (exponent)?
+
 character_literal (['](graphic_character)['])
 string_literal ([\"](graphic_character)*[\"])
 
@@ -111,7 +104,7 @@ string_literal ([\"](graphic_character)*[\"])
 "xor" { LEXTOK(XOR); }
 "character_literal" { LEXTOK(CHARACTER_LITERAL); }
 "string_literal"    { LEXTOK(STRING_LITERAL); }
-"numeric_literal"   { LEXTOK(NUMERIC_LITERAL); }
-"identifier"        { LEXTOK(IDENTIFIER); }
+{numeric_literal}   { LEXTOK(NUMERIC_LITERAL); }
+{identifier}        { LEXTOK(IDENTIFIER); }
 
 %%

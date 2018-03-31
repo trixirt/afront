@@ -33,8 +33,4 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-digit		     [0-9]
-nonzero_digit        [1-9]
-octal_digit          [0-7]
-hexadecimal_digit    [a-fA-F0-9]
-nondigit             [a-zA-Z_]
+identifier           {letter}({digit}|{nondigit})*

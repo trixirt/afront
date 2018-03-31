@@ -85,14 +85,11 @@ static void comment();
 %x COMMENT CPP_COMMENT PP_DIRECTIVE
 
 
-%include c.digit.l
+%include digit.l
 %include c.identifier.l
 %include c.constant.l
 %include c.string_literal.l
 %include c.whitespace.l
-
-letter			[a-zA-Z_]
-
 
 %%
 %{

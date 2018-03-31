@@ -46,17 +46,16 @@ hexadecimal_constant {hexadecimal_prefix}{hexadecimal_digit}+{integer_suffix}?
 integer_constant ({decimal_constant}|{octal_constant}|{hexadecimal_constant})
 
 floating_suffix	(f|F|l|L)
-sign [-+]
 exponent [eE]
 digit_sequence {digit}+
 exponent_part {exponent}{sign}?{digit_sequence}
-fractional_constant (({digit_sequence}?"."{digit_sequence})|({digit_sequence}"."))
+fractional_constant (({digit_sequence}?{dot}{digit_sequence})|({digit_sequence}{dot}))
 decimal_floating_constant (({fractional_constant}{exponent_part}?{floating_suffix}?)|({digit_sequence}{exponent_part}{floating_suffix}?))
 
 binary_exponent [pP]
 binary_exponent_part {binary_exponent}{sign}?{digit_sequence}
 hexadecimal_digit_sequence {hexadecimal_digit}+
-hexadecimal_fractional_constant (({hexadecimal_digit_sequence}?"."{hexadecimal_digit_sequence})|({hexadecimal_digit_sequence}"."))
+hexadecimal_fractional_constant (({hexadecimal_digit_sequence}?{dot}{hexadecimal_digit_sequence})|({hexadecimal_digit_sequence}{dot}))
 hexadecimal_floating_constant (({hexadecimal_prefix}{hexadecimal_fractional_constant}{binary_exponent_part}{floating_suffix}?)|({hexadecimal_prefix}{hexadecimal_digit_sequence}{binary_exponent_part}{floating_suffix}?))
 
 floating_constant    ({decimal_floating_constant}|{hexadecimal_floating_constant})
