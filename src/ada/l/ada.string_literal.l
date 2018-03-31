@@ -33,17 +33,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-digit		     [0-9]
-nonzero_digit        [1-9]
-octal_digit          [0-7]
-hexadecimal_digit    [a-fA-F0-9]
-letter               [a-zA-Z]
-lower_letter         [a-z]
-upper_letter         [A-Z]
-nondigit             [a-zA-Z_]
-underline            [_]
-dot                  [.]
-sign                 [-+]
-sq                   [']
-dq                   ["]
-
+non_quotation_mark_special_character       [#&'()*+,-./:;<=>_|]
+non_quotation_mark_graphic_character ({letter}|{digit}|{space_character}|{non_quotation_mark_special_character}|{other_special_character})
+string_element ({dq}{dq}|{non_quotation_mark_graphic_character})
+string_literal {dq}{string_element}*{dq}

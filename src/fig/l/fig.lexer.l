@@ -53,11 +53,8 @@ static void comment();
 %x C_COMMENT CPP_COMMENT SH_COMMENT
 
 
-%include c.digit.l
+%include digit.l
 %include c.constant.l
-
-letter			[a-zA-Z_]
-
 
 %%
 %{

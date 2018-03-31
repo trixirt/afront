@@ -41,9 +41,11 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 
 LS = 	$(TOPSRCDIR)/l/digit.l \
 	$(TOPSRCDIR)/l/lexer.l \
+	$(SRCDIR)/l/ada.character_literal.l \
 	$(SRCDIR)/l/ada.identifier.l \
 	$(SRCDIR)/l/ada.lexer.l \
-	$(SRCDIR)/l/ada.numeric_literal.l
+	$(SRCDIR)/l/ada.numeric_literal.l \
+	$(SRCDIR)/l/ada.string_literal.l
 
 $(OBJDIR)/ada.lexer.o : $(OBJDIR)/ada.lexer.yy.cc
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<

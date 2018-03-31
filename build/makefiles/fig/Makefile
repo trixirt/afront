@@ -34,7 +34,7 @@ $(OBJDIR)/fig.lexer.yy.cc : $(OBJDIR)/fig.lexer.l $(OBJDIR)/parser.tab.cc
 	$(LEX) --outfile=$@ $<
 
 $(OBJDIR)/fig.lexer.l : $(SRCDIR)/l/fig.lexer.l 
-	$(LYPP) -I$(SRCDIR)/l -I$(TOPSRCDIR)/c/l  $< > $@
+	$(LYPP) -I$(TOPSRCDIR)/l -I$(SRCDIR)/l -I$(TOPSRCDIR)/c/l  $< > $@
 
 $(OBJDIR)/figc1.o : $(SRCDIR)/figc1.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<

@@ -33,17 +33,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-digit		     [0-9]
-nonzero_digit        [1-9]
-octal_digit          [0-7]
-hexadecimal_digit    [a-fA-F0-9]
-letter               [a-zA-Z]
-lower_letter         [a-z]
-upper_letter         [A-Z]
-nondigit             [a-zA-Z_]
-underline            [_]
-dot                  [.]
-sign                 [-+]
-sq                   [']
-dq                   ["]
+other_special_character [!$%?@[\]^`{}~]
+space_character         [ ]
+special_character       ["#&'()*+,-./:;<=>_|]
+basic_graphic_character ({upper_letter}|{digit}|{special_character}|{space_character})
+graphic_character ({basic_graphic_character}|{lower_letter}|{other_special_character})
 
+character_literal {sq}{graphic_character}{sq}

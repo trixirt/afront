@@ -16,20 +16,8 @@ int yyFlexLexer::yylex() { return -1; /* to silence undefined reference in yyFle
 %include digit.l
 %include ada.identifier.l
 %include ada.numeric_literal.l
-
-lower_case_letter       [a-z]
-other_special_character [!$%?@[\]^`{}~]
-space_character         [ ]
-special_character       ["#&'()*+,-./:;<=>_|]
-upper_case_letter       [A-Z]
-
-graphic_character ((basic_graphic_character) | (lower_case_letter) | (other_special_character))
-basic_graphic_character ((upper_case_letter) | (digit) | (special_character) | (space_character))
-basic_character (basic_graphic_character)
-letter_or_digit ((letter) | (digit))
-
-character_literal (['](graphic_character)['])
-string_literal ([\"](graphic_character)*[\"])
+%include ada.character_literal.l
+%include ada.string_literal.l
 
 %%
 
@@ -102,8 +90,8 @@ string_literal ([\"](graphic_character)*[\"])
 "while" { LEXTOK(WHILE); }
 "with" { LEXTOK(WITH); }
 "xor" { LEXTOK(XOR); }
-"character_literal" { LEXTOK(CHARACTER_LITERAL); }
-"string_literal"    { LEXTOK(STRING_LITERAL); }
+{character_literal} { LEXTOK(CHARACTER_LITERAL); }
+{string_literal}    { LEXTOK(STRING_LITERAL); }
 {numeric_literal}   { LEXTOK(NUMERIC_LITERAL); }
 {identifier}        { LEXTOK(IDENTIFIER); }
 

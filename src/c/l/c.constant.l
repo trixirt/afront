@@ -70,5 +70,5 @@ universal_character_name ("\\u"{hex_quad}|"\\U"{hex_quad}{hex_quad})
 escape_sequence ({simple_escape_sequence}|{octal_escape_sequence}|{hexadecimal_escape_sequence}|{universal_character_name})
 c_char  [a-zA-Z0-9]|{c_char_graphic_char}|{escape_sequence}
 c_char_sequence  {c_char}
-character_constant {constant_char_prefix}"'"{c_char_sequence}"'"
+character_constant {constant_char_prefix}{sq}{c_char_sequence}{sq}
 		       
