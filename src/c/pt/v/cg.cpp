@@ -36,6 +36,7 @@
 #include "cg.h"
 #include "e.h"
 #include "pt.h"
+#include "cc1.h"
 
 #define V(C)                                                                   \
   void cg::v(C *a) { a->caccept(this); }

@@ -151,8 +151,8 @@ $(OBJDIR)/c.lexer.yy.cc : $(OBJDIR)/c.lexer.l
 $(OBJDIR)/c.lexer.l : $(LS) $(OBJDIR)/parser.tab.cc
 	$(LYPP) -q -I$(TOPSRCDIR)/l -I$(SRCDIR)/l $(SRCDIR)/l/c.lexer.l > $@
 
-$(OBJDIR)/cc1.o : $(SRCDIR)/cc1.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+$(OBJDIR)/cc1.o : $(SRCDIR)/cc1.h $(SRCDIR)/cc1.opt $(SRCDIR)/cc1.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/cc1.cpp
 
 $(OBJDIR)/lang_driver.o : $(SRCDIR)/lang_driver.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<

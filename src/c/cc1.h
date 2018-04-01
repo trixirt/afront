@@ -1,4 +1,5 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/*
+ * Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,7 +32,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-data_layout
-	: endian object_list                    { $$ = std::shared_ptr<fig::data_layout> (new fig::data_layout($1, $2)); }
-	| endian layout_option_list object_list { $$ = std::shared_ptr<fig::data_layout> (new fig::data_layout($1, $2, $3)); }
-	;
+#ifndef AFRONT_CC1_H
+#define AFRONT_CC1_H
+
+class cmdline_options {
+public:
+    std::string fig_filename;
+    std::string input_filename;
+    std::string output_filename;
+
+    bool flag_syntax_only;
+    bool flag_verbose;
+};
+
+extern cmdline_options opt;
+
+#endif

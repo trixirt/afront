@@ -1,4 +1,5 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/*
+ * Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,7 +32,26 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-data_layout
-	: endian object_list                    { $$ = std::shared_ptr<fig::data_layout> (new fig::data_layout($1, $2)); }
-	| endian layout_option_list object_list { $$ = std::shared_ptr<fig::data_layout> (new fig::data_layout($1, $2, $3)); }
-	;
+llvm::cl::opt<std::string, true>
+    ConfigurationFilename("f", llvm::cl::desc("Specify configuration filename"),
+			  llvm::cl::value_desc("configuration file"),
+			  llvm::cl::location(opt.fig_filename));
+
+llvm::cl::opt<std::string, true>
+    InputFilename(llvm::cl::Positional, llvm::cl::desc("<input file>"),
+                  llvm::cl::Required, llvm::cl::location(opt.input_filename));
+
+llvm::cl::opt<std::string, true>
+    OutputFilename("o", llvm::cl::desc("Specify output filename"),
+                   llvm::cl::value_desc("output file"),
+                   llvm::cl::location(opt.output_filename));
+
+llvm::cl::opt<bool, true> SyntaxOnly("fsyntax-only",
+                                     llvm::cl::desc("Syntax-check only"),
+                                     llvm::cl::location(opt.flag_syntax_only),
+                                     llvm::cl::init(false));
+
+llvm::cl::opt<bool, true> Verbose("verbose",
+				  llvm::cl::desc("verbose output"),
+				  llvm::cl::location(opt.flag_verbose),
+				  llvm::cl::init(false));

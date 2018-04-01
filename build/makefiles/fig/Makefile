@@ -24,6 +24,33 @@ OBJS = 	$(TOPOBJDIR)/con/m.o \
 	$(OBJDIR)/parser.o \
 	$(OBJDIR)/pt.o \
 
+YYS =	$(TOPSRCDIR)/y/directives.yy \
+	$(TOPSRCDIR)/y/error.yy \
+	$(TOPSRCDIR)/y/override.yy \
+	$(TOPSRCDIR)/y/preamble.yy \
+	$(TOPSRCDIR)/y/tokens.yy \
+	$(SRCDIR)/y/fig.grammer.abi.yy \
+	$(SRCDIR)/y/fig.grammer.configuration.yy \
+	$(SRCDIR)/y/fig.grammer.constant.yy \
+	$(SRCDIR)/y/fig.grammer.data_layout.yy \
+	$(SRCDIR)/y/fig.grammer.endian.yy \
+	$(SRCDIR)/y/fig.grammer.identifier.yy \
+	$(SRCDIR)/y/fig.grammer.language_type_list.yy \
+	$(SRCDIR)/y/fig.grammer.language_type.yy \
+	$(SRCDIR)/y/fig.grammer.layout_option_list.yy \
+	$(SRCDIR)/y/fig.grammer.layout_option.yy \
+	$(SRCDIR)/y/fig.grammer.mangle.yy \
+	$(SRCDIR)/y/fig.grammer.object_class.yy \
+	$(SRCDIR)/y/fig.grammer.object_list.yy \
+	$(SRCDIR)/y/fig.grammer.object.yy \
+	$(SRCDIR)/y/fig.grammer.stack.yy \
+	$(SRCDIR)/y/fig.grammer.string_constant.yy \
+	$(SRCDIR)/y/fig.grammer.triple.yy \
+	$(SRCDIR)/y/fig.grammer.yy \
+	$(SRCDIR)/y/fig.parser.yy \
+	$(SRCDIR)/y/fig.tokens.yy \
+	$(SRCDIR)/y/fig.types.yy
+
 $(OBJDIR)/driver.o : $(TOPSRCDIR)/con/driver.cpp $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
 
@@ -48,11 +75,11 @@ $(OBJDIR)/parser.o : $(OBJDIR)/parser.tab.cc
 $(OBJDIR)/parser.tab.cc : $(OBJDIR)/parser.yy
 	$(YACC) -o $@ $(YACC_FLAGS) -d -v $<
 
-$(OBJDIR)/parser.yy : $(SRCDIR)/y/fig.parser.yy
-	$(LYPP) -I $(TOPSRCDIR)/y -I $(SRCDIR)/y $(LYPP_FLAGS) $< > $@
+$(OBJDIR)/parser.yy : $(YYS)
+	$(LYPP) -I $(TOPSRCDIR)/y -I $(SRCDIR)/y $(LYPP_FLAGS) $(SRCDIR)/y/fig.parser.yy > $@
 
-$(OBJDIR)/pt.o : $(SRCDIR)/pt/pt.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
+$(OBJDIR)/pt.o : $(SRCDIR)/pt/pt.h $(SRCDIR)/pt/pt.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $(SRCDIR)/pt/pt.cpp
 
 $(OBJDIR)/figc1: $(OBJS)
 	$(LD) -o $@ $(LDFLAGS) $(OBJS) $(LLVM_LIBS) $(LLVM_SYSTEM_LIBS) $(LIBS)

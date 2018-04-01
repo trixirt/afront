@@ -35,6 +35,22 @@
 #include "pt.h"
 #include "observer.h"
 
+void m::accept(visitor *a) { a->v(this); };
+void m::caccept(visitor *a) {
+  a->descend();
+  for (auto i : c)
+    i->accept(a);
+  a->ascend();
+}
+
+void n::accept(visitor *a) { a->v(this); };
+void n::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+
+namespace fig {
+
 abi::abi(std::shared_ptr<string_constant> a) { *this += a; }
 void abi::accept(visitor *a) { a->v(this); }
 void abi::notify() {
@@ -139,7 +155,7 @@ void layout_option_list::notify() {
     i->update(this);
 }
 
-layout_option::layout_option(std::shared_ptr<target_stack> a) { *this += a; }
+layout_option::layout_option(std::shared_ptr<stack> a) { *this += a; }
 layout_option::layout_option(std::shared_ptr<mangle> a) { *this += a; }
 layout_option::layout_option(std::shared_ptr<abi> a) { *this += a; }
 void layout_option::accept(visitor *a) { a->v(this); }
@@ -148,23 +164,9 @@ void layout_option::notify() {
     i->update(this);
 }
 
-void m::accept(visitor *a) { a->v(this); };
-void m::caccept(visitor *a) {
-  a->descend();
-  for (auto i : c)
-    i->accept(a);
-  a->ascend();
-}
-
 mangle::mangle(std::shared_ptr<string_constant> a) { *this += a; }
 void mangle::accept(visitor *a) { a->v(this); }
 void mangle::notify() {
-  for (auto i : observers)
-    i->update(this);
-}
-
-void n::accept(visitor *a) { a->v(this); };
-void n::notify() {
   for (auto i : observers)
     i->update(this);
 }
@@ -206,9 +208,9 @@ void string_constant::notify() {
     i->update(this);
 }
 
-target_stack::target_stack(std::shared_ptr<constant> a) { *this += a; }
-void target_stack::accept(visitor *a) { a->v(this); }
-void target_stack::notify() {
+stack::stack(std::shared_ptr<constant> a) { *this += a; }
+void stack::accept(visitor *a) { a->v(this); }
+void stack::notify() {
   for (auto i : observers)
     i->update(this);
 }
@@ -219,3 +221,5 @@ void triple::notify() {
   for (auto i : observers)
     i->update(this);
 }
+
+} // end namespace fig

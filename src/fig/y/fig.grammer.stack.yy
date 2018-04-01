@@ -32,5 +32,5 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 stack
-	: STACK constant   { $$ = std::shared_ptr<target_stack> (new target_stack($2)); }
+	: STACK constant   { $$ = std::shared_ptr<fig::stack> (new fig::stack($2)); }
 	;

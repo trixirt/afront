@@ -38,6 +38,8 @@
 #include "n.h"
 #include "v/visitor.h"
 
+namespace fig {
+
 class abi;
 class configuration;
 class constant;
@@ -53,7 +55,7 @@ class object_class;
 class object_list;
 class object;
 class string_constant;
-class target_stack;
+class stack;
 class triple;
 
 class abi : public n {
@@ -139,7 +141,7 @@ public:
 
 class layout_option : public n {
 public:
-  layout_option(std::shared_ptr<target_stack> a);
+  layout_option(std::shared_ptr<stack> a);
   layout_option(std::shared_ptr<mangle> a);
   layout_option(std::shared_ptr<abi> a);
   virtual ~layout_option(){};
@@ -189,10 +191,10 @@ public:
   virtual void notify();
 };
 
-class target_stack : public n {
+class stack : public n {
 public:
-  target_stack(std::shared_ptr<constant> a);
-  virtual ~target_stack(){};
+  stack(std::shared_ptr<constant> a);
+  virtual ~stack(){};
   virtual void accept(visitor *a);
   virtual void notify();
 };
@@ -205,4 +207,5 @@ public:
   virtual void notify();
 };
 
+} // end namespace fig
 #endif

@@ -32,7 +32,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 object_class
-	: INTEGER   { $$ = std::shared_ptr<object_class> (new object_class($1)); }
-	| REAL      { $$ = std::shared_ptr<object_class> (new object_class($1)); }
-	| VECTOR    { $$ = std::shared_ptr<object_class> (new object_class($1)); }
+	: INTEGER   { $$ = std::shared_ptr<fig::object_class> (new fig::object_class($1)); }
+	| REAL      { $$ = std::shared_ptr<fig::object_class> (new fig::object_class($1)); }
+	| VECTOR    { $$ = std::shared_ptr<fig::object_class> (new fig::object_class($1)); }
 	;

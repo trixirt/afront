@@ -33,6 +33,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include "cc1.h"
 #include "at/at.h"
 #include "c/lang_driver.h"
 #include "c/pt/v/cg.h"
@@ -40,25 +41,8 @@
 #include "e.h"
 #include "llvm/Support/CommandLine.h"
 
-class cmdline_options {
-public:
-  std::string input_filename;
-  std::string output_filename;
-  bool syntax_only;
-} opt;
-
-llvm::cl::opt<std::string, true>
-    OutputFilename("o", llvm::cl::desc("Specify output filename"),
-                   llvm::cl::value_desc("filename"),
-                   llvm::cl::location(opt.output_filename));
-llvm::cl::opt<std::string, true>
-    InputFilename(llvm::cl::Positional, llvm::cl::desc("<input file>"),
-                  llvm::cl::Required, llvm::cl::location(opt.input_filename));
-
-llvm::cl::opt<bool, true> SyntaxOnly("fsyntax-only",
-                                     llvm::cl::desc("Syntax-check only"),
-                                     llvm::cl::location(opt.syntax_only),
-                                     llvm::cl::init(false));
+class cmdline_options opt;
+#include "cc1.opt"
 
 void init_types(std::shared_ptr<scope> a) {
   // 6.7.2 Type specifiers
@@ -145,7 +129,7 @@ int main(int argc, char *argv[]) {
         goto end;
       }
     }
-    if (opt.syntax_only)
+    if (opt.flag_syntax_only)
       goto end;
 
     vcg = new cg();
