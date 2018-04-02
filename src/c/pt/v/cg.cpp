@@ -34,14 +34,25 @@
  */
 
 #include "cg.h"
-#include "e.h"
-#include "pt.h"
 #include "cc1.h"
+#include "e.h"
+#include "fig.h"
+#include "pt.h"
 
 #define V(C)                                                                   \
   void cg::v(C *a) { a->caccept(this); }
 
-cg::cg() {}
+cg::cg() {
+  config = nullptr;
+
+  if (opt.fig_filename.size()) {
+    config = new llvm_configuration(opt.fig_filename);
+    if (config->has_triple()) {
+      if (opt.flag_verbose)
+        std::cout << "Triple : " << config->triple() << std::endl;
+    }
+  }
+}
 cg::~cg() {}
 
 V(abstract_array_declarator)

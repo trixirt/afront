@@ -1,9 +1,10 @@
+AR     := ar
 CXX    := clang++
 LD     := $(CXX)
-FORMAT := clang-format
-SCAN   := scan-build
-LYPP   := $(TOP)/tools/install/bin/lypp
+LLD    := ld.lld
 LEX    := $(TOP)/tools/install/bin/flex
+LYPP   := $(TOP)/tools/install/bin/lypp
+RANLIB := ranlib
 YACC   := $(TOP)/tools/install/bin/bison
 
 WARN_FLAGS=-Werror -Wpedantic
@@ -11,7 +12,7 @@ DEBUG_FLAGS=-fno-limit-debug-info -O0 -g
 MEMSAN_FLAGS=-fsanitize=memory -fsanitize-memory-track-origins=2
 UBSAN_FLAGS=-fsanitize=undefined
 
-CXXFLAGS=-std=c++17 $(WARN_FLAGS) $(DEBUG_FLAGS)
+CXXFLAGS=-fPIC -std=c++17 $(WARN_FLAGS) $(DEBUG_FLAGS)
 YACC_FLAGS=
 LYPP_FLAGS=
 

@@ -31,114 +31,25 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _NADA_FIG_H
-#define _NADA_FIG_H
+#ifndef _AFRONT_FIG_H
+#define _AFRONT_FIG_H
 
-#include "n.h"
+#include <string>
 
-class constant : public n {
-public:
-  constant(lex::token a);
-  virtual void accept(visitor *a);
-  vritual std::string classname();
-};
-
-class string_constant : public n {
-public:
-  string_constant(lex::token a);
-  virtual void accept(visitor *a);
-  vritual std::string classname();
-};
-
-class target_triple : public n {
-public:
-  target_triple(std::shared_ptr<string_constant> a);
-  virtual voide accept(visitor *a);
-  vritual std::string classname();
-};
-
-class abi : public n {
-public:
-  abi(std::shared_ptr<identifier> a);
-  virtual void accept(visitor *a);
-  vritual std::string classname();
-};
-
-class mangle : public n {
-public:
-  mangle(std::shared_ptr<identifier> a);
-  virtual void accept(visitor *a);
-  vritual std::string classname();
-};
-
-class stack : public n {
-public:
-  stack(std::shared_ptr<constant> a);
-  virtual void accept(visitor *a);
-  vritual std::string classname();
-};
-
-class layout_option : public n {
-public:
-  layout_option(std::shared_ptr<stack> a);
-  layout_option(std::shared_ptr<mangle> a);
-  layout_option(std::shared_ptr<abi> a);
-  virtual void accept(visitor *a);
-  vritual std::string classname();
-};
-
-class layout_option_list : public n {
-public:
-  layout_option_list(std::shared_ptr<layout_option> a);
-  virtual void accept(visitor *a);
-  vritual std::string classname();
-};
-
-class object_class : public n {
-public:
-  object_class(lex::token a);
-  virtual void accept(visitor *a);
-  vritual std::string classname();
-};
-
-class object : public n {
-public:
-  object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b);
-  object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b,
-         std::shared_ptr<constant> c);
-  virtual void accept(visitor *a);
-  vritual std::string classname();
-};
-
-class object_list : public n {
-public:
-  object_list(std::shared_ptr<object> a);
-  virtual void accept(visitor *a);
-  virtual std::string classname();
+namespace fig {
+class configuration;
 }
 
-class endian : public n {
+class llvm_configuration {
 public:
-  endian(lex::token a);
-  virtual voide accept(visitor *a);
-  vritual std::string classname();
-};
+  llvm_configuration(std::string f);
+  virtual ~llvm_configuration() {}
 
-class data_layout : public n {
-public:
-  data_layout(std::shared_ptr<endian> a, std::shared_ptr<object_list> b);
-  data_layout(std::shared_ptr<endian> a, std::shared_ptr<layout_option_list> b,
-              std::shared_ptr<object_list> c);
-  virtual voide accept(visitor *a);
-  vritual std::string classname();
-};
+  bool has_triple();
+  std::string triple();
 
-class configuration : public n {
-public:
-  configuration(std::shared_ptr<data_layout> a,
-                std::shared_ptr<language_type_list>);
-  virtual void accecpt(vistor *a);
-  vritual std::string classname();
+private:
+  std::shared_ptr<fig::configuration> c;
 };
 
 #endif

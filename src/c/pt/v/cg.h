@@ -35,8 +35,11 @@
 
 #ifndef AFRONT_C_PT_VIS_CG_H
 #define AFRONT_C_PT_VIS_CG_H
-#include "parser.tab.hh"
 #include "visitor.h"
+#include <string>
+
+class llvm_configuration;
+
 class cg : public visitor {
 public:
   cg();
@@ -45,5 +48,6 @@ public:
 #include "visitor_methods.h"
 
 private:
+  llvm_configuration *config;
 };
 #endif

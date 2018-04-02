@@ -154,8 +154,8 @@ $(OBJDIR)/c.lexer.l : $(LS) $(OBJDIR)/parser.tab.cc
 $(OBJDIR)/cc1.o : $(SRCDIR)/cc1.h $(SRCDIR)/cc1.opt $(SRCDIR)/cc1.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/cc1.cpp
 
-$(OBJDIR)/lang_driver.o : $(SRCDIR)/lang_driver.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+$(OBJDIR)/lang_driver.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/lang_driver.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/lang_driver.cpp
 
 $(OBJDIR)/parser.o : $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
@@ -171,20 +171,20 @@ $(OBJDIR)/parser.yy : $(YYS)
 $(OBJDIR)/n.o : $(SRCDIR)/pt/n.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
-$(OBJDIR)/chk.o : $(SRCDIR)/pt/v/chk.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+$(OBJDIR)/chk.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/chk.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/chk.cpp
 
-$(OBJDIR)/cg.o : $(SRCDIR)/pt/v/cg.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+$(OBJDIR)/cg.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/cg.h $(SRCDIR)/pt/v/cg.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/fig -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/cg.cpp
 
-$(OBJDIR)/ping.o : $(SRCDIR)/pt/v/ping.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+$(OBJDIR)/ping.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/ping.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/ping.cpp
 
-$(OBJDIR)/typedefs.o : $(SRCDIR)/pt/v/typedefs.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+$(OBJDIR)/typedefs.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/typedefs.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/typedefs.cpp
 
-$(OBJDIR)/pt.o : $(SRCDIR)/pt/pt.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+$(OBJDIR)/pt.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/pt.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/pt.cpp
 
 $(OBJDIR)/ast.o : $(TOPSRCDIR)/at/ast.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
@@ -195,9 +195,9 @@ $(OBJDIR)/type.o : $(TOPSRCDIR)/at/type.cpp
 $(OBJDIR)/scope.o : $(TOPSRCDIR)/at/scope.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
-$(OBJDIR)/oparser.o : $(SRCDIR)/oparser.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+$(OBJDIR)/oparser.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/oparser.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/oparser.cpp
 
 $(OBJDIR)/cc1: $(OBJS)
-	$(LD) -o $@ $(LDFLAGS) $(OBJS) $(LLVM_LIBS) $(LLVM_SYSTEM_LIBS) $(LIBS)
+	$(LD) -o $@ $(LDFLAGS) $(OBJS) -L$(TOPOBJDIR)/fig -lfig $(LLVM_LIBS) $(LLVM_SYSTEM_LIBS) $(LIBS)
 

@@ -35,6 +35,8 @@
 #ifndef AFRONT_CC1_H
 #define AFRONT_CC1_H
 
+#include <string>
+
 class cmdline_options {
 public:
     std::string fig_filename;
