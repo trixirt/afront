@@ -1012,6 +1012,7 @@ private:
 
 class translation_unit : public n {
 public:
+  translation_unit();
   translation_unit(std::shared_ptr<external_definition> a);
   virtual ~translation_unit(){};
   virtual void accept(visitor *a);

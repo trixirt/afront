@@ -41,6 +41,10 @@ translation_unit
 	  drv->set_root($$);
 	}
 	| translation_unit external_definition { *$1 += $2; $$ = $1; }
+	| END {
+	   $$ = std::shared_ptr<translation_unit> (new translation_unit());
+	   drv->set_root($$);
+	}
 	;
 
 

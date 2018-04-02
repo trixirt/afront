@@ -1685,6 +1685,7 @@ void struct_or_union_specifier::declarators(std::vector<declarator *> *a) {
 //
 // 6.9 translation-unit
 //
+translation_unit::translation_unit() {}
 translation_unit::translation_unit(std::shared_ptr<external_definition> a) {
   *this += a;
 }
