@@ -152,7 +152,7 @@ $(OBJDIR)/c.lexer.l : $(LS) $(OBJDIR)/parser.tab.cc
 	$(LYPP) -q -I$(TOPSRCDIR)/l -I$(SRCDIR)/l $(SRCDIR)/l/c.lexer.l > $@
 
 $(OBJDIR)/cc1.o : $(SRCDIR)/cc1.h $(SRCDIR)/cc1.opt $(SRCDIR)/cc1.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/cc1.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/cc1.cpp
 
 $(OBJDIR)/lang_driver.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/lang_driver.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/lang_driver.cpp
@@ -172,19 +172,19 @@ $(OBJDIR)/n.o : $(SRCDIR)/pt/n.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/chk.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/chk.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/chk.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/chk.cpp
 
 $(OBJDIR)/cg.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/cg.h $(SRCDIR)/pt/v/cg.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/fig -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/cg.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/fig -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/cg.cpp
 
 $(OBJDIR)/ping.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/ping.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/ping.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/ping.cpp
 
 $(OBJDIR)/typedefs.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/typedefs.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/typedefs.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/typedefs.cpp
 
 $(OBJDIR)/pt.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/pt.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/pt.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/pt.cpp
 
 $(OBJDIR)/ast.o : $(TOPSRCDIR)/at/ast.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
