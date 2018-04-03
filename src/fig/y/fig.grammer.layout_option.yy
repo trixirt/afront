@@ -32,7 +32,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 layout_option
-	: stack  { $$ = std::shared_ptr<fig::layout_option> (new fig::layout_option($1)); }
-	| mangle { $$ = std::shared_ptr<fig::layout_option> (new fig::layout_option($1)); }
-	| abi    { $$ = std::shared_ptr<fig::layout_option> (new fig::layout_option($1)); }
+	: stack  { $$ = std::shared_ptr<layout_option> (new layout_option($1)); }
+	| mangle { $$ = std::shared_ptr<layout_option> (new layout_option($1)); }
+	| abi    { $$ = std::shared_ptr<layout_option> (new layout_option($1)); }
 	;

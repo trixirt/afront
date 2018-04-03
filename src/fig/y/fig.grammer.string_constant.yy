@@ -32,5 +32,5 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 string_constant
-	: STRING_CONSTANT   { $$ = std::shared_ptr<fig::string_constant> (new fig::string_constant($1)); }
+	: STRING_CONSTANT   { $$ = std::shared_ptr<string_constant> (new string_constant($1)); }
 	;

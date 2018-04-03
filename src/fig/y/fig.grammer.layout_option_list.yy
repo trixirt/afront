@@ -32,6 +32,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 layout_option_list
-	: layout_option             { $$ = std::shared_ptr<fig::layout_option_list> (new fig::layout_option_list($1)); }
+	: layout_option             { $$ = std::shared_ptr<layout_option_list> (new layout_option_list($1)); }
 	| layout_option_list layout_option { *$1 += $2; $$ = $1; }
 	;

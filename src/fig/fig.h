@@ -31,14 +31,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _AFRONT_FIG_H
-#define _AFRONT_FIG_H
+#ifndef AFRONT_FIG_H
+#define AFRONT_FIG_H
 
 #include <string>
 
-namespace fig {
 class configuration;
-}
 
 class llvm_configuration {
 public:
@@ -49,7 +47,7 @@ public:
   std::string triple();
 
 private:
-  std::shared_ptr<fig::configuration> c;
+  std::shared_ptr<configuration> c;
 };
 
 #endif

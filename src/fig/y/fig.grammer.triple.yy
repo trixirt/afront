@@ -32,5 +32,5 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 triple
-	: TRIPLE string_constant   { $$ = std::shared_ptr<fig::triple> (new fig::triple($2)); }
+	: TRIPLE string_constant   { $$ = std::shared_ptr<triple> (new triple($2)); }
 	;

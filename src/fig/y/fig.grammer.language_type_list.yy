@@ -32,6 +32,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 language_type_list
-	: language_type                    { $$ = std::shared_ptr<fig::language_type_list> (new fig::language_type_list($1)); }
+	: language_type                    { $$ = std::shared_ptr<language_type_list> (new language_type_list($1)); }
 	| language_type_list language_type { *$1 += $2; $$ = $1; }
 	;

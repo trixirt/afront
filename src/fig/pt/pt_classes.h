@@ -35,10 +35,10 @@
 
 /* multiple includes is ok */
 
-// Define PT_CLASS(classname) to do something 
+// Define PT_CLASS(classname) to do something
 #ifndef PT_CLASS
 // If you did not, then it is foreward decl of the class
-#define PT_CLASS(C) class C ;
+#define PT_CLASS(C) class C;
 #endif
 
 PT_CLASS(abi)
@@ -51,11 +51,13 @@ PT_CLASS(language_type)
 PT_CLASS(language_type_list)
 PT_CLASS(layout_option_list)
 PT_CLASS(layout_option)
+PT_CLASS(m)
 PT_CLASS(mangle)
+PT_CLASS(n)
 PT_CLASS(object_class)
 PT_CLASS(object_list)
 PT_CLASS(object)
-PT_CLASS(target_stack)
+PT_CLASS(fig_stack)
 PT_CLASS(string_constant)
 PT_CLASS(triple)
 

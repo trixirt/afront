@@ -36,27 +36,7 @@
 #define AFRONT_FIG_PT_PT_H
 
 #include "n.h"
-#include "v/visitor.h"
-
-namespace fig {
-
-class abi;
-class configuration;
-class constant;
-class data_layout;
-class endian;
-class identifier;
-class language_type;
-class language_type_list;
-class layout_option_list;
-class layout_option;
-class mangle;
-class object_class;
-class object_list;
-class object;
-class string_constant;
-class stack;
-class triple;
+#include "pt_classes.h"
 
 class abi : public n {
 public:
@@ -141,7 +121,7 @@ public:
 
 class layout_option : public n {
 public:
-  layout_option(std::shared_ptr<stack> a);
+  layout_option(std::shared_ptr<fig_stack> a);
   layout_option(std::shared_ptr<mangle> a);
   layout_option(std::shared_ptr<abi> a);
   virtual ~layout_option(){};
@@ -191,10 +171,10 @@ public:
   virtual void notify();
 };
 
-class stack : public n {
+class fig_stack : public n {
 public:
-  stack(std::shared_ptr<constant> a);
-  virtual ~stack(){};
+  fig_stack(std::shared_ptr<constant> a);
+  virtual ~fig_stack(){};
   virtual void accept(visitor *a);
   virtual void notify();
 };
@@ -207,5 +187,4 @@ public:
   virtual void notify();
 };
 
-} // end namespace fig
 #endif

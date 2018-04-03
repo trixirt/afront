@@ -32,6 +32,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 object_list
-	: object             { $$ = std::shared_ptr<fig::object_list> (new fig::object_list($1)); }
+	: object             { $$ = std::shared_ptr<object_list> (new object_list($1)); }
 	| object_list object { *$1 += $2; $$ = $1; }
 	;

@@ -33,7 +33,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "pt.h"
-#include "observer.h"
+#include "v/observer.h"
+#include "v/visitor.h"
 
 void m::accept(visitor *a) { a->v(this); };
 void m::caccept(visitor *a) {
@@ -48,8 +49,6 @@ void n::notify() {
   for (auto i : observers)
     i->update(this);
 }
-
-namespace fig {
 
 abi::abi(std::shared_ptr<string_constant> a) { *this += a; }
 void abi::accept(visitor *a) { a->v(this); }
@@ -155,7 +154,7 @@ void layout_option_list::notify() {
     i->update(this);
 }
 
-layout_option::layout_option(std::shared_ptr<stack> a) { *this += a; }
+layout_option::layout_option(std::shared_ptr<fig_stack> a) { *this += a; }
 layout_option::layout_option(std::shared_ptr<mangle> a) { *this += a; }
 layout_option::layout_option(std::shared_ptr<abi> a) { *this += a; }
 void layout_option::accept(visitor *a) { a->v(this); }
@@ -208,9 +207,9 @@ void string_constant::notify() {
     i->update(this);
 }
 
-stack::stack(std::shared_ptr<constant> a) { *this += a; }
-void stack::accept(visitor *a) { a->v(this); }
-void stack::notify() {
+fig_stack::fig_stack(std::shared_ptr<constant> a) { *this += a; }
+void fig_stack::accept(visitor *a) { a->v(this); }
+void fig_stack::notify() {
   for (auto i : observers)
     i->update(this);
 }
@@ -221,5 +220,3 @@ void triple::notify() {
   for (auto i : observers)
     i->update(this);
 }
-
-} // end namespace fig

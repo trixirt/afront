@@ -32,6 +32,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 endian
-	: LITTLE   { $$ = std::shared_ptr<fig::endian> (new fig::endian($1)); }
-	| BIG      { $$ = std::shared_ptr<fig::endian> (new fig::endian($1)); }
+	: LITTLE   { $$ = std::shared_ptr<endian> (new endian($1)); }
+	| BIG      { $$ = std::shared_ptr<endian> (new endian($1)); }
 	;

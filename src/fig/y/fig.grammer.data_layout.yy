@@ -32,6 +32,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 data_layout
-	: endian object_list                    { $$ = std::shared_ptr<fig::data_layout> (new fig::data_layout($1, $2)); }
-	| endian layout_option_list object_list { $$ = std::shared_ptr<fig::data_layout> (new fig::data_layout($1, $2, $3)); }
+	: endian object_list                    { $$ = std::shared_ptr<data_layout> (new data_layout($1, $2)); }
+	| endian layout_option_list object_list { $$ = std::shared_ptr<data_layout> (new data_layout($1, $2, $3)); }
 	;

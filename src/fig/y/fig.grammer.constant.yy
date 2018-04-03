@@ -32,5 +32,5 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 constant
-	: CONSTANT   { $$ = std::shared_ptr<fig::constant> (new fig::constant($1)); }
+	: CONSTANT   { $$ = std::shared_ptr<constant> (new constant($1)); }
 	;

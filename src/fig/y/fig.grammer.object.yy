@@ -32,6 +32,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 object
-	: object_class constant          { $$ = std::shared_ptr<fig::object> (new fig::object($1, $2)); }
-	| object_class constant constant { $$ = std::shared_ptr<fig::object> (new fig::object($1, $2, $3)); }	
+	: object_class constant          { $$ = std::shared_ptr<object> (new object($1, $2)); }
+	| object_class constant constant { $$ = std::shared_ptr<object> (new object($1, $2, $3)); }	
 	;

@@ -32,5 +32,5 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 abi
-	: ABI string_constant { $$ = std::shared_ptr<fig::abi> (new fig::abi($2)); }
+	: ABI string_constant { $$ = std::shared_ptr<abi> (new abi($2)); }
 	;
