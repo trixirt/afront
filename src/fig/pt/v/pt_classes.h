@@ -32,54 +32,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef AFRONT_FIG_PT_VIS_VISITOR_H
-#define AFRONT_FIG_PT_VIS_VISITOR_H
 
-class abi;
-class configuration;
-class constant;
-class data_layout;
-class endian;
-class identifier;
-class language_type;
-class language_type_list;
-class layout_option_list;
-class layout_option;
-class mangle;
-class object_class;
-class object_list;
-class object;
-class target_stack;
-class string_constant;
-class triple;
+/* multiple includes is ok */
 
-class visitor {
-public:
-  visitor(){};
-  virtual ~visitor(){};
-
-  virtual void descend() {}
-  virtual void ascend() {}
-
-  virtual void v(abi *a) = 0;
-  virtual void v(configuration *a) = 0;
-  virtual void v(constant *a) = 0;
-  virtual void v(data_layout *a) = 0;
-  virtual void v(endian *a) = 0;
-  virtual void v(identifier *a) = 0;
-  virtual void v(language_type *a) = 0;
-  virtual void v(language_type_list *a) = 0;
-  virtual void v(layout_option_list *a) = 0;
-  virtual void v(layout_option *a) = 0;
-  virtual void v(m *a) = 0;
-  virtual void v(mangle *a) = 0;
-  virtual void v(n *a) = 0;
-  virtual void v(object_class *a) = 0;
-  virtual void v(object_list *a) = 0;
-  virtual void v(object *a) = 0;
-  virtual void v(target_stack *a) = 0;
-  virtual void v(string_constant *a) = 0;
-  virtual void v(triple *a) = 0;
-};
-
+// Define PT_CLASS(classname) to do something 
+#ifndef PT_CLASS
+// If you did not, then it is foreward decl of the class
+#define PT_CLASS(C) class C ;
 #endif
+
+PT_CLASS(abi)
+PT_CLASS(configuration)
+PT_CLASS(constant)
+PT_CLASS(data_layout)
+PT_CLASS(endian)
+PT_CLASS(identifier)
+PT_CLASS(language_type)
+PT_CLASS(language_type_list)
+PT_CLASS(layout_option_list)
+PT_CLASS(layout_option)
+PT_CLASS(mangle)
+PT_CLASS(object_class)
+PT_CLASS(object_list)
+PT_CLASS(object)
+PT_CLASS(target_stack)
+PT_CLASS(string_constant)
+PT_CLASS(triple)
+
+#undef PT_CLASS
