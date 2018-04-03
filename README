@@ -36,7 +36,6 @@ First build lex/yacc etc.
 
 Then the project
 
-  $ > cd build
-  $ > ./build.sh
+  $ > cd build/makefiles
+  $ > make
 
-Be warned you will have to hack build.sh.
