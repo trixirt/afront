@@ -33,8 +33,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef AFRONT_C_PT_VIS_PING_H
-#define AFRONT_C_PT_VIS_PING_H
+#ifndef AFRONT_PT_VIS_PING_H
+#define AFRONT_PT_VIS_PING_H
 #include "parser.tab.hh"
 #include "visitor.h"
 class ping : public visitor {
