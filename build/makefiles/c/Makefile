@@ -177,8 +177,8 @@ $(OBJDIR)/chk.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/chk.cpp
 $(OBJDIR)/cg.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/cg.h $(SRCDIR)/pt/v/cg.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/fig -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/cg.cpp
 
-$(OBJDIR)/ping.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/ping.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/ping.cpp
+$(OBJDIR)/ping.o : $(OBJDIR)/parser.tab.cc $(TOPSRCDIR)/pt/v/ping.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/pt/v/ping.cpp
 
 $(OBJDIR)/typedefs.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/v/typedefs.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/v/typedefs.cpp
