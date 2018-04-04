@@ -31,19 +31,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-%token END 0
-%token <class lex_token> ABI
 %token <class lex_token> AGGREGATE
 %token <class lex_token> BIG
-%token <class lex_token> CONSTANT
-%token <class lex_token> IDENTIFIER
 %token <class lex_token> INTEGER
 %token <class lex_token> LITTLE
 %token <class lex_token> MANGLE
 %token <class lex_token> POINTER
 %token <class lex_token> REAL
 %token <class lex_token> STACK
-%token <class lex_token> STRING_CONSTANT
 %token <class lex_token> TRIPLE
 %token <class lex_token> VECTOR
 

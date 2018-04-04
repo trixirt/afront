@@ -34,5 +34,7 @@
 
 configuration
 	: data_layout language_type_list        {  $$ = std::shared_ptr<configuration> (new configuration($1, $2));  drv->set_root($$); }
-	| triple data_layout language_type_list {  $$ = std::shared_ptr<configuration> (new configuration($1, $2, $3));  drv->set_root($$); }
+  	| triple data_layout language_type_list {  $$ = std::shared_ptr<configuration> (new configuration($1, $2, $3));  drv->set_root($$); }
+  	| triple data_layout                    {  $$ = std::shared_ptr<configuration> (new configuration($1, $2));  drv->set_root($$); }
+
 	;

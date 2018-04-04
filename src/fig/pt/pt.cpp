@@ -69,6 +69,11 @@ configuration::configuration(std::shared_ptr<triple> a,
   *this += b;
   *this += c;
 }
+configuration::configuration(std::shared_ptr<triple> a,
+                             std::shared_ptr<data_layout> b) {
+  *this += a;
+  *this += b;
+}
 void configuration::accept(visitor *a) { a->v(this); }
 void configuration::notify() {
   for (auto i : observers)
@@ -81,6 +86,8 @@ void constant::notify() {
   for (auto i : observers)
     i->update(this);
 }
+
+data_layout::data_layout(std::shared_ptr<endian> a) { *this += a; }
 
 data_layout::data_layout(std::shared_ptr<endian> a,
                          std::shared_ptr<object_list> b) {
@@ -193,6 +200,13 @@ object::object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b,
   *this += a;
   *this += b;
   *this += c;
+}
+object::object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b,
+               std::shared_ptr<constant> c, std::shared_ptr<constant> d) {
+  *this += a;
+  *this += b;
+  *this += c;
+  *this += d;
 }
 void object::accept(visitor *a) { a->v(this); }
 void object::notify() {

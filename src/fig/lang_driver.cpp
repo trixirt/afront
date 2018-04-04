@@ -34,22 +34,22 @@
  */
 
 #include "lang_driver.h"
-#include "parser.tab.hh"
+#include "con/oparser.h"
 #include "scanner.h"
 
 bool lang_driver::initialize_scanner(std::istream *i) {
-    bool ret = false;
-    Scanner = new scanner(i, &Filename);
-    if (Scanner) {
-	ret = true;
-    }
-    return ret;
+  bool ret = false;
+  Scanner = new scanner(i, &Filename);
+  if (Scanner) {
+    ret = true;
+  }
+  return ret;
 }
 bool lang_driver::initialize_parser() {
-    bool ret = false;
-    Parser = new afront::parser(this);
-    if (Parser) {
-	ret = true;
-    }
-    return ret;
+  bool ret = false;
+  Parser = new oparser(this);
+  if (Parser) {
+    ret = true;
+  }
+  return ret;
 }

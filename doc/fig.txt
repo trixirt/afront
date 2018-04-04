@@ -13,8 +13,8 @@ data-layout
   endian layout_option_list,opt object-list
 
 endian
-  LITTLE
-  BIG
+  'little'
+  'big'
 
 layout_option_list
   layout_option
@@ -23,16 +23,12 @@ layout_option_list
 layout_option
   stack
   mangle
-  abi
 
 stack
-  STACK constant
+  'stack' constant
 
 mangle
-  MANGLE string-constant
-
-abi
-  ABI string-constant
+  'mangle' string-constant
 
 language-type-list
   language-type
@@ -49,7 +45,10 @@ language-type
      maps the c type 'float _Complex' to the llvm ir type [ 2 x f32 ]
 
 object-class
-  INTEGER
-  REAL
-  VECTOR
+  'aggregate'
+  'integer'
+  'pointer'
+  'real'
+  'vector'
+  
 

@@ -90,8 +90,8 @@ int yyFlexLexer::yylex() { return -1; /* to silence undefined reference in yyFle
 "while" { LEXTOK(WHILE); }
 "with" { LEXTOK(WITH); }
 "xor" { LEXTOK(XOR); }
-{character_literal} { LEXTOK(CHARACTER_LITERAL); }
-{string_literal}    { LEXTOK(STRING_LITERAL); }
+{character_literal} { LEXTOK(CHARACTER_CONSTANT); }
+{string_literal}    { LEXTOK(STRING_CONSTANT); }
 {numeric_literal}   { LEXTOK(NUMERIC_LITERAL); }
 {identifier}        { LEXTOK(IDENTIFIER); }
 

@@ -195,8 +195,8 @@ $(OBJDIR)/type.o : $(TOPSRCDIR)/at/type.cpp
 $(OBJDIR)/scope.o : $(TOPSRCDIR)/at/scope.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
-$(OBJDIR)/oparser.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/oparser.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/oparser.cpp
+$(OBJDIR)/oparser.o : $(OBJDIR)/parser.tab.cc $(TOPSRCDIR)/con/oparser.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/con/oparser.cpp
 
 $(OBJDIR)/cc1: $(OBJS)
 	$(LD) -o $@ $(LDFLAGS) $(OBJS) -L$(TOPOBJDIR)/fig -lfig $(LLVM_LIBS) $(LLVM_SYSTEM_LIBS) $(LIBS)

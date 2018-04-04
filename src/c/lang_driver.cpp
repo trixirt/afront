@@ -34,7 +34,7 @@
  */
 
 #include "lang_driver.h"
-#include "oparser.h"
+#include "con/oparser.h"
 #include "scanner.h"
 
 void lang_driver::add_typedefs(std::vector<identifier *> a) {

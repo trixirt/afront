@@ -33,8 +33,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 encoding_prefix  (u8|u|U|L)?
-s_char_graphic_char       ("!"|";"|"\'"|"<"|"#"|"="|"%"|">"|"&"|"?"|"["|"("|"/"|"~"|":"|" "|"\t"|"\v"|"\r")
+s_char_graphic_char       ("+"|"-"|"!"|";"|"\'"|"<"|"#"|"="|"%"|">"|"&"|"?"|"["|"("|"/"|"~"|":"|" "|"\t"|"\v"|"\r")
 s_char  [a-zA-Z0-9]|{s_char_graphic_char}|{escape_sequence}
-s_char_sequence  {s_char}
-string_literal {encoding_prefix}"\""{s_char_sequence}"\""
+s_char_sequence  {s_char}*
+string_literal {encoding_prefix}{dq}{s_char_sequence}{dq}
 		       

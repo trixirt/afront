@@ -44,6 +44,6 @@ nondigit             [a-zA-Z_]
 underline            [_]
 dot                  [.]
 sign                 [-+]
-sq                   [']
-dq                   ["]
+sq                   "\'"
+dq                   "\""
 

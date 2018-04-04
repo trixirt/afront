@@ -4,7 +4,6 @@
 %token <class lex_token> AND_ASSIGN
 %token <class lex_token> AUTO
 %token <class lex_token> CHAR
-%token <class lex_token> CHARACTER_CONSTANT
 %token <class lex_token> CONST
 %token <class lex_token> CONSTANT
 %token <class lex_token> DEC
@@ -14,12 +13,9 @@
 %token <class lex_token> ENUM
 %token <class lex_token> EXTERN
 %token <class lex_token> FLOAT
-%token <class lex_token> FLOATING_CONSTANT
-%token <class lex_token> IDENTIFIER
 %token <class lex_token> TYPENAME_IDENTIFIER
 %token <class lex_token> INC
 %token <class lex_token> INT
-%token <class lex_token> INTEGER_CONSTANT
 %token <class lex_token> LEFT_ASSIGN
 %token <class lex_token> LONG
 %token <class lex_token> MOD_ASSIGN
@@ -32,7 +28,6 @@
 %token <class lex_token> SIZEOF
 %token <class lex_token> SIGNED
 %token <class lex_token> STATIC
-%token <class lex_token> STRING_LITERAL
 %token <class lex_token> STRUCT
 %token <class lex_token> SUB_ASSIGN
 %token <class lex_token> TYPEDEF
@@ -76,4 +71,4 @@
 
 %endif
 
-%token <class lex_token> UNSUPPORTED_INPUT_CHAR
+

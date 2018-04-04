@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Rix
+ * Copyright (c) 2017-2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -37,7 +37,7 @@
 %endif
 
 static_assert_declaration
-	: _STATIC_ASSERT OPA constant_expr COM STRING_LITERAL CPA SCO  { $$ = std::shared_ptr<static_assert_declaration> (new static_assert_declaration($3, $4)); } 
+	: _STATIC_ASSERT OPA constant_expr COM STRING_CONSTANT CPA SCO  { $$ = std::shared_ptr<static_assert_declaration> (new static_assert_declaration($3, $4)); } 
 	;
 
 

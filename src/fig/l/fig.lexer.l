@@ -54,7 +54,14 @@ static void comment();
 
 
 %include digit.l
+%include c.identifier.l
 %include c.constant.l
+%include c.whitespace.l
+
+graphic_char       ("-"|"_"|" ")
+char  [a-zA-Z0-9]|{graphic_char}
+char_sequence  {char}*
+string_constant {dq}{char_sequence}{dq}
 
 %%
 %{
@@ -74,7 +81,9 @@ static void comment();
 <SH_COMMENT>.               { }
 <SH_COMMENT>\n              { this->line(); BEGIN(INITIAL); }
 
-"abi"                       { LEXTOK(ABI); }
+"\n"                        { this->line(); }
+"\\\n"                      { this->line(); }
+
 "mangle"                    { LEXTOK(MANGLE); }
 "stack"                     { LEXTOK(STACK); }
 "triple"                    { LEXTOK(TRIPLE); }
@@ -83,9 +92,13 @@ static void comment();
 "integer"                   { LEXTOK(INTEGER); }
 "real"                      { LEXTOK(REAL); }
 "vector"                    { LEXTOK(VECTOR); }
-{letter}({letter}|{digit})* { LEXTOK(IDENTIFIER);  }
-{decimal_constant}          { LEXTOK(CONSTANT);   }
-.                           {                     }
+"aggregate"                 { LEXTOK(AGGREGATE); }
+"pointer"                   { LEXTOK(POINTER); }
+{identifier}                { LEXTOK(IDENTIFIER);  }
+{string_constant}           { LEXTOK(STRING_CONSTANT);   }
+{decimal_constant}          { LEXTOK(INTEGER_CONSTANT);   }
+{whitespace}                { }
+.                           { LEXTOK(UNSUPPORTED_INPUT_CHAR);   }
 
 %%
 

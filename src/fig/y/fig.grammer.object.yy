@@ -33,5 +33,6 @@
  */
 object
 	: object_class constant          { $$ = std::shared_ptr<object> (new object($1, $2)); }
-	| object_class constant constant { $$ = std::shared_ptr<object> (new object($1, $2, $3)); }	
+	| object_class constant constant { $$ = std::shared_ptr<object> (new object($1, $2, $3)); }
+	| object_class constant constant constant { $$ = std::shared_ptr<object> (new object($1, $2, $3, $4)); }
 	;

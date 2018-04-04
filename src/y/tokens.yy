@@ -27,3 +27,12 @@
 %token <class lex_token> LTEQ
 %token <class lex_token> GTEQ
 %token <class lex_token> EQEQ
+
+%token <class lex_token> CHARACTER_CONSTANT
+%token <class lex_token> FLOATING_CONSTANT
+%token <class lex_token> INTEGER_CONSTANT
+%token <class lex_token> STRING_CONSTANT
+
+%token <class lex_token> IDENTIFIER
+
+%token <class lex_token> UNSUPPORTED_INPUT_CHAR

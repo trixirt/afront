@@ -36,5 +36,5 @@
 %endif
 
 string_literal
-	: STRING_LITERAL { $$ = std::shared_ptr<string_literal> (new string_literal($1)); }
+	: STRING_CONSTANT { $$ = std::shared_ptr<string_literal> (new string_literal($1)); }
 	;

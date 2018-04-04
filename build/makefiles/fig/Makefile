@@ -18,6 +18,7 @@ clean: dirs
 LOBJS = $(OBJDIR)/fig.o \
 	$(OBJDIR)/lang_driver.o \
 	$(OBJDIR)/parser.o \
+	$(OBJDIR)/oparser.o \
 	$(OBJDIR)/fig.lexer.o \
 	$(OBJDIR)/driver.o \
 	$(OBJDIR)/pt.o \
@@ -55,6 +56,12 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(SRCDIR)/y/fig.tokens.yy \
 	$(SRCDIR)/y/fig.types.yy
 
+LS = 	$(TOPSRCDIR)/l/digit.l \
+	$(TOPSRCDIR)/c/l/c.constant.l \
+	$(TOPSRCDIR)/c/l/c.identifier.l \
+	$(TOPSRCDIR)/c/l/c.whitespace.l \
+	$(SRCDIR)/l/fig.lexer.l
+
 $(OBJDIR)/driver.o : $(TOPSRCDIR)/con/driver.cpp $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
 
@@ -64,8 +71,8 @@ $(OBJDIR)/fig.lexer.o : $(OBJDIR)/fig.lexer.yy.cc
 $(OBJDIR)/fig.lexer.yy.cc : $(OBJDIR)/fig.lexer.l $(OBJDIR)/parser.tab.cc
 	$(LEX) --outfile=$@ $<
 
-$(OBJDIR)/fig.lexer.l : $(SRCDIR)/l/fig.lexer.l 
-	$(LYPP) -I$(TOPSRCDIR)/l -I$(SRCDIR)/l -I$(TOPSRCDIR)/c/l  $< > $@
+$(OBJDIR)/fig.lexer.l : $(LS) $(SRCDIR)/l/fig.lexer.l 
+	$(LYPP) -I$(TOPSRCDIR)/l -I$(SRCDIR)/l -I$(TOPSRCDIR)/c/l  $(SRCDIR)/l/fig.lexer.l > $@
 
 $(OBJDIR)/fig.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/fig.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -I$(OBJDIR) -c $(SRCDIR)/fig.cpp
@@ -79,11 +86,16 @@ $(OBJDIR)/figc1.o : $(SRCDIR)/figc1.cpp
 $(OBJDIR)/lang_driver.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/lang_driver.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/lang_driver.cpp
 
+$(OBJDIR)/oparser.o : $(OBJDIR)/parser.tab.cc $(TOPSRCDIR)/con/oparser.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/con/oparser.cpp
+
 $(OBJDIR)/parser.o : $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/parser.tab.cc : $(OBJDIR)/parser.yy
 	$(YACC) -o $@ $(YACC_FLAGS) -d -v $<
+	sed -e "s#private:#public:#g" < $(OBJDIR)/parser.tab.hh > $(OBJDIR)/parser.tab.hh.s
+	mv $(OBJDIR)/parser.tab.hh.s $(OBJDIR)/parser.tab.hh
 
 $(OBJDIR)/parser.yy : $(YYS)
 	$(LYPP) -I $(TOPSRCDIR)/y -I $(SRCDIR)/y $(LYPP_FLAGS) $(SRCDIR)/y/fig.parser.yy > $@

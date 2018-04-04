@@ -52,6 +52,7 @@ public:
                 std::shared_ptr<language_type_list> b);
   configuration(std::shared_ptr<triple> a, std::shared_ptr<data_layout> b,
                 std::shared_ptr<language_type_list> c);
+  configuration(std::shared_ptr<triple> a, std::shared_ptr<data_layout> b);
   virtual ~configuration(){};
   virtual void accept(visitor *a);
   virtual void notify();
@@ -67,6 +68,7 @@ public:
 
 class data_layout : public n {
 public:
+  data_layout(std::shared_ptr<endian> a);
   data_layout(std::shared_ptr<endian> a, std::shared_ptr<object_list> b);
   data_layout(std::shared_ptr<endian> a, std::shared_ptr<layout_option_list> b,
               std::shared_ptr<object_list> c);
@@ -155,9 +157,11 @@ public:
 
 class object : public n {
 public:
-  object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b);
-  object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b,
-         std::shared_ptr<constant> c);
+  object(std::shared_ptr<object_class>, std::shared_ptr<constant>);
+  object(std::shared_ptr<object_class>, std::shared_ptr<constant>,
+         std::shared_ptr<constant>);
+  object(std::shared_ptr<object_class>, std::shared_ptr<constant>,
+         std::shared_ptr<constant>, std::shared_ptr<constant>);
   virtual ~object(){};
   virtual void accept(visitor *a);
   virtual void notify();
