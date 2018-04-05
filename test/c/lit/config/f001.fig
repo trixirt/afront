@@ -2,11 +2,18 @@ triple "i386-unknown-linux-gnu"
 little
 stack       64
 pointer     32 32 32
-integer      8 32
-integer     16 32
-integer     32 32
-real        32 32
-real        64 64
+integer      1  8  8
+integer      8  8  8
+integer      16  16  16
+integer      32  32  32
+integer      64  32  64
+real        32 32 32
+real        64 32 64
+vector	    64 64 64
+vector	    128 128 128
+aggregate   0 0
+real	    80 32 32
+native      8 16 32
 "char"      integer 8
 "short"     integer 16
 "int"       integer 32
