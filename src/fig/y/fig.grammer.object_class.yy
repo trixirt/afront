@@ -36,5 +36,6 @@ object_class
 	| REAL      { $$ = std::shared_ptr<object_class> (new object_class($1)); }
 	| VECTOR    { $$ = std::shared_ptr<object_class> (new object_class($1)); }
 	| AGGREGATE { $$ = std::shared_ptr<object_class> (new object_class($1)); }
+	| NATIVE    { $$ = std::shared_ptr<object_class> (new object_class($1)); }
 	| POINTER   { $$ = std::shared_ptr<object_class> (new object_class($1)); }
 	;

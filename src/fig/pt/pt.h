@@ -58,6 +58,14 @@ public:
   virtual void notify();
 };
 
+class constant_list : public n {
+public:
+  constant_list(std::shared_ptr<constant> a);
+  virtual ~constant_list(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+};
+
 class constant : public n {
 public:
   constant(lex_token a);
@@ -96,10 +104,8 @@ public:
 class language_type : public n {
 public:
   language_type(std::shared_ptr<string_constant> a,
-                std::shared_ptr<object_class> b, std::shared_ptr<constant> c);
-  language_type(std::shared_ptr<string_constant> a,
-                std::shared_ptr<object_class> b, std::shared_ptr<constant> c,
-                std::shared_ptr<constant> d);
+                std::shared_ptr<object_class> b,
+                std::shared_ptr<constant_list> c);
   virtual ~language_type(){};
   virtual void accept(visitor *a);
   virtual void notify();
@@ -157,11 +163,7 @@ public:
 
 class object : public n {
 public:
-  object(std::shared_ptr<object_class>, std::shared_ptr<constant>);
-  object(std::shared_ptr<object_class>, std::shared_ptr<constant>,
-         std::shared_ptr<constant>);
-  object(std::shared_ptr<object_class>, std::shared_ptr<constant>,
-         std::shared_ptr<constant>, std::shared_ptr<constant>);
+  object(std::shared_ptr<object_class>, std::shared_ptr<constant_list>);
   virtual ~object(){};
   virtual void accept(visitor *a);
   virtual void notify();

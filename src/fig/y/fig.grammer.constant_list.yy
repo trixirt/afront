@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2018 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -31,6 +31,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-object
-	: object_class constant_list { $$ = std::shared_ptr<object> (new object($1, $2)); }
+constant_list
+	: constant               { $$ = std::shared_ptr<constant_list> (new constant_list($1)); }
+	| constant_list constant { *$1 += $2; $$ = $1; }
 	;

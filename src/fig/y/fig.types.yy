@@ -31,8 +31,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-%type <std::shared_ptr<abi>> abi;
 %type <std::shared_ptr<configuration>> configuration;
+%type <std::shared_ptr<constant_list>> constant_list;
 %type <std::shared_ptr<constant>> constant;
 %type <std::shared_ptr<data_layout>> data_layout;
 %type <std::shared_ptr<endian>> endian;

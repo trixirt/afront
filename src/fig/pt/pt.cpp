@@ -80,6 +80,13 @@ void configuration::notify() {
     i->update(this);
 }
 
+constant_list::constant_list(std::shared_ptr<constant> a) { *this += a; }
+void constant_list::accept(visitor *a) { a->v(this); }
+void constant_list::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+
 constant::constant(lex_token a) : n(a) {}
 void constant::accept(visitor *a) { a->v(this); }
 void constant::notify() {
@@ -123,20 +130,12 @@ void identifier::notify() {
 
 language_type::language_type(std::shared_ptr<string_constant> a,
                              std::shared_ptr<object_class> b,
-                             std::shared_ptr<constant> c) {
+                             std::shared_ptr<constant_list> c) {
   *this += a;
   *this += b;
   *this += c;
 }
-language_type::language_type(std::shared_ptr<string_constant> a,
-                             std::shared_ptr<object_class> b,
-                             std::shared_ptr<constant> c,
-                             std::shared_ptr<constant> d) {
-  *this += a;
-  *this += b;
-  *this += c;
-  *this += d;
-}
+
 void language_type::accept(visitor *a) { a->v(this); }
 void language_type::notify() {
   for (auto i : observers)
@@ -191,23 +190,12 @@ void object_list::notify() {
     i->update(this);
 }
 
-object::object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b) {
+object::object(std::shared_ptr<object_class> a,
+               std::shared_ptr<constant_list> b) {
   *this += a;
   *this += b;
 }
-object::object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b,
-               std::shared_ptr<constant> c) {
-  *this += a;
-  *this += b;
-  *this += c;
-}
-object::object(std::shared_ptr<object_class> a, std::shared_ptr<constant> b,
-               std::shared_ptr<constant> c, std::shared_ptr<constant> d) {
-  *this += a;
-  *this += b;
-  *this += c;
-  *this += d;
-}
+
 void object::accept(visitor *a) { a->v(this); }
 void object::notify() {
   for (auto i : observers)

@@ -33,6 +33,7 @@
  */
 %include fig.grammer.configuration.yy
 
+%include fig.grammer.constant_list.yy
 %include fig.grammer.constant.yy
 %include fig.grammer.data_layout.yy
 %include fig.grammer.endian.yy

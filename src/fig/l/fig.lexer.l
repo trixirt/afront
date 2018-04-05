@@ -91,12 +91,13 @@ string_constant {dq}{char_sequence}{dq}
 "big"                       { LEXTOK(BIG); }
 "integer"                   { LEXTOK(INTEGER); }
 "real"                      { LEXTOK(REAL); }
-"vector"                    { LEXTOK(VECTOR); }
 "aggregate"                 { LEXTOK(AGGREGATE); }
+"native"                    { LEXTOK(NATIVE); }
 "pointer"                   { LEXTOK(POINTER); }
+"vector"                    { LEXTOK(VECTOR); }
 {identifier}                { LEXTOK(IDENTIFIER);  }
 {string_constant}           { LEXTOK(STRING_CONSTANT);   }
-{decimal_constant}          { LEXTOK(INTEGER_CONSTANT);   }
+{decimal_constant}|0        { LEXTOK(INTEGER_CONSTANT);   }
 {whitespace}                { }
 .                           { LEXTOK(UNSUPPORTED_INPUT_CHAR);   }
 

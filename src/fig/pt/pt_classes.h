@@ -43,6 +43,7 @@
 
 PT_CLASS(abi)
 PT_CLASS(configuration)
+PT_CLASS(constant_list)
 PT_CLASS(constant)
 PT_CLASS(data_layout)
 PT_CLASS(endian)

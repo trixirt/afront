@@ -36,6 +36,7 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(TOPSRCDIR)/y/tokens.yy \
 	$(SRCDIR)/y/fig.grammer.abi.yy \
 	$(SRCDIR)/y/fig.grammer.configuration.yy \
+	$(SRCDIR)/y/fig.grammer.constant_list.yy \
 	$(SRCDIR)/y/fig.grammer.constant.yy \
 	$(SRCDIR)/y/fig.grammer.data_layout.yy \
 	$(SRCDIR)/y/fig.grammer.endian.yy \

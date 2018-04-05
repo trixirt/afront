@@ -36,6 +36,7 @@
 %token <class lex_token> INTEGER
 %token <class lex_token> LITTLE
 %token <class lex_token> MANGLE
+%token <class lex_token> NATIVE
 %token <class lex_token> POINTER
 %token <class lex_token> REAL
 %token <class lex_token> STACK
