@@ -32,11 +32,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef AFRONT_C_OPARSER_H
-#define AFRONT_C_OPARSER_H
+#ifndef AFRONT_OPARSER_H
+#define AFRONT_OPARSER_H
 
-#include <map>
 #include "parser.tab.hh"
+#include <map>
 
 typedef std::map<std::size_t, std::string> hs_map;
 typedef std::map<int, std::shared_ptr<hs_map>> sh_map;
@@ -47,9 +47,11 @@ public:
   virtual void error(const class location &loc, const std::string &msg);
   virtual std::string yysyntax_error_(state_type yystate,
                                       const symbol_type &yyla) const;
+  std::string error();
 
 private:
   sh_map syntax_error_map;
+  std::string str_error;
 };
 
 #endif /* AFRONT_C_OPARSER_H */

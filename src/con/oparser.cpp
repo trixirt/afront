@@ -36,6 +36,7 @@
 #include "oparser.h"
 #include "scanner.h"
 #include <iostream>
+#include <sstream>
 #include <stdio.h>
 
 #include "parser.tab.hh"
@@ -60,39 +61,44 @@ void oparser::error(const class location &loc, const std::string &msg) {
       override_loc.begin.column > loc.begin.column)
     lloc = &override_loc;
 
-  fprintf(stderr, "%s:%u:%u Error: %s\n", drv->Filename.c_str(),
-          lloc->begin.line, lloc->begin.column, msg.c_str());
+  str_error = drv->Filename;
+  str_error += ':';
+  str_error += std::to_string(lloc->begin.line);
+  str_error += ':';
+  str_error += std::to_string(lloc->begin.column);
+  str_error += " Error: ";
+  str_error += msg;
+  str_error += '\n';
+
   unsigned l = lloc->begin.line;
   std::shared_ptr<std::string> s = drv->Scanner->get_line(l);
   if (s != nullptr) {
     const char *cs = s->c_str();
     size_t l = strlen(cs);
     for (size_t i = 0; i < l; i++) {
+      std::stringstream con;
       if ((cs[i] >= 0x20 && cs[i] < 0x7f) || cs[i] == '\n' || cs[i] == '\r' ||
           cs[i] == '\t' || cs[i] == '\v' || cs[i] == '\f') {
-        fputc(cs[i], stderr);
+        con << cs[i];
       } else {
-        if (cs[i] > 077)
-          fprintf(stderr, "\'%4.4o\'", cs[i]);
-        else if (cs[i] > 07)
-          fprintf(stderr, "\'%3.3o\'", cs[i]);
-        else
-          fprintf(stderr, "\'%2.2o\'", cs[i]);
+        con << std::oct << cs[i];
+        str_error += "0";
       }
+      str_error += con.str();
     }
     if (s->back() != '\n')
-      fprintf(stderr, "\n");
+      str_error += '\n';
 
     for (size_t i = 0; i < l; i++) {
       if (i + 1 < lloc->begin.column)
-        fprintf(stderr, " ");
+        str_error += " ";
       else if ((i + 1 < lloc->end.column) ||
                (lloc->begin.line != lloc->end.line))
-        fprintf(stderr, "^");
+        str_error += "^";
       else
         break;
     }
-    fprintf(stderr, "\n");
+    str_error += '\n';
   }
 #endif
 }
@@ -144,3 +150,5 @@ std::string oparser::yysyntax_error_(state_type yystate,
   }
   return r;
 }
+
+std::string oparser::error() { return str_error; }

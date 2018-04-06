@@ -34,6 +34,7 @@
  */
 
 #include "driver.h"
+#include "oparser.h"
 #include "parser.tab.hh"
 #include "scanner.h"
 #include <fstream>
@@ -79,7 +80,9 @@ end:
   return ret;
 }
 
-std::string driver::result() { return "" /* Add something here */; }
+std::string driver::result() {
+  return dynamic_cast<oparser *>(Parser)->error();
+}
 
 std::shared_ptr<n> driver::get_root() { return Root; }
 void driver::set_root(std::shared_ptr<n> a) { Root = a; }
