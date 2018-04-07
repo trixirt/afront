@@ -36,7 +36,6 @@
 %type <std::shared_ptr<constant>> constant;
 %type <std::shared_ptr<data_layout>> data_layout;
 %type <std::shared_ptr<endian>> endian;
-%type <std::shared_ptr<identifier>> identifier;
 %type <std::shared_ptr<language_type>> language_type;
 %type <std::shared_ptr<language_type_list>> language_type_list;
 %type <std::shared_ptr<layout_option_list>> layout_option_list;

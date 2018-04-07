@@ -48,7 +48,7 @@ LS = 	$(TOPSRCDIR)/l/digit.l \
 	$(SRCDIR)/l/ada.string_literal.l
 
 $(OBJDIR)/ada.lexer.o : $(OBJDIR)/ada.lexer.yy.cc
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+	$(CXX) -o $@ $(CXXFLAGS) $(TOOL_INCLUDES) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/ada.lexer.yy.cc : $(OBJDIR)/ada.lexer.l 
 	$(LEX) --outfile=$@ $<

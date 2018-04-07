@@ -1,11 +1,13 @@
-AR     := ar
-CXX    := clang++
-LD     := $(CXX)
-LLD    := ld.lld
-LEX    := $(TOP)/tools/install/bin/flex
-LYPP   := $(TOP)/tools/install/bin/lypp
-RANLIB := ranlib
-YACC   := $(TOP)/tools/install/bin/bison
+AR            := ar
+CXX           := clang++
+LD            := $(CXX)
+LLD           := ld.lld
+LEX           := $(TOP)/tools/install/bin/flex
+LYPP          := $(TOP)/tools/install/bin/lypp
+RANLIB        := ranlib
+YACC          := $(TOP)/tools/install/bin/bison
+TOOL_INCLUDES := -I $(TOP)/tools/install/include
+TOOL_LIBS     := -L $(TOP)/tools/install/lib
 
 WARN_FLAGS=-Werror -Wpedantic
 DEBUG_FLAGS=-fno-limit-debug-info -O0 -g

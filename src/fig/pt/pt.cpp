@@ -74,6 +74,7 @@ configuration::configuration(std::shared_ptr<triple> a,
   *this += a;
   *this += b;
 }
+configuration::configuration(std::shared_ptr<triple> a) { *this += a; }
 void configuration::accept(visitor *a) { a->v(this); }
 void configuration::notify() {
   for (auto i : observers)

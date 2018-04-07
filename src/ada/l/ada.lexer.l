@@ -48,7 +48,7 @@ int yyFlexLexer::yylex() { return -1; /* to silence undefined reference in yyFle
 "do" { LEXTOK(DO); }
 "else" { LEXTOK(ELSE); }
 "elsif" { LEXTOK(ELSIF); }
-"end" { LEXTOK(END); }
+"end" { LEXTOK(ADA_END); }
 "entry" { LEXTOK(ENTRY); }
 "exception" { LEXTOK(EXCEPTION); }
 "exit" { LEXTOK(EXIT); }

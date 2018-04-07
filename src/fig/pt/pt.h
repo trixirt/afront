@@ -48,13 +48,14 @@ public:
 
 class configuration : public n {
 public:
-  configuration(std::shared_ptr<data_layout> a,
-                std::shared_ptr<language_type_list> b);
-  configuration(std::shared_ptr<triple> a, std::shared_ptr<data_layout> b,
-                std::shared_ptr<language_type_list> c);
-  configuration(std::shared_ptr<triple> a, std::shared_ptr<data_layout> b);
+  configuration(std::shared_ptr<data_layout>,
+                std::shared_ptr<language_type_list>);
+  configuration(std::shared_ptr<triple>, std::shared_ptr<data_layout>,
+                std::shared_ptr<language_type_list>);
+  configuration(std::shared_ptr<triple>, std::shared_ptr<data_layout>);
+  configuration(std::shared_ptr<triple>);
   virtual ~configuration(){};
-  virtual void accept(visitor *a);
+  virtual void accept(visitor *);
   virtual void notify();
 };
 

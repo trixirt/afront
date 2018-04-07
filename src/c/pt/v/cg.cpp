@@ -47,10 +47,8 @@ cg::cg() {
 
   if (opt.fig_filename.size()) {
     config = new llvm_configuration(opt.fig_filename);
-    if (config->has_triple()) {
-      if (opt.flag_verbose)
-        std::cout << "Triple : " << config->triple() << std::endl;
-    }
+    if (opt.flag_verbose)
+      std::cout << "Triple : " << config->triple() << std::endl;
   }
 }
 cg::~cg() {}

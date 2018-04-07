@@ -43,11 +43,12 @@ public:
   llvm_configuration(std::string f);
   virtual ~llvm_configuration() {}
 
-  bool has_triple();
   std::string triple();
+  std::string data_layout();
 
 private:
-  std::shared_ptr<configuration> c;
+  template <class T> T *_get();
+  std::shared_ptr<configuration> _c;
 };
 
 #endif

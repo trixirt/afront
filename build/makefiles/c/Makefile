@@ -143,7 +143,7 @@ $(OBJDIR)/driver.o : $(TOPSRCDIR)/con/driver.cpp $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/c.lexer.o : $(OBJDIR)/c.lexer.yy.cc
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+	$(CXX) -o $@ $(CXXFLAGS) $(TOOL_INCLUDES) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/c.lexer.yy.cc : $(OBJDIR)/c.lexer.l 
 	$(LEX) --outfile=$@ $<
