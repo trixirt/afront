@@ -48,7 +48,11 @@ public:
 
 private:
   template <class T> T *_get();
+  void _triple();
+  void _data_layout();
   std::shared_ptr<configuration> _c;
+  std::string str_data_layout;
+  std::string str_triple;
 };
 
 #endif

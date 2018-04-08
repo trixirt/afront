@@ -47,8 +47,10 @@ cg::cg() {
 
   if (opt.fig_filename.size()) {
     config = new llvm_configuration(opt.fig_filename);
-    if (opt.flag_verbose)
-      std::cout << "Triple : " << config->triple() << std::endl;
+    if (opt.flag_verbose) {
+      std::cout << "Triple      : " << config->triple() << std::endl;
+      std::cout << "Data Layout : " << config->data_layout() << std::endl;
+    }
   }
 }
 cg::~cg() {}
