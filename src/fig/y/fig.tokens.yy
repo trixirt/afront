@@ -42,4 +42,5 @@
 %token <class lex_token> STACK
 %token <class lex_token> TRIPLE
 %token <class lex_token> VECTOR
+%token <class lex_token> VOID
 

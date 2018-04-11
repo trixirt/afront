@@ -65,7 +65,6 @@ $(OBJDIR)/driver.o : $(TOPSRCDIR)/con/driver.cpp $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/fig.lexer.o : $(OBJDIR)/fig.lexer.yy.cc
-	$(CXX) -o $(OBJDIR)/fig.lexer.ii $(CXXFLAGS) $(TOOL_INCLUDES) -fvisibility=hidden -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -E $<
 	$(CXX) -o $@ $(CXXFLAGS) $(TOOL_INCLUDES) -fvisibility=hidden -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/fig.lexer.yy.cc : $(OBJDIR)/fig.lexer.l $(OBJDIR)/parser.tab.cc
@@ -75,7 +74,7 @@ $(OBJDIR)/fig.lexer.l : $(LS) $(SRCDIR)/l/fig.lexer.l
 	$(LYPP) -I$(TOPSRCDIR)/l -I$(SRCDIR)/l -I$(TOPSRCDIR)/c/l  $(SRCDIR)/l/fig.lexer.l > $@
 
 $(OBJDIR)/fig.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/fig.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -I$(OBJDIR) -c $(SRCDIR)/fig.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -I$(OBJDIR) -c $(SRCDIR)/fig.cpp
 
 $(OBJDIR)/figc1.o : $(SRCDIR)/figc1.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
@@ -110,7 +109,7 @@ $(OBJDIR)/pt.o : $(SRCDIR)/pt/pt.h $(SRCDIR)/pt/pt.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $(SRCDIR)/pt/pt.cpp
 
 $(OBJDIR)/libfig.so : $(LOBJS)
-	$(LD) -Wl,-z,defs -shared -o $@ $(LOBJS)
+	$(LD) -Wl,-z,defs -shared -o $@ $(LOBJS) $(LLVM_LIBS) $(LLVM_SYSTEM_LIBS) 
 
 $(OBJDIR)/figc1: $(OBJS) $(OBJDIR)/libfig.so
 	$(LD) -o $@ $(LDFLAGS) $(OBJS) -L$(OBJDIR) -lfig $(LLVM_LIBS) $(LLVM_SYSTEM_LIBS) $(LIBS)

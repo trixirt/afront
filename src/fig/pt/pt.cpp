@@ -137,6 +137,12 @@ language_type::language_type(std::shared_ptr<string_constant> a,
   *this += c;
 }
 
+language_type::language_type(std::shared_ptr<string_constant> a,
+                             std::shared_ptr<object_class> b) {
+  *this += a;
+  *this += b;
+}
+
 void language_type::accept(visitor *a) { a->v(this); }
 void language_type::notify() {
   for (auto i : observers)

@@ -32,5 +32,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 language_type
-	: string_constant object_class constant_list      { $$ = std::shared_ptr<language_type> (new language_type($1, $2, $3)); }
+	: string_constant object_class constant_list  { $$ = std::shared_ptr<language_type> (new language_type($1, $2, $3)); }
+	| string_constant object_class                { $$ = std::shared_ptr<language_type> (new language_type($1, $2)); }
 	;

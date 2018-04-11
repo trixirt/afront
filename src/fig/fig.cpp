@@ -14,6 +14,7 @@ llvm_configuration::llvm_configuration(std::string f) {
       _c = std::dynamic_pointer_cast<configuration>(drv->get_root());
       _triple();
       _data_layout();
+      _language_type_list();
     } else {
       std::cout << drv->result() << std::endl;
     }
@@ -112,6 +113,100 @@ void llvm_configuration::_triple() {
 }
 
 std::string llvm_configuration::triple() { return str_triple; }
+
+void llvm_configuration::_language_type_list() {
+  class language_type_list *ltl = _get<class language_type_list>();
+  if (ltl != nullptr) {
+    for (auto c : ltl->children()) {
+      // expecting { language_type }
+      class language_type *lt = dynamic_cast<language_type *>(c.get());
+      if (lt != nullptr) {
+        auto gc = lt->children();
+        // expecting { string_constant object_class }
+        // expecting { string_constant object_class constant_list }
+
+        string_constant *sc = nullptr;
+        object_class *oc = nullptr;
+        constant_list *cl = nullptr;
+        std::string str_type;
+
+        if (gc.size() >= 2) {
+          sc = dynamic_cast<string_constant *>(gc[0].get());
+          oc = dynamic_cast<object_class *>(gc[1].get());
+        }
+        if (gc.size() >= 3) {
+          cl = dynamic_cast<constant_list *>(gc[2].get());
+        }
+        if (sc != nullptr and oc != nullptr) {
+          // Assuming if you got this far, the children are ok.
+          std::string s = sc->who();
+          if (s.length() >= 2)
+            str_type = s.substr(1, s.length() - 2);
+
+          if (oc->what() == afront::parser::token::VOID) {
+            /* Done not bother with checking size and extent */
+            _language_type_map[str_type] = llvm::Type::getVoidTy(_ctx);
+          } else if (cl != nullptr) {
+            unsigned size(0), extent(0);
+            auto ggc = cl->children();
+            size_t nggc = ggc.size();
+            if (nggc > 0) {
+              // expecting { constant }
+              constant *ct = dynamic_cast<constant *>(ggc[0].get());
+              if (ct != nullptr)
+                size = std::stoi(ct->who());
+            }
+            if (nggc > 1) {
+              // expecting { constant }
+              constant *ct = dynamic_cast<constant *>(ggc[1].get());
+              if (ct != nullptr)
+                extent = std::stoi(ct->who());
+            }
+            /* ignore extras */
+            if (size > 0) {
+              if (extent > 0) {
+                if ((oc->what() == afront::parser::token::INTEGER) ||
+                    (oc->what() == afront::parser::token::NATIVE)) {
+                  _language_type_map[str_type] = llvm::ArrayType::get(
+                      llvm::Type::getIntNTy(_ctx, size), extent);
+                } else if (oc->what() == afront::parser::token::REAL) {
+                  if (size == 16)
+                    _language_type_map[str_type] = llvm::ArrayType::get(
+                        llvm::Type::getHalfTy(_ctx), extent);
+                  else if (size == 32)
+                    _language_type_map[str_type] = llvm::ArrayType::get(
+                        llvm::Type::getFloatTy(_ctx), extent);
+                  else if (size == 64)
+                    _language_type_map[str_type] = llvm::ArrayType::get(
+                        llvm::Type::getDoubleTy(_ctx), extent);
+                  /* ignore other sizes */
+                }
+                /* vector, aggregate are not handled */
+              } else {
+                if ((oc->what() == afront::parser::token::INTEGER) ||
+                    (oc->what() == afront::parser::token::NATIVE)) {
+                  _language_type_map[str_type] =
+                      llvm::Type::getIntNTy(_ctx, size);
+                } else if (oc->what() == afront::parser::token::REAL) {
+                  if (size == 16)
+                    _language_type_map[str_type] = llvm::Type::getHalfTy(_ctx);
+                  else if (size == 32)
+                    _language_type_map[str_type] = llvm::Type::getFloatTy(_ctx);
+                  else if (size == 64)
+                    _language_type_map[str_type] =
+                        llvm::Type::getDoubleTy(_ctx);
+                  /* ignore other sizes */
+                }
+                /* vector, aggregate are not handled */
+              }
+            }
+            /* ignore errors in setting either size or extent */
+          }
+        }
+      }
+    }
+  }
+}
 
 template <class T> T *llvm_configuration::_get() {
   T *ret = nullptr;

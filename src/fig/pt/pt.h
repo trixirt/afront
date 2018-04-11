@@ -104,11 +104,12 @@ public:
 
 class language_type : public n {
 public:
-  language_type(std::shared_ptr<string_constant> a,
-                std::shared_ptr<object_class> b,
-                std::shared_ptr<constant_list> c);
+  language_type(std::shared_ptr<string_constant>, std::shared_ptr<object_class>,
+                std::shared_ptr<constant_list>);
+  language_type(std::shared_ptr<string_constant>,
+                std::shared_ptr<object_class>);
   virtual ~language_type(){};
-  virtual void accept(visitor *a);
+  virtual void accept(visitor *);
   virtual void notify();
 };
 

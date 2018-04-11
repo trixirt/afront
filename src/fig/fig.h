@@ -34,6 +34,10 @@
 #ifndef AFRONT_FIG_H
 #define AFRONT_FIG_H
 
+#include <llvm/IR/DerivedTypes.h>
+#include <llvm/IR/LLVMContext.h>
+#include <llvm/IR/Type.h>
+#include <map>
 #include <string>
 
 class configuration;
@@ -50,9 +54,12 @@ private:
   template <class T> T *_get();
   void _triple();
   void _data_layout();
+  void _language_type_list();
   std::shared_ptr<configuration> _c;
   std::string str_data_layout;
   std::string str_triple;
+  std::map<std::string, llvm::Type *> _language_type_map; /* types */
+  llvm::LLVMContext _ctx;
 };
 
 #endif

@@ -95,6 +95,7 @@ string_constant {dq}{char_sequence}{dq}
 "native"                    { LEXTOK(NATIVE); }
 "pointer"                   { LEXTOK(POINTER); }
 "vector"                    { LEXTOK(VECTOR); }
+"void"                      { LEXTOK(VOID); }
 {identifier}                { LEXTOK(IDENTIFIER);  }
 {string_constant}           { LEXTOK(STRING_CONSTANT);   }
 {decimal_constant}|0        { LEXTOK(INTEGER_CONSTANT);   }
