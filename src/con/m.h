@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2017-2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,10 +32,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_CON_M_H
-#define NADA_CON_M_H
+#ifndef AFRONT_CON_M_H
+#define AFRONT_CON_M_H
 
 #include <deque>
+#include <memory>
 #include <string>
 
 class visitor;
