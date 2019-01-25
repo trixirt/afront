@@ -9,6 +9,9 @@ V=3.0.4
 S=bison-${V}
 tar xf ../pkgs/${S}.tar.gz
 cd ${S}
+if [ -d build ]; then
+    rm -rf build
+fi
 mkdir build
 cd build
 ../configure --prefix=$P
