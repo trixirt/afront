@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Rix
+ * Copyright (c) 2017-2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -35,6 +35,7 @@
 #ifndef AFRONT_LEX_TOKEN_H
 #define AFRONT_LEX_TOKEN_H
 
+#include <memory>
 #include "location.h"
 
 class lex_token {
