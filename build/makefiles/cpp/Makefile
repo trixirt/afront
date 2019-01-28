@@ -19,12 +19,31 @@ clean: dirs
 
 OBJS =	$(OBJDIR)/cpp.o \
 	$(OBJDIR)/parser.o \
+	$(OBJDIR)/pt.o \
+
 
 YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(TOPSRCDIR)/y/error.yy \
 	$(TOPSRCDIR)/y/override.yy \
 	$(TOPSRCDIR)/y/preamble.yy \
 	$(TOPSRCDIR)/y/tokens.yy \
+	$(SRCDIR)/y/cpp.grammer.control_line.yy \
+	$(SRCDIR)/y/cpp.grammer.elif_groups.yy \
+	$(SRCDIR)/y/cpp.grammer.elif_group.yy \
+	$(SRCDIR)/y/cpp.grammer.else_group.yy \
+	$(SRCDIR)/y/cpp.grammer.endif_line.yy \
+	$(SRCDIR)/y/cpp.grammer.group_part.yy \
+	$(SRCDIR)/y/cpp.grammer.group.yy \
+	$(SRCDIR)/y/cpp.grammer.if_group.yy \
+	$(SRCDIR)/y/cpp.grammer.if_section.yy \
+	$(SRCDIR)/y/cpp.grammer.new_line.yy \
+	$(SRCDIR)/y/cpp.grammer.non_directive.yy \
+	$(SRCDIR)/y/cpp.grammer.pp_tokens.yy \
+	$(SRCDIR)/y/cpp.grammer.preprocessing_file.yy \
+	$(SRCDIR)/y/cpp.grammer.preprocessing_token.yy \
+	$(SRCDIR)/y/cpp.grammer.replacement_list.yy \
+	$(SRCDIR)/y/cpp.grammer.text_line.yy \
+	$(SRCDIR)/y/cpp.grammer.white_space.yy \
 	$(SRCDIR)/y/cpp.grammer.yy \
 	$(SRCDIR)/y/cpp.parser.yy \
 	$(SRCDIR)/y/cpp.tokens.yy \
@@ -46,6 +65,9 @@ $(OBJDIR)/parser.tab.cc : $(OBJDIR)/parser.yy
 
 $(OBJDIR)/parser.yy : $(YYS)
 	$(LYPP) -I $(TOPSRCDIR)/y -I $(SRCDIR)/y $(LYPP_FLAGS) $(SRCDIR)/y/cpp.parser.yy > $@
+
+$(OBJDIR)/pt.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/pt.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/pt.cpp
 
 $(OBJDIR)/cpp: $(OBJS)
 	$(LD) -o $@ $(LDFLAGS) $(OBJS) $(LIBS)
