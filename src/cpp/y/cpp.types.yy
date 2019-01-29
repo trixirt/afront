@@ -73,6 +73,7 @@
 %type <std::shared_ptr<group>> group;
 %type <std::shared_ptr<group_part>> group_part;
 %type <std::shared_ptr<identifier>> identifier;
+%type <std::shared_ptr<identifier>> typename_identifier;
 %type <std::shared_ptr<identifier_list>> identifier_list;
 %type <std::shared_ptr<if_group>> if_group;
 %type <std::shared_ptr<if_section>> if_section;
@@ -111,7 +112,6 @@
 %type <std::shared_ptr<type_qualifier_list>> type_qualifier_list;
 %type <std::shared_ptr<type_qualifier>> type_qualifier;
 %type <std::shared_ptr<type_specifier>> type_specifier;
-%type <std::shared_ptr<typename_identifier>> typename_identifier;
 %type <std::shared_ptr<unary_expr>> unary_expr;
 %type <std::shared_ptr<unary_operator>> unary_operator;
 %type <std::shared_ptr<white_space>> nospace;

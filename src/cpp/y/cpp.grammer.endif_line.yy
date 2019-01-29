@@ -36,5 +36,5 @@
 %endif
 
 endif_line
-	: HASH ENDIF new_line       { $$ = std::shared_ptr<endif_line> (new endif_line($3));         }
+	: HASH ENDIF new_line       { $$ = std::shared_ptr<endif_line> (new endif_line());         }
 	;
