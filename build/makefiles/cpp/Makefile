@@ -18,9 +18,15 @@ clean: dirs
 	- rm $(OBJDIR)/*
 
 OBJS =	$(OBJDIR)/cpp.o \
+	$(OBJDIR)/driver.o \
+	$(OBJDIR)/lang_driver.o \
+	$(OBJDIR)/oparser.o \
 	$(OBJDIR)/parser.o \
 	$(OBJDIR)/pt.o \
+	$(TOPOBJDIR)/c/ping.o \
+	$(TOPOBJDIR)/c/n.o \
 	$(TOPOBJDIR)/c/pt.o \
+	$(TOPOBJDIR)/c/typedefs.o \
 	$(TOPOBJDIR)/pt/n.o \
 	$(TOPOBJDIR)/con/m.o
 
@@ -121,6 +127,15 @@ LS = 	$(TOPSRCDIR)/l/digit.l \
 
 $(OBJDIR)/cpp.o : $(SRCDIR)/cpp.h $(SRCDIR)/cpp.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -c $(SRCDIR)/cpp.cpp
+
+$(OBJDIR)/driver.o : $(TOPSRCDIR)/con/driver.cpp $(OBJDIR)/parser.tab.cc
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
+
+$(OBJDIR)/lang_driver.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/lang_driver.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/lang_driver.cpp
+
+$(OBJDIR)/oparser.o : $(OBJDIR)/parser.tab.cc $(TOPSRCDIR)/con/oparser.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/con/oparser.cpp
 
 $(OBJDIR)/parser.o : $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
