@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2017-2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -1266,7 +1266,7 @@ void parameter_type_list::notify() {
 std::string parameter_type_list::classname() { return "parameter_type_list"; }
 bool parameter_type_list::has_vararg() {
   bool ret = false;
-  if (what() == afront::parser::token::ELIPSIS)
+  if (what() == afront::parser::token::ELLIPSIS)
     ret = true;
   return ret;
 }

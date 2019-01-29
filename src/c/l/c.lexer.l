@@ -151,7 +151,7 @@ static void comment();
 
 ">>="                       { LEXTOK(RIGHT_ASSIGN); }
 
-"..."                       { LEXTOK(ELIPSIS); }
+"..."                       { LEXTOK(ELLIPSIS); }
 "auto"                      { LEXTOK(AUTO); }
 "break"                     { LEXTOK(BREAK); }
 "case"                      { LEXTOK(CASE); }

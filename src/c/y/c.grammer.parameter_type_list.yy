@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2017-2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -37,6 +37,6 @@
 
 parameter_type_list
 	: parameter_list             { $$ = std::shared_ptr<parameter_type_list> (new parameter_type_list($1)); }
-	| parameter_list COM ELIPSIS { $$ = std::shared_ptr<parameter_type_list> (new parameter_type_list($1, $3)); }
+	| parameter_list COM ELLIPSIS { $$ = std::shared_ptr<parameter_type_list> (new parameter_type_list($1, $3)); }
 	;
 
