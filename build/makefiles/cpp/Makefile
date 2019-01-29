@@ -20,7 +20,9 @@ clean: dirs
 OBJS =	$(OBJDIR)/cpp.o \
 	$(OBJDIR)/parser.o \
 	$(OBJDIR)/pt.o \
-
+	$(TOPOBJDIR)/c/pt.o \
+	$(TOPOBJDIR)/pt/n.o \
+	$(TOPOBJDIR)/con/m.o
 
 YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(TOPSRCDIR)/y/error.yy \
