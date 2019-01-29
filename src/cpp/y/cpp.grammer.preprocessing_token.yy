@@ -35,7 +35,7 @@
 %def   debug.grammer.preprocessor_token
 %endif
 
-preprocessor_token
-	: preprocessing_token           { $$ = std::shared_ptr<preprocessor_token> (new preprocessor_token($1));   }
-	| preprocessor_token preprocessing_token { *$1 += $2; $$ = $1; }
+preprocessing_token
+	: preprocessing_token           { $$ = std::shared_ptr<preprocessing_token> (new preprocessing_token($1));   }
+	| preprocessing_token preprocessing_token { *$1 += $2; $$ = $1; }
 	;

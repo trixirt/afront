@@ -27,6 +27,71 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(TOPSRCDIR)/y/override.yy \
 	$(TOPSRCDIR)/y/preamble.yy \
 	$(TOPSRCDIR)/y/tokens.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.abstract_array_declarator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.abstract_declarator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.abstract_function_declarator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.additive_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.alignment_specifier.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.and_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.argument_expr_list.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.array_declarator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.assignment_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.assignment_operator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.atomic_type_specifier.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.cast_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.character_constant.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.conditional_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.constant_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.constant.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.declaration_specifiers.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.declarator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.direct_abstract_declarator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.direct_declarator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.enumeration_constant.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.enumerator_list.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.enumerator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.enum_specifier.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.equality_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.exclusive_or_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.floating_constant.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.function_declarator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.function_specifier.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.generic_association.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.generic_assoc_list.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.generic_selection.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.identifier_list.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.identifier.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.inclusive_or_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.integer_constant.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.logical_and_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.logical_or_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.multiplicative_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.parameter_declaration.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.parameter_list.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.parameter_type_list.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.pointer.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.postfix_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.primary_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.relation_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.shift_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.specifier_qualifier_list.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.static_assert_declaration.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.storage_class_specifier.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.string_literal.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.struct_declaration_list.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.struct_declaration.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.struct_declarator_list.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.struct_declarator.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.struct_or_union_specifier.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.struct_or_union.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.typedef_name.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.type_name.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.type_qualifier_list.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.type_qualifier.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.type_specifier.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.unary_expr.yy \
+	$(TOPSRCDIR)/c/y/c.grammer.unary_operator.yy \
 	$(SRCDIR)/y/cpp.grammer.control_line.yy \
 	$(SRCDIR)/y/cpp.grammer.elif_groups.yy \
 	$(SRCDIR)/y/cpp.grammer.elif_group.yy \
@@ -64,7 +129,7 @@ $(OBJDIR)/parser.tab.cc : $(OBJDIR)/parser.yy
 	mv $(OBJDIR)/parser.tab.hh.s $(OBJDIR)/parser.tab.hh
 
 $(OBJDIR)/parser.yy : $(YYS)
-	$(LYPP) -I $(TOPSRCDIR)/y -I $(SRCDIR)/y $(LYPP_FLAGS) $(SRCDIR)/y/cpp.parser.yy > $@
+	$(LYPP) -I $(TOPSRCDIR)/y -I $(TOPSRCDIR)/c/y -I $(SRCDIR)/y $(LYPP_FLAGS) $(SRCDIR)/y/cpp.parser.yy > $@
 
 $(OBJDIR)/pt.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/pt.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/pt.cpp

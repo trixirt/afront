@@ -36,6 +36,6 @@
 %endif
 
 elif_group
-	: HASH ELIF constant_expression new_line       { $$ = std::shared_ptr<elif_group> (new elif_group($2, $3));         }
-	| HASH ELIF constant_expression new_line group { $$ = std::shared_ptr<elif_group> (new elif_group($2, $3, $4));     }
+	: HASH ELIF constant_expr new_line       { $$ = std::shared_ptr<elif_group> (new elif_group($2, $3));         }
+	| HASH ELIF constant_expr new_line group { $$ = std::shared_ptr<elif_group> (new elif_group($2, $3, $4));     }
 	;
