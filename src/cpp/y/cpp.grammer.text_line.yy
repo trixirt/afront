@@ -36,6 +36,6 @@
 %endif
 
 text_line
-	: new_line           { $$ = std::shared_ptr<text_line> (new text_line());   }
-	| pp_tokens new_line { $$ = std::shared_ptr<text_line> (new text_line($1)); }
+	: NL           { $$ = std::shared_ptr<text_line> (new text_line());   }
+	| pp_tokens NL { $$ = std::shared_ptr<text_line> (new text_line($1)); }
 	;

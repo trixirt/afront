@@ -158,16 +158,6 @@ public:
   virtual std::string classname();
 };
 
-class new_line : public n {
-public:
-  new_line(lex_token a);
-
-  virtual ~new_line(){};
-  virtual void accept(visitor *a);
-  virtual void notify();
-  virtual std::string classname();
-};
-
 class non_directive : public n {
 public:
   non_directive(std::shared_ptr<pp_tokens> a);

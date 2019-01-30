@@ -36,17 +36,17 @@
 %endif
 
 control_line
-	: HASH INCLUDE pp_tokens new_line                                                       { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
-	| HASH DEFINE identifier replacement_list new_line                                      { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $4));         }
-	| HASH DEFINE identifier OPA CPA replacement_list new_line                              { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $6));         }
-	| HASH DEFINE identifier OPA identifier_list CPA replacement_list new_line              { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7));     }
-	| HASH DEFINE identifier OPA ELLIPSIS CPA replacement_list new_line                     { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7));     }
-	| HASH DEFINE identifier OPA identifier_list COM ELLIPSIS CPA replacement_list new_line { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7, $9)); }	
-	| HASH UNDEF identifier new_line                                                        { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
-	| HASH LINE pp_tokens new_line                                                          { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
-	| HASH ERROR new_line                                                                   { $$ = std::shared_ptr<control_line> (new control_line($2));                 }
-	| HASH ERROR pp_tokens new_line                                                         { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
-	| HASH PRAGMA new_line                                                                  { $$ = std::shared_ptr<control_line> (new control_line($2));                 }
-	| HASH PRAGMA pp_tokens new_line                                                        { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
-	| HASH new_line                                                                         { $$ = std::shared_ptr<control_line> (new control_line());                   }
+	: HASH INCLUDE pp_tokens NL                                                       { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
+	| HASH DEFINE identifier replacement_list NL                                      { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $4));         }
+	| HASH DEFINE identifier OPA CPA replacement_list NL                              { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $6));         }
+	| HASH DEFINE identifier OPA identifier_list CPA replacement_list NL              { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7));     }
+	| HASH DEFINE identifier OPA ELLIPSIS CPA replacement_list NL                     { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7));     }
+	| HASH DEFINE identifier OPA identifier_list COM ELLIPSIS CPA replacement_list NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7, $9)); }	
+	| HASH UNDEF identifier NL                                                        { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
+	| HASH LINE pp_tokens NL                                                          { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
+	| HASH ERROR NL                                                                   { $$ = std::shared_ptr<control_line> (new control_line($2));                 }
+	| HASH ERROR pp_tokens NL                                                         { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
+	| HASH PRAGMA NL                                                                  { $$ = std::shared_ptr<control_line> (new control_line($2));                 }
+	| HASH PRAGMA pp_tokens NL                                                        { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
+	| HASH NL                                                                         { $$ = std::shared_ptr<control_line> (new control_line());                   }
 	;

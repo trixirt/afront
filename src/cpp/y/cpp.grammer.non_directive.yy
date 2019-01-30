@@ -36,5 +36,5 @@
 %endif
 
 non_directive
-	: pp_tokens new_line { $$ = std::shared_ptr<non_directive> (new non_directive($1)); }
+	: pp_tokens NL { $$ = std::shared_ptr<non_directive> (new non_directive($1)); }
 	;

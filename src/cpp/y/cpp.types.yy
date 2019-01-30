@@ -82,7 +82,6 @@
 %type <std::shared_ptr<logical_and_expr>> logical_and_expr;
 %type <std::shared_ptr<logical_or_expr>> logical_or_expr;
 %type <std::shared_ptr<multiplicative_expr>> multiplicative_expr;
-%type <std::shared_ptr<new_line>> new_line;
 %type <std::shared_ptr<non_directive>> non_directive;
 %type <std::shared_ptr<parameter_declaration>> parameter_declaration;
 %type <std::shared_ptr<parameter_list>> parameter_list;
@@ -114,6 +113,3 @@
 %type <std::shared_ptr<type_specifier>> type_specifier;
 %type <std::shared_ptr<unary_expr>> unary_expr;
 %type <std::shared_ptr<unary_operator>> unary_operator;
-%type <std::shared_ptr<white_space>> nospace;
-%type <std::shared_ptr<white_space>> white_space;
-%type <std::shared_ptr<white_space>> white_space_or_nospace;

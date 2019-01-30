@@ -195,14 +195,6 @@ void if_section::notify() {
 }
 std::string if_section::classname() { return "if_section"; }
 
-new_line::new_line(lex_token a) : n(a) {}
-void new_line::accept(visitor *a) { a->v(this); }
-void new_line::notify() {
-  for (auto i : observers)
-    i->update(this);
-}
-std::string new_line::classname() { return "new_line"; }
-
 preprocessing_file::preprocessing_file() {}
 preprocessing_file::preprocessing_file(std::shared_ptr<group> a) { *this += a; }
 void preprocessing_file::accept(visitor *a) { a->v(this); }
