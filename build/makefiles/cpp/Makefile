@@ -132,7 +132,7 @@ LS = 	$(TOPSRCDIR)/l/digit.l \
 	$(SRCDIR)/l/cpp.lexer.l \
 
 $(OBJDIR)/cpp.o : $(SRCDIR)/cpp.h $(SRCDIR)/cpp.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -c $(SRCDIR)/cpp.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/cpp.cpp
 
 $(OBJDIR)/cpp.lexer.o : $(OBJDIR)/cpp.lexer.yy.cc
 	$(CXX) -o $@ $(CXXFLAGS) $(TOOL_INCLUDES) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
@@ -168,5 +168,5 @@ $(OBJDIR)/pt.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/pt/pt.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/pt/pt.cpp
 
 $(OBJDIR)/cpp: $(OBJS)
-	$(LD) -o $@ $(LDFLAGS) $(OBJS) $(LIBS)
+	$(LD) -o $@ $(LDFLAGS) $(OBJS) $(LLVM_LIBS) $(LLVM_SYSTEM_LIBS) $(LIBS)
 

@@ -33,5 +33,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #include "cpp.h"
-int main(int argc, char *argv[]) { return 0; }
+#include "cpp/lang_driver.h"
+#include "llvm/Support/CommandLine.h"
+
+class cmdline_options opt;
+#include "cpp.opt"
+
+int main(int argc, char *argv[]) {
+
+  int ret = 1;
+  lang_driver drv;
+  llvm::cl::ParseCommandLineOptions(argc, argv);
+  if (!drv.parse(opt.input_filename.c_str())) {
+    std::cout << drv.result() << std::endl;
+  } else {
+      ret = 0;
+  }
+  return ret;
+}
 
