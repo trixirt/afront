@@ -54,7 +54,7 @@ static void comment();
 %option noyywrap
 %option c++
 %option yylineno
-%x NPP PP D DL
+%x NPP PP D DL U
 
 
 %include digit.l
@@ -85,14 +85,15 @@ static void comment();
 <PP>"define"       { BEGIN(D); LEXTOK(DEFINE); };
 <D>{identifier}    { BEGIN(NPP); LEXTOK(IDENTIFIER); }
 <D>{identifier}"(" { BEGIN(DL); LEXTOK(IDENTIFIER_LPAREN); }
-<DL>{identifier}   { LEXTOK(IDENTIFIER); }
+<DL,U>{identifier}   { LEXTOK(IDENTIFIER); }
 <DL>","            { LEXTOK(COM); }
 <DL>"..."          { LEXTOK(ELLIPSIS); }
 <DL>")"            { BEGIN(NPP); LEXTOK(CPA); }
 
+<PP>"undef"        { BEGIN(U); LEXTOK(UNDEF); };
+
 <PP>"ifdef"  { LEXTOK(IFDEF); };
 <PP>"ifndef" { LEXTOK(IFNDEF); };
-<PP>"undef"  { LEXTOK(UNDEF); };
 <PP>"endif"  { LEXTOK(ENDIF); };
 
 
