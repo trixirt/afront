@@ -195,6 +195,22 @@ void if_section::notify() {
 }
 std::string if_section::classname() { return "if_section"; }
 
+non_directive::non_directive(std::shared_ptr<pp_tokens> a) { *this += a; }
+void non_directive::accept(visitor *a) { a->v(this); }
+void non_directive::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string non_directive::classname() { return "non_directive"; }
+
+pp_tokens::pp_tokens(std::shared_ptr<preprocessing_token> a) { *this += a; }
+void pp_tokens::accept(visitor *a) { a->v(this); }
+void pp_tokens::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string pp_tokens::classname() { return "pp_tokens"; }
+
 preprocessing_file::preprocessing_file() {}
 preprocessing_file::preprocessing_file(std::shared_ptr<group> a) { *this += a; }
 void preprocessing_file::accept(visitor *a) { a->v(this); }
@@ -203,6 +219,14 @@ void preprocessing_file::notify() {
     i->update(this);
 }
 std::string preprocessing_file::classname() { return "preprocessing_file"; }
+
+preprocessing_token::preprocessing_token(lex_token a) : n(a) {}
+void preprocessing_token::accept(visitor *a) { a->v(this); }
+void preprocessing_token::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string preprocessing_token::classname() { return "preprocessing_token"; }
 
 replacement_list::replacement_list() {}
 replacement_list::replacement_list(std::shared_ptr<pp_tokens> a) { *this += a; }

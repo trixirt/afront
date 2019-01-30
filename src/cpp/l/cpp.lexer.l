@@ -54,7 +54,7 @@ static void comment();
 %option noyywrap
 %option c++
 %option yylineno
-%x COMMENT CPP_COMMENT PP_DIRECTIVE
+%x NPP PP D DL
 
 
 %include digit.l
@@ -68,26 +68,39 @@ static void comment();
 
 %}
 
-"/*"             { BEGIN(COMMENT); }
-<COMMENT>"*/"    { BEGIN(INITIAL); }
-<COMMENT>.       {                 }
-<COMMENT>\n      { this->line();   }
+"#"        { BEGIN(PP); LEXTOK(HASH); };  
+"??="      { BEGIN(PP); LEXTOK(HASH); };
+<*>\n      { this->line(); BEGIN(INITIAL); LEXTOK(NL); }
 
-"//"             { BEGIN(CPP_COMMENT); }
-<CPP_COMMENT>.   { }
-<CPP_COMMENT>\n  { this->line(); BEGIN(INITIAL); }
+"\n"       { this->line(); LEXTOK(NL); }
+"\\\n"     { this->line(); LEXTOK(NL); }
+"??/\n"    { this->line(); LEXTOK(NL); }
 
-^"#"             { BEGIN(PP_DIRECTIVE); };
-^"??="             { BEGIN(PP_DIRECTIVE); };
-<PP_DIRECTIVE>.  { }
-<PP_DIRECTIVE>\n { this->line(); BEGIN(INITIAL); }
 
-"\n"       { this->line(); }
-"\\\n"     { this->line(); }
-"??/\n"    { this->line(); }
+<PP>"include"      { BEGIN(NPP); LEXTOK(INCLUDE); };
+<PP>"pragma"       { BEGIN(NPP); LEXTOK(PRAGMA); };
+<PP>"error"        { BEGIN(NPP); LEXTOK(ERROR); };
+<PP>"line"         { BEGIN(NPP); LEXTOK(LINE); };
 
-%include lexer.l
+<PP>"define"       { BEGIN(D); LEXTOK(DEFINE); };
+<D>{identifier}    { BEGIN(NPP); LEXTOK(IDENTIFIER); }
+<D>{identifier}"(" { BEGIN(DL); LEXTOK(IDENTIFIER_LPAREN); }
+<DL>{identifier}   { LEXTOK(IDENTIFIER); }
+<DL>","            { LEXTOK(COM); }
+<DL>"..."          { LEXTOK(ELLIPSIS); }
+<DL>")"            { BEGIN(NPP); LEXTOK(CPA); }
 
+<PP>"ifdef"  { LEXTOK(IFDEF); };
+<PP>"ifndef" { LEXTOK(IFNDEF); };
+<PP>"undef"  { LEXTOK(UNDEF); };
+<PP>"endif"  { LEXTOK(ENDIF); };
+
+
+<INITIAL>.   { BEGIN(NPP); LEXTOK(TOKEN); }
+<NPP>.*      { LEXTOK(TOKEN); }
+
+
+"??="      { LEXTOK(HASH); };
 "->"       { LEXTOK(PTR); }
 "!="       { LEXTOK(NE); }
 "&="       { LEXTOK(AND_ASSIGN); }
@@ -159,17 +172,12 @@ static void comment();
 "_Static_assert"            { LEXTOK(_STATIC_ASSERT); }
 "_Thread_local"             { LEXTOK(_THREAD_LOCAL); }
 %endif
-{identifier}                { if (tn.count(yytext)) {
-                                LEXTOK(TYPENAME_IDENTIFIER); 
-                              } else {
-                                LEXTOK(IDENTIFIER); 
-                              }
-		            }
+<PP>{identifier}            { LEXTOK(IDENTIFIER); }
 {integer_constant}          { LEXTOK(INTEGER_CONSTANT);   }
 {floating_constant}         { LEXTOK(FLOATING_CONSTANT);   }
 {character_constant}        { LEXTOK(CHARACTER_CONSTANT);   }
 {string_literal}            { LEXTOK(STRING_CONSTANT);   }
 {whitespace}                { }
-.                           { LEXTOK(UNSUPPORTED_INPUT_CHAR);   }
+
 %%
 

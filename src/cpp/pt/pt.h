@@ -191,7 +191,7 @@ public:
 
 class preprocessing_token : public n {
 public:
-  preprocessing_token(std::shared_ptr<preprocessing_token> a);
+  preprocessing_token(lex_token a);
 
   virtual ~preprocessing_token(){};
   virtual void accept(visitor *a);

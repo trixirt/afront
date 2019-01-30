@@ -5,6 +5,7 @@ TOPSRCDIR= $(TOP)/src
 OBJDIR= $(TOPOBJDIR)/cpp
 SRCDIR= $(TOPSRCDIR)/cpp
 
+LYPP_FLAGS+=-DDEBUG
 LYPP_FLAGS+=-Dc99 -Dc11
 
 all: dirs $(OBJDIR)/cpp
@@ -108,16 +109,15 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(SRCDIR)/y/cpp.grammer.endif_line.yy \
 	$(SRCDIR)/y/cpp.grammer.group_part.yy \
 	$(SRCDIR)/y/cpp.grammer.group.yy \
+	$(SRCDIR)/y/cpp.grammer.identifier_lparen.yy \
 	$(SRCDIR)/y/cpp.grammer.if_group.yy \
 	$(SRCDIR)/y/cpp.grammer.if_section.yy \
-	$(SRCDIR)/y/cpp.grammer.new_line.yy \
 	$(SRCDIR)/y/cpp.grammer.non_directive.yy \
 	$(SRCDIR)/y/cpp.grammer.pp_tokens.yy \
 	$(SRCDIR)/y/cpp.grammer.preprocessing_file.yy \
 	$(SRCDIR)/y/cpp.grammer.preprocessing_token.yy \
 	$(SRCDIR)/y/cpp.grammer.replacement_list.yy \
 	$(SRCDIR)/y/cpp.grammer.text_line.yy \
-	$(SRCDIR)/y/cpp.grammer.white_space.yy \
 	$(SRCDIR)/y/cpp.grammer.yy \
 	$(SRCDIR)/y/cpp.parser.yy \
 	$(SRCDIR)/y/cpp.tokens.yy \

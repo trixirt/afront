@@ -38,10 +38,10 @@
 control_line
 	: HASH INCLUDE pp_tokens NL                                                       { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
 	| HASH DEFINE identifier replacement_list NL                                      { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $4));         }
-	| HASH DEFINE identifier OPA CPA replacement_list NL                              { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $6));         }
-	| HASH DEFINE identifier OPA identifier_list CPA replacement_list NL              { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7));     }
-	| HASH DEFINE identifier OPA ELLIPSIS CPA replacement_list NL                     { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7));     }
-	| HASH DEFINE identifier OPA identifier_list COM ELLIPSIS CPA replacement_list NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5, $7, $9)); }	
+	| HASH DEFINE identifier_lparen CPA replacement_list NL                              { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5));         }
+	| HASH DEFINE identifier_lparen identifier_list CPA replacement_list NL              { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $4, $6));     }
+	| HASH DEFINE identifier_lparen ELLIPSIS CPA replacement_list NL                     { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $4, $6));     }
+	| HASH DEFINE identifier_lparen identifier_list COM ELLIPSIS CPA replacement_list NL { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $4, $6, $8)); }	
 	| HASH UNDEF identifier NL                                                        { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
 	| HASH LINE pp_tokens NL                                                          { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
 	| HASH ERROR NL                                                                   { $$ = std::shared_ptr<control_line> (new control_line($2));                 }
