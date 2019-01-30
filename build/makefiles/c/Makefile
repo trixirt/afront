@@ -17,19 +17,19 @@ dirs:
 clean: dirs
 	- rm $(OBJDIR)/*
 
-OBJS =	$(OBJDIR)/driver.o \
+OBJS =	$(OBJDIR)/ast.o \
+	$(OBJDIR)/driver.o \
+	$(OBJDIR)/chk.o \
+	$(OBJDIR)/cg.o \
 	$(OBJDIR)/c.lexer.o \
 	$(OBJDIR)/cc1.o \
 	$(OBJDIR)/lang_driver.o \
-	$(OBJDIR)/parser.o \
 	$(OBJDIR)/oparser.o \
+	$(OBJDIR)/parser.o \
 	$(OBJDIR)/ping.o \
-	$(OBJDIR)/chk.o \
-	$(OBJDIR)/cg.o \
 	$(OBJDIR)/typedefs.o \
 	$(OBJDIR)/n.o \
 	$(OBJDIR)/pt.o \
-	$(OBJDIR)/ast.o \
 	$(OBJDIR)/type.o \
 	$(OBJDIR)/scope.o \
 	$(TOPOBJDIR)/pt/n.o \

@@ -18,6 +18,7 @@ clean: dirs
 	- rm $(OBJDIR)/*
 
 OBJS =	$(OBJDIR)/cpp.o \
+	$(OBJDIR)/cpp.lexer.o \
 	$(OBJDIR)/driver.o \
 	$(OBJDIR)/lang_driver.o \
 	$(OBJDIR)/oparser.o \
@@ -124,9 +125,24 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 
 LS = 	$(TOPSRCDIR)/l/digit.l \
 	$(TOPSRCDIR)/l/lexer.l \
+	$(TOPSRCDIR)/c/l/c.constant.l \
+	$(TOPSRCDIR)/c/l/c.identifier.l \
+	$(TOPSRCDIR)/c/l/c.string_literal.l \
+	$(TOPSRCDIR)/c/l/c.whitespace.l \
+	$(SRCDIR)/l/cpp.lexer.l \
 
 $(OBJDIR)/cpp.o : $(SRCDIR)/cpp.h $(SRCDIR)/cpp.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -c $(SRCDIR)/cpp.cpp
+
+$(OBJDIR)/cpp.lexer.o : $(OBJDIR)/cpp.lexer.yy.cc
+	$(CXX) -o $@ $(CXXFLAGS) $(TOOL_INCLUDES) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+
+$(OBJDIR)/cpp.lexer.yy.cc : $(OBJDIR)/cpp.lexer.l 
+	$(LEX) --outfile=$@ $<
+
+$(OBJDIR)/cpp.lexer.l : $(LS) $(OBJDIR)/parser.tab.cc
+	$(LYPP) -q -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/c/l -I$(SRCDIR)/l $(SRCDIR)/l/cpp.lexer.l > $@
+
 
 $(OBJDIR)/driver.o : $(TOPSRCDIR)/con/driver.cpp $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
