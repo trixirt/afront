@@ -36,6 +36,6 @@
 %endif
 
 preprocessing_token
-	: preprocessing_token           { $$ = std::shared_ptr<preprocessing_token> (new preprocessing_token($1));   }
+	: TOKEN           { $$ = std::shared_ptr<preprocessing_token> (new preprocessing_token($1));   }
 	| preprocessing_token preprocessing_token { *$1 += $2; $$ = $1; }
 	;

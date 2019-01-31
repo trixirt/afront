@@ -85,7 +85,7 @@ static void comment();
 <PP>"define"       { BEGIN(D); LEXTOK(DEFINE); };
 <D>{identifier}    { BEGIN(NPP); LEXTOK(IDENTIFIER); }
 <D>{identifier}"(" { BEGIN(DL); LEXTOK(IDENTIFIER_LPAREN); }
-<DL,U>{identifier}   { LEXTOK(IDENTIFIER); }
+<DL,U>{identifier} { LEXTOK(IDENTIFIER); }
 <DL>","            { LEXTOK(COM); }
 <DL>"..."          { LEXTOK(ELLIPSIS); }
 <DL>")"            { BEGIN(NPP); LEXTOK(CPA); }

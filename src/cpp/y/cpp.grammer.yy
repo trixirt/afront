@@ -109,6 +109,7 @@
 %include cpp.grammer.group_part.yy
 %include cpp.grammer.group.yy
 %include cpp.grammer.if_group.yy
+%include cpp.grammer.identifier_lparen.yy
 %include cpp.grammer.if_section.yy
 %include cpp.grammer.non_directive.yy
 %include cpp.grammer.pp_tokens.yy

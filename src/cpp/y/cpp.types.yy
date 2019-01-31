@@ -73,6 +73,7 @@
 %type <std::shared_ptr<group>> group;
 %type <std::shared_ptr<group_part>> group_part;
 %type <std::shared_ptr<identifier>> identifier;
+%type <std::shared_ptr<identifier>> identifier_lparen;
 %type <std::shared_ptr<identifier>> typename_identifier;
 %type <std::shared_ptr<identifier_list>> identifier_list;
 %type <std::shared_ptr<if_group>> if_group;

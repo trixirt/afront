@@ -89,6 +89,7 @@
 %token <class lex_token> VOLATILE
 %token <class lex_token> WS
 %token <class lex_token> XOR_ASSIGN
+%token <class lex_token> IDENTIFIER_LPAREN
 
 %token <class lex_token> _ALIGNAS
 %token <class lex_token> _ATOMIC

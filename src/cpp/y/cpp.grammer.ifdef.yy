@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2017-2019 Tom Rix
+/* Copyright (c) 2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,39 +31,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef AFRONT_LEX_TOKEN_H
-#define AFRONT_LEX_TOKEN_H
+%ifdef debug.all
+%def   debug.grammer.if_group
+%endif
 
-#include <memory>
-#include "location.h"
-
-class lex_token {
-public:
-  lex_token() {
-    t = -1;
-    l = std::shared_ptr<class location>(new location());
-  }
-  lex_token(std::string a, location b, unsigned c) {
-    s = a;
-    l = std::shared_ptr<class location>(new location(b));
-    t = c;
-  }
-  std::string text() { return s; }
-  class location &here() const {
-    return *l.get();
-  }
-  signed what() { return t; }
-
-  class lex_token &operator+=(const class lex_token &rhs) {
-    *l += rhs.here();
-    return *this;
-  }
-  void pop_back() { s.pop_back(); }
-
-private:
-  std::string s;
-  std::shared_ptr<class location> l;
-  signed t;
-};
-
-#endif
+ifdef
+	: HASH IFDEF identifier NL       { $$ = std::shared_ptr<ifdef> (new ifdef($3));     }
+	;
