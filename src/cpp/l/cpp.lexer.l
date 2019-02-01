@@ -54,7 +54,7 @@ static void comment();
 %option noyywrap
 %option c++
 %option yylineno
-%x NPP PP D DL U I
+%x NPP PP D DL U I C
 
 
 %include digit.l
@@ -83,22 +83,30 @@ static void comment();
 <PP>"line"         { BEGIN(NPP); LEXTOK(LINE); };
 
 <PP>"define"       { BEGIN(D); LEXTOK(DEFINE); };
-<D>{identifier}    { BEGIN(NPP); LEXTOK(IDENTIFIER); }
-<D>{identifier}"(" { BEGIN(DL); LEXTOK(IDENTIFIER_LPAREN); }
-<DL,U,I>{identifier} { LEXTOK(IDENTIFIER); }
 <DL>","            { LEXTOK(COM); }
 <DL>"..."          { LEXTOK(ELLIPSIS); }
 <DL>")"            { BEGIN(NPP); LEXTOK(CPA); }
 
 <PP>"undef"        { BEGIN(U); LEXTOK(UNDEF); };
 
-<PP>"ifdef"  { LEXTOK(IFDEF); };
-<PP>"ifndef" { LEXTOK(IFNDEF); };
+<PP>"ifdef"  { BEGIN(I); LEXTOK(IFDEF); };
+<PP>"ifndef" { BEGIN(I); LEXTOK(IFNDEF); };
 <PP>"endif"  { LEXTOK(ENDIF); };
+
+<PP>"if"     { BEGIN(C); LEXTOK(IF); }
+<PP>"elif"   { BEGIN(C); LEXTOK(ELIF); }
+
+<C>"defined" { LEXTOK(DEFINED); }
+<C>"("       { LEXTOK(OPA); }
+<C>")"       { LEXTOK(CPA); }
 
 
 <INITIAL>.   { BEGIN(NPP); LEXTOK(TOKEN); }
 <NPP>.*      { LEXTOK(TOKEN); }
+
+<D>{identifier}    { BEGIN(NPP); LEXTOK(IDENTIFIER); }
+<D>{identifier}"(" { BEGIN(DL); LEXTOK(IDENTIFIER_LPAREN); }
+<DL,U,I,C>{identifier} { LEXTOK(IDENTIFIER); }
 
 
 "??="      { LEXTOK(HASH); };
@@ -144,7 +152,6 @@ static void comment();
 "enum"                      { LEXTOK(ENUM); }
 "extern"                    { LEXTOK(EXTERN); }
 "float"                     { LEXTOK(FLOAT); }
-"if"                        { LEXTOK(IF); }
 "int"                       { LEXTOK(INT); }
 "long"                      { LEXTOK(LONG); }
 "register"                  { LEXTOK(REGISTER); }

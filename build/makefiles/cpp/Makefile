@@ -6,7 +6,7 @@ OBJDIR= $(TOPOBJDIR)/cpp
 SRCDIR= $(TOPSRCDIR)/cpp
 
 LYPP_FLAGS+=-DDEBUG
-LYPP_FLAGS+=-Dc99 -Dc11
+LYPP_FLAGS+=-Dc99 -Dc11 -Dcpp
 
 all: dirs $(OBJDIR)/cpp
 
@@ -106,7 +106,6 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(SRCDIR)/y/cpp.grammer.elif_groups.yy \
 	$(SRCDIR)/y/cpp.grammer.elif_group.yy \
 	$(SRCDIR)/y/cpp.grammer.else_group.yy \
-	$(SRCDIR)/y/cpp.grammer.endif_line.yy \
 	$(SRCDIR)/y/cpp.grammer.group_part.yy \
 	$(SRCDIR)/y/cpp.grammer.group.yy \
 	$(SRCDIR)/y/cpp.grammer.identifier_lparen.yy \

@@ -36,8 +36,8 @@
 %endif
 
 if_section
-	: if_group endif_line                        { $$ = std::shared_ptr<if_section> (new if_section($1, $2));         }
-	| if_group else_group endif_line             { $$ = std::shared_ptr<if_section> (new if_section($1, $2, $3));     }
-	| if_group elif_groups endif_line            { $$ = std::shared_ptr<if_section> (new if_section($1, $2, $3));     }
-	| if_group elif_groups else_group endif_line { $$ = std::shared_ptr<if_section> (new if_section($1, $2, $3, $4)); }
+	: if_group ENDIF NL                        { $$ = std::shared_ptr<if_section> (new if_section($1));  }
+	| if_group else_group ENDIF NL             { $$ = std::shared_ptr<if_section> (new if_section($1, $2));     }
+	| if_group elif_groups ENDIF NL            { $$ = std::shared_ptr<if_section> (new if_section($1, $2));     }
+	| if_group elif_groups else_group ENDIF NL { $$ = std::shared_ptr<if_section> (new if_section($1, $2, $3));     }
 	;

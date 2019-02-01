@@ -36,10 +36,10 @@
 %endif
 
 if_group
-	: HASH IF constant_expr NL        { $$ = std::shared_ptr<if_group> (new if_group($2, $3));         }
-	| HASH IF constant_expr NL group  { $$ = std::shared_ptr<if_group> (new if_group($2, $3, $5));     }
-	| HASH IFDEF identifier NL        { $$ = std::shared_ptr<if_group> (new if_group($2, $3));     }
-	| HASH IFDEF identifier NL group  { $$ = std::shared_ptr<if_group> (new if_group($2, $3, $5)); }
-	| HASH IFNDEF identifier NL       { $$ = std::shared_ptr<if_group> (new if_group($2, $3));     }
-	| HASH IFNDEF identifier NL group { $$ = std::shared_ptr<if_group> (new if_group($2, $3, $5)); }
+	: HASH IF constant_expr NL HASH        { $$ = std::shared_ptr<if_group> (new if_group($2, $3));     }
+	| HASH IF constant_expr NL group HASH  { $$ = std::shared_ptr<if_group> (new if_group($2, $3, $5)); }
+	| HASH IFDEF identifier NL HASH        { $$ = std::shared_ptr<if_group> (new if_group($2, $3));     }
+	| HASH IFDEF identifier NL group HASH  { $$ = std::shared_ptr<if_group> (new if_group($2, $3, $5)); }
+	| HASH IFNDEF identifier NL HASH       { $$ = std::shared_ptr<if_group> (new if_group($2, $3));     }
+	| HASH IFNDEF identifier NL group HASH { $$ = std::shared_ptr<if_group> (new if_group($2, $3, $5)); }
 	;

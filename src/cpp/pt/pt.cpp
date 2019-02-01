@@ -78,6 +78,23 @@ void control_line::notify() {
 }
 std::string control_line::classname() { return "control_line"; }
 
+cpp_conditional_expr::cpp_conditional_expr(std::shared_ptr<defined> a) { *this += a; }
+void cpp_conditional_expr::accept(visitor *a) { a->v(this); }
+void cpp_conditional_expr::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string cpp_conditional_expr::classname() { return "cpp_conditional_expr"; }
+
+
+defined::defined(std::shared_ptr<identifier> a) { *this += a; }
+void defined::accept(visitor *a) { a->v(this); }
+void defined::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string defined::classname() { return "defined"; }
+
 elif_group::elif_group(std::shared_ptr<constant_expr> a) { *this += a; }
 elif_group::elif_group(std::shared_ptr<constant_expr> a,
                        std::shared_ptr<group> b) {
@@ -160,33 +177,25 @@ void if_group::notify() {
 }
 std::string if_group::classname() { return "if_group"; }
 
+if_section::if_section(std::shared_ptr<if_group> a) {
+  *this += a;
+}
 if_section::if_section(std::shared_ptr<if_group> a,
-                       std::shared_ptr<endif_line> b) {
+                       std::shared_ptr<else_group> b) {
   *this += a;
   *this += b;
 }
 if_section::if_section(std::shared_ptr<if_group> a,
-                       std::shared_ptr<else_group> b,
-                       std::shared_ptr<endif_line> c) {
+                       std::shared_ptr<elif_groups> b) {
   *this += a;
   *this += b;
-  *this += c;
-}
-if_section::if_section(std::shared_ptr<if_group> a,
-                       std::shared_ptr<elif_groups> b,
-                       std::shared_ptr<endif_line> c) {
-  *this += a;
-  *this += b;
-  *this += c;
 }
 if_section::if_section(std::shared_ptr<if_group> a,
                        std::shared_ptr<elif_groups> b,
-                       std::shared_ptr<else_group> c,
-                       std::shared_ptr<endif_line> d) {
+                       std::shared_ptr<else_group> c) {
   *this += a;
   *this += b;
   *this += c;
-  *this += d;
 }
 void if_section::accept(visitor *a) { a->v(this); }
 void if_section::notify() {

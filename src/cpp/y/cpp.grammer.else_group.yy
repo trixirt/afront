@@ -36,6 +36,6 @@
 %endif
 
 else_group
-	: HASH ELSE NL       { $$ = std::shared_ptr<else_group> (new else_group());         }
-	| HASH ELSE NL group { $$ = std::shared_ptr<else_group> (new else_group($4));     }
+	: ELSE NL HASH       { $$ = std::shared_ptr<else_group> (new else_group());         }
+	| ELSE NL group HASH      { $$ = std::shared_ptr<else_group> (new else_group($3));     }
 	;

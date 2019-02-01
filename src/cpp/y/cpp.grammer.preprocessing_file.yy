@@ -36,7 +36,7 @@
 %endif
 
 preprocessing_file
-	: group      {
+	: group END  {
 	  $$ = std::shared_ptr<preprocessing_file> (new preprocessing_file($1));
 	  drv->set_root($$);
 	}

@@ -62,6 +62,27 @@ public:
   virtual std::string classname();
 };
 
+class cpp_conditional_expr : public conditional_expr {
+public:
+  cpp_conditional_expr(std::shared_ptr<defined> a);
+  using conditional_expr::conditional_expr;
+
+  virtual ~cpp_conditional_expr(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class defined : public n {
+public:
+  defined(std::shared_ptr<identifier> a);
+
+  virtual ~defined(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
 class elif_group : public n {
 public:
   elif_group(std::shared_ptr<constant_expr> a);
@@ -144,13 +165,11 @@ public:
 
 class if_section : public n {
 public:
-  if_section(std::shared_ptr<if_group> a, std::shared_ptr<endif_line> b);
-  if_section(std::shared_ptr<if_group> a, std::shared_ptr<else_group> b,
-             std::shared_ptr<endif_line> c);
+  if_section(std::shared_ptr<if_group> a);
+  if_section(std::shared_ptr<if_group> a, std::shared_ptr<else_group> b);
+  if_section(std::shared_ptr<if_group> a, std::shared_ptr<elif_groups> b);
   if_section(std::shared_ptr<if_group> a, std::shared_ptr<elif_groups> b,
-             std::shared_ptr<endif_line> c);
-  if_section(std::shared_ptr<if_group> a, std::shared_ptr<elif_groups> b,
-             std::shared_ptr<else_group> c, std::shared_ptr<endif_line> d);
+             std::shared_ptr<else_group> c);
 
   virtual ~if_section(){};
   virtual void accept(visitor *a);

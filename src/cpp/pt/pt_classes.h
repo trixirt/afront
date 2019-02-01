@@ -42,6 +42,8 @@
 #endif
 
 PT_CLASS(control_line)
+PT_CLASS(cpp_conditional_expr)
+PT_CLASS(defined)
 PT_CLASS(elif_groups)
 PT_CLASS(elif_group)
 PT_CLASS(else_group)
