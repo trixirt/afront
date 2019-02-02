@@ -106,12 +106,11 @@ static void comment();
 <PP>"elif"   { BEGIN(C); LEXTOK(ELIF); }
 
 <C>"defined" { LEXTOK(DEFINED); }
-<C>"("       { LEXTOK(OPA); }
-<C>")"       { LEXTOK(CPA); }
-
 
 <INITIAL>.   { BEGIN(NPP); LEXTOK(TOKEN); }
 <NPP>.*      { LEXTOK(TOKEN); }
+
+%include lexer.l
 
 <D>{identifier}    { BEGIN(NPP); LEXTOK(IDENTIFIER); }
 <D>{identifier}"(" { BEGIN(DL); LEXTOK(IDENTIFIER_LPAREN); }

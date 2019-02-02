@@ -115,86 +115,41 @@ static void comment();
 "??/\n"    { this->line(); }
 
 %include lexer.l
+%include c.assign.l
+%include c.trigraph.l
+%include c.digraph.l
+%include c.misc.l
+%include c.type_qualifier.l
+%include c.type_specifier.l
 
-"->"       { LEXTOK(PTR); }
-"!="       { LEXTOK(NE); }
-"&="       { LEXTOK(AND_ASSIGN); }
-"++"                        { LEXTOK(INC); }
-"--"                        { LEXTOK(DEC); }
-"+="                        { LEXTOK(ADD_ASSIGN); }
-"-="                        { LEXTOK(SUB_ASSIGN); }
-"??-"                       { LEXTOK(TIL); }
-"*="                        { LEXTOK(MUL_ASSIGN); }
-"%="                        { LEXTOK(MOD_ASSIGN); }
-"??("                       { LEXTOK(OBK); }
-"<:"                        { LEXTOK(OBK); }
-"??)"                       { LEXTOK(CBK); }
-":>"                        { LEXTOK(CBK); }
-"??<"                       { LEXTOK(OBR); }
-"<%"                        { LEXTOK(OBR); }
-"??>"                       { LEXTOK(CBR); }
-"%>"                        { LEXTOK(CBR); }
-"??!"                       { LEXTOK(VER); }
-"||"                        { LEXTOK(OROR); }
-"??!|"                      { LEXTOK(OROR); }
-"|??!"                      { LEXTOK(OROR); }
-"??!??!"                    { LEXTOK(OROR); }
-"|="                        { LEXTOK(OR_ASSIGN); }
-"??!="                      { LEXTOK(OR_ASSIGN); }
-
-"/="                        { LEXTOK(DIV_ASSIGN); }
-"??'"                       { LEXTOK(CIR); }
-"^="                        { LEXTOK(XOR_ASSIGN); }
-"??'="                      { LEXTOK(XOR_ASSIGN); }
-
-"<<="                       { LEXTOK(LEFT_ASSIGN); }
-
-">>="                       { LEXTOK(RIGHT_ASSIGN); }
-
-"..."                       { LEXTOK(ELLIPSIS); }
 "auto"                      { LEXTOK(AUTO); }
 "break"                     { LEXTOK(BREAK); }
 "case"                      { LEXTOK(CASE); }
-"char"                      { LEXTOK(CHAR); }
-"const"                     { LEXTOK(CONST); }
-"volatile"                  { LEXTOK(VOLATILE);   }
 "continue"                  { LEXTOK(CONTINUE); }
 "default"                   { LEXTOK(DEFAULT); }
 "do"                        { LEXTOK(DO); }
-"double"                    { LEXTOK(DOUBLE); }
 "else"                      { LEXTOK(ELSE); }
 "enum"                      { LEXTOK(ENUM); }
 "extern"                    { LEXTOK(EXTERN); }
-"float"                     { LEXTOK(FLOAT); }
 "for"                       { LEXTOK(FOR); }
 "goto"                      { LEXTOK(GOTO); }
 "if"                        { LEXTOK(IF); }
-"int"                       { LEXTOK(INT); }
-"long"                      { LEXTOK(LONG); }
 "register"                  { LEXTOK(REGISTER); }
 "return"                    { LEXTOK(RETURN); }
-"short"                     { LEXTOK(SHORT);      }
 "sizeof"                    { LEXTOK(SIZEOF);     }
-"signed"                    { LEXTOK(SIGNED);     }
 "static"                    { LEXTOK(STATIC);     }
 "struct"                    { LEXTOK(STRUCT);     }
 "switch"                    { LEXTOK(SWITCH);     }
 "typedef"                   { LEXTOK(TYPEDEF);    }
 "union"                     { LEXTOK(UNION);      }
-"unsigned"                  { LEXTOK(UNSIGNED);   }
-"void"                      { LEXTOK(VOID);       }
 "while"                     { LEXTOK(WHILE);      }
 %ifdef c99
 "inline"                    { LEXTOK(INLINE); }
-"restrict"                  { LEXTOK(RESTRICT); }
-"_Bool"                     { LEXTOK(_BOOL); }
-"_Complex"                  { LEXTOK(_COMPLEX); }
 "_Imaginary"                { LEXTOK(_IMAGINARY); }
 %endif
 %ifdef c11
 "_Alignas"                  { LEXTOK(_ALIGNAS); }
 "_Alignof"                  { LEXTOK(_ALIGNOF); }
-"_Atomic"                   { LEXTOK(_ATOMIC); }
 "_Generic"                  { LEXTOK(_GENERIC); }
 "_Noreturn"                 { LEXTOK(_NORETURN) }
 "_Static_assert"            { LEXTOK(_STATIC_ASSERT); }
