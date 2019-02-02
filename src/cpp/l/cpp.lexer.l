@@ -54,7 +54,7 @@ static void comment();
 %option noyywrap
 %option c++
 %option yylineno
-%x NPP PP D DL U I C
+%x NPP PP D DL U I C COMMENT CXX_COMMENT
 
 
 %include digit.l
@@ -67,6 +67,15 @@ static void comment();
 %{
 
 %}
+
+<*>"/*"          { yy_push_state(COMMENT); }
+<COMMENT>"*/"    { yy_pop_state(); }
+<COMMENT>.       {                 }
+<COMMENT>\n      { this->line();   }
+
+<*>"//"          { BEGIN(CXX_COMMENT); }
+<CXX_COMMENT>.   { }
+
 
 "#"        { BEGIN(PP); LEXTOK(HASH); };  
 "??="      { BEGIN(PP); LEXTOK(HASH); };
