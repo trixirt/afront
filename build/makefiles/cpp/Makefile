@@ -138,7 +138,7 @@ LS = 	$(TOPSRCDIR)/l/digit.l \
 	$(TOPSRCDIR)/c/l/c.type_qualifier.l \
 	$(TOPSRCDIR)/c/l/c.type_specifier.l \
 	$(TOPSRCDIR)/c/l/c.unary_expression.l \
-	$(TOPSRCDIR)/c/l/c.whitespace.l \
+	$(SRCDIR)/l/cpp.whitespace.l \
 	$(SRCDIR)/l/cpp.lexer.l
 
 $(OBJDIR)/cpp.o : $(SRCDIR)/cpp.h $(SRCDIR)/cpp.cpp

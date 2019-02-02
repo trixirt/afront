@@ -35,8 +35,5 @@
 
 space \x20
 ht    \x09
-vt    \x11
-ff    \x12
-cr    \x13
-whitespace     ({space}|{ht}|{vt}|{ff}|{cr})+
+whitespace     ({space}|{ht})+
 
