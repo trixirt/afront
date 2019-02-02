@@ -138,10 +138,6 @@ static void comment();
 "return"                    { LEXTOK(RETURN); }
 "switch"                    { LEXTOK(SWITCH);     }
 "while"                     { LEXTOK(WHILE);      }
-%ifdef c11
-"_Generic"                  { LEXTOK(_GENERIC); }
-"_Static_assert"            { LEXTOK(_STATIC_ASSERT); }
-%endif
 {identifier}                { if (tn.count(yytext)) {
                                 LEXTOK(TYPENAME_IDENTIFIER); 
                               } else {

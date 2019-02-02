@@ -10,3 +10,4 @@
 <*>"??'"     { LEXTOK(CIR); }
 <*>"??!="    { LEXTOK(OR_ASSIGN); }
 <*>"??'="    { LEXTOK(XOR_ASSIGN); }
+<*>"??/\n"   { this->line(); LEXTOK(NL); }

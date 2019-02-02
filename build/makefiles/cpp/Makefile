@@ -124,11 +124,22 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 
 LS = 	$(TOPSRCDIR)/l/digit.l \
 	$(TOPSRCDIR)/l/lexer.l \
+	$(TOPSRCDIR)/c/l/c.alignment_specifier.l \
+	$(TOPSRCDIR)/c/l/c.assign.l \
+	$(TOPSRCDIR)/c/l/c.constant2.l \
 	$(TOPSRCDIR)/c/l/c.constant.l \
+	$(TOPSRCDIR)/c/l/c.digraph.l \
+	$(TOPSRCDIR)/c/l/c.function_specifier.l \
 	$(TOPSRCDIR)/c/l/c.identifier.l \
+	$(TOPSRCDIR)/c/l/c.misc.l \
+	$(TOPSRCDIR)/c/l/c.storage_class_specifier.l \
 	$(TOPSRCDIR)/c/l/c.string_literal.l \
+	$(TOPSRCDIR)/c/l/c.trigraph.l \
+	$(TOPSRCDIR)/c/l/c.type_qualifier.l \
+	$(TOPSRCDIR)/c/l/c.type_specifier.l \
+	$(TOPSRCDIR)/c/l/c.unary_expression.l \
 	$(TOPSRCDIR)/c/l/c.whitespace.l \
-	$(SRCDIR)/l/cpp.lexer.l \
+	$(SRCDIR)/l/cpp.lexer.l
 
 $(OBJDIR)/cpp.o : $(SRCDIR)/cpp.h $(SRCDIR)/cpp.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/cpp.cpp

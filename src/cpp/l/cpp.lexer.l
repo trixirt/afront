@@ -38,10 +38,6 @@
 #include <string>
 #include "scanner.h"
 
-void scanner::add_typename(std::string a) {
-  tn.insert(a);
-}
-
 using token = afront::parser::token;
 
 int yyFlexLexer::yylex() { return -1; /* to silence undefined reference in yyFlexLex class */ }
@@ -68,132 +64,65 @@ static void comment();
 
 %}
 
-<*>"/*"          { yy_push_state(COMMENT); }
-<COMMENT>"*/"    { yy_pop_state(); }
-<COMMENT>.       {                 }
-<COMMENT>\n      { this->line();   }
+<*>"/*"                   { yy_push_state(COMMENT); }
+<COMMENT>"*/"             { yy_pop_state(); }
+<COMMENT>.                {                 }
+<COMMENT>\n               { this->line();   }
 
-<*>"//"          { BEGIN(CXX_COMMENT); }
-<CXX_COMMENT>.   { }
-
-
-"#"        { BEGIN(PP); LEXTOK(HASH); };  
-"??="      { BEGIN(PP); LEXTOK(HASH); };
-<*>\n      { this->line(); BEGIN(INITIAL); LEXTOK(NL); }
-
-"\n"       { this->line(); LEXTOK(NL); }
-"\\\n"     { this->line(); LEXTOK(NL); }
-"??/\n"    { this->line(); LEXTOK(NL); }
+<*>"//"                   { BEGIN(CXX_COMMENT); }
+<CXX_COMMENT>.            { }
 
 
-<PP>"include"      { BEGIN(NPP); LEXTOK(INCLUDE); };
-<PP>"pragma"       { BEGIN(NPP); LEXTOK(PRAGMA); };
-<PP>"error"        { BEGIN(NPP); LEXTOK(ERROR); };
-<PP>"line"         { BEGIN(NPP); LEXTOK(LINE); };
+"#"                       { BEGIN(PP); LEXTOK(HASH); };  
+"??="                     { BEGIN(PP); LEXTOK(HASH); };
+<*>\n                     { this->line(); BEGIN(INITIAL); LEXTOK(NL); }
 
-<PP>"define"       { BEGIN(D); LEXTOK(DEFINE); };
-<DL>","            { LEXTOK(COM); }
-<DL>"..."          { LEXTOK(ELLIPSIS); }
-<DL>")"            { BEGIN(NPP); LEXTOK(CPA); }
+"\\\n"                    { this->line(); /* do not pass escaped nl */ }
 
-<PP>"undef"        { BEGIN(U); LEXTOK(UNDEF); };
 
-<PP>"ifdef"  { BEGIN(I); LEXTOK(IFDEF); };
-<PP>"ifndef" { BEGIN(I); LEXTOK(IFNDEF); };
-<PP>"endif"  { LEXTOK(ENDIF); };
+<PP>"include"             { BEGIN(NPP); LEXTOK(INCLUDE); };
+<PP>"pragma"              { BEGIN(NPP); LEXTOK(PRAGMA); };
+<PP>"error"               { BEGIN(NPP); LEXTOK(ERROR); };
+<PP>"line"                { BEGIN(NPP); LEXTOK(LINE); };
 
-<PP>"if"     { BEGIN(C); LEXTOK(IF); }
-<PP>"elif"   { BEGIN(C); LEXTOK(ELIF); }
+<PP>"define"              { BEGIN(D); LEXTOK(DEFINE); };
+<DL>","                   { LEXTOK(COM); }
+<DL>"..."                 { LEXTOK(ELLIPSIS); }
+<DL>")"                   { BEGIN(NPP); LEXTOK(CPA); }
 
-<C>"defined" { LEXTOK(DEFINED); }
+<PP>"undef"               { BEGIN(U); LEXTOK(UNDEF); };
 
-<INITIAL>.   { BEGIN(NPP); LEXTOK(TOKEN); }
-<NPP>.*      { LEXTOK(TOKEN); }
+<PP>"ifdef"               { BEGIN(I); LEXTOK(IFDEF); };
+<PP>"ifndef"              { BEGIN(I); LEXTOK(IFNDEF); };
+<PP>"endif"               { LEXTOK(ENDIF); };
+
+<PP>"if"                  { BEGIN(C); LEXTOK(IF); }
+<PP>"elif"                { BEGIN(C); LEXTOK(ELIF); }
+
+<C>"defined"              { LEXTOK(DEFINED); }
+
+<INITIAL>.                { BEGIN(NPP); LEXTOK(TOKEN); }
+<NPP>.*                   { LEXTOK(TOKEN); }
 
 %include lexer.l
+%include c.assign.l
+%include c.trigraph.l
+%include c.digraph.l
+%include c.misc.l
+%include c.type_qualifier.l
+%include c.type_specifier.l
+%include c.storage_class_specifier.l
+%include c.unary_expression.l
+%include c.function_specifier.l
+%include c.alignment_specifier.l
 
-<D>{identifier}    { BEGIN(NPP); LEXTOK(IDENTIFIER); }
-<D>{identifier}"(" { BEGIN(DL); LEXTOK(IDENTIFIER_LPAREN); }
-<DL,U,I,C>{identifier} { LEXTOK(IDENTIFIER); }
+<D>{identifier}           { BEGIN(NPP); LEXTOK(IDENTIFIER); }
+<D>{identifier}"("        { BEGIN(DL); LEXTOK(IDENTIFIER_LPAREN); }
+<PP,DL,U,I,C>{identifier} { LEXTOK(IDENTIFIER); }
 
-
-"??="      { LEXTOK(HASH); };
-"->"       { LEXTOK(PTR); }
-"!="       { LEXTOK(NE); }
-"&="       { LEXTOK(AND_ASSIGN); }
-"++"                        { LEXTOK(INC); }
-"--"                        { LEXTOK(DEC); }
-"+="                        { LEXTOK(ADD_ASSIGN); }
-"-="                        { LEXTOK(SUB_ASSIGN); }
-"??-"                       { LEXTOK(TIL); }
-"*="                        { LEXTOK(MUL_ASSIGN); }
-"%="                        { LEXTOK(MOD_ASSIGN); }
-"??("                       { LEXTOK(OBK); }
-"<:"                        { LEXTOK(OBK); }
-"??)"                       { LEXTOK(CBK); }
-":>"                        { LEXTOK(CBK); }
-"??<"                       { LEXTOK(OBR); }
-"<%"                        { LEXTOK(OBR); }
-"??>"                       { LEXTOK(CBR); }
-"%>"                        { LEXTOK(CBR); }
-"??!"                       { LEXTOK(VER); }
-"||"                        { LEXTOK(OROR); }
-"??!|"                      { LEXTOK(OROR); }
-"|??!"                      { LEXTOK(OROR); }
-"??!??!"                    { LEXTOK(OROR); }
-"|="                        { LEXTOK(OR_ASSIGN); }
-"??!="                      { LEXTOK(OR_ASSIGN); }
-"/="                        { LEXTOK(DIV_ASSIGN); }
-"??'"                       { LEXTOK(CIR); }
-"^="                        { LEXTOK(XOR_ASSIGN); }
-"??'="                      { LEXTOK(XOR_ASSIGN); }
-"<<="                       { LEXTOK(LEFT_ASSIGN); }
-">>="                       { LEXTOK(RIGHT_ASSIGN); }
-"..."                       { LEXTOK(ELLIPSIS); }
-"auto"                      { LEXTOK(AUTO); }
-"char"                      { LEXTOK(CHAR); }
-"const"                     { LEXTOK(CONST); }
-"volatile"                  { LEXTOK(VOLATILE);   }
-"default"                   { LEXTOK(DEFAULT); }
-"double"                    { LEXTOK(DOUBLE); }
-"else"                      { LEXTOK(ELSE); }
-"enum"                      { LEXTOK(ENUM); }
-"extern"                    { LEXTOK(EXTERN); }
-"float"                     { LEXTOK(FLOAT); }
-"int"                       { LEXTOK(INT); }
-"long"                      { LEXTOK(LONG); }
-"register"                  { LEXTOK(REGISTER); }
-"short"                     { LEXTOK(SHORT);      }
-"sizeof"                    { LEXTOK(SIZEOF);     }
-"signed"                    { LEXTOK(SIGNED);     }
-"static"                    { LEXTOK(STATIC);     }
-"struct"                    { LEXTOK(STRUCT);     }
-"typedef"                   { LEXTOK(TYPEDEF);    }
-"union"                     { LEXTOK(UNION);      }
-"unsigned"                  { LEXTOK(UNSIGNED);   }
-"void"                      { LEXTOK(VOID);       }
-%ifdef c99
-"inline"                    { LEXTOK(INLINE); }
-"restrict"                  { LEXTOK(RESTRICT); }
-"_Bool"                     { LEXTOK(_BOOL); }
-"_Complex"                  { LEXTOK(_COMPLEX); }
-"_Imaginary"                { LEXTOK(_IMAGINARY); }
-%endif
-%ifdef c11
-"_Alignas"                  { LEXTOK(_ALIGNAS); }
-"_Alignof"                  { LEXTOK(_ALIGNOF); }
-"_Atomic"                   { LEXTOK(_ATOMIC); }
-"_Generic"                  { LEXTOK(_GENERIC); }
-"_Noreturn"                 { LEXTOK(_NORETURN) }
-"_Static_assert"            { LEXTOK(_STATIC_ASSERT); }
-"_Thread_local"             { LEXTOK(_THREAD_LOCAL); }
-%endif
-<PP>{identifier}            { LEXTOK(IDENTIFIER); }
-{integer_constant}          { LEXTOK(INTEGER_CONSTANT);   }
-{floating_constant}         { LEXTOK(FLOATING_CONSTANT);   }
-{character_constant}        { LEXTOK(CHARACTER_CONSTANT);   }
-{string_literal}            { LEXTOK(STRING_CONSTANT);   }
-{whitespace}                { }
+%include c.constant2.l			      
+{whitespace}              { }
+.                         { LEXTOK(UNSUPPORTED_INPUT_CHAR);   }
 
 %%
 
