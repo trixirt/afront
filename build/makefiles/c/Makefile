@@ -133,10 +133,21 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 
 LS = 	$(TOPSRCDIR)/l/digit.l \
 	$(TOPSRCDIR)/l/lexer.l \
+	$(SRCDIR)/l/c.alignment_specifier.l \
+	$(SRCDIR)/l/c.assign.l \
+	$(SRCDIR)/l/c.constant2.l \
 	$(SRCDIR)/l/c.constant.l \
+	$(SRCDIR)/l/c.digraph.l \
+	$(SRCDIR)/l/c.function_specifier.l \
 	$(SRCDIR)/l/c.identifier.l \
 	$(SRCDIR)/l/c.lexer.l \
+	$(SRCDIR)/l/c.misc.l \
+	$(SRCDIR)/l/c.storage_class_specifier.l \
 	$(SRCDIR)/l/c.string_literal.l \
+	$(SRCDIR)/l/c.trigraph.l \
+	$(SRCDIR)/l/c.type_qualifier.l \
+	$(SRCDIR)/l/c.type_specifier.l \
+	$(SRCDIR)/l/c.unary_expression.l \
 	$(SRCDIR)/l/c.whitespace.l
 
 $(OBJDIR)/driver.o : $(TOPSRCDIR)/con/driver.cpp $(OBJDIR)/parser.tab.cc

@@ -121,50 +121,34 @@ static void comment();
 %include c.misc.l
 %include c.type_qualifier.l
 %include c.type_specifier.l
+%include c.storage_class_specifier.l
+%include c.unary_expression.l
+%include c.function_specifier.l
+%include c.alignment_specifier.l
 
-"auto"                      { LEXTOK(AUTO); }
 "break"                     { LEXTOK(BREAK); }
 "case"                      { LEXTOK(CASE); }
 "continue"                  { LEXTOK(CONTINUE); }
 "default"                   { LEXTOK(DEFAULT); }
 "do"                        { LEXTOK(DO); }
 "else"                      { LEXTOK(ELSE); }
-"enum"                      { LEXTOK(ENUM); }
-"extern"                    { LEXTOK(EXTERN); }
 "for"                       { LEXTOK(FOR); }
 "goto"                      { LEXTOK(GOTO); }
 "if"                        { LEXTOK(IF); }
-"register"                  { LEXTOK(REGISTER); }
 "return"                    { LEXTOK(RETURN); }
-"sizeof"                    { LEXTOK(SIZEOF);     }
-"static"                    { LEXTOK(STATIC);     }
-"struct"                    { LEXTOK(STRUCT);     }
 "switch"                    { LEXTOK(SWITCH);     }
-"typedef"                   { LEXTOK(TYPEDEF);    }
-"union"                     { LEXTOK(UNION);      }
 "while"                     { LEXTOK(WHILE);      }
-%ifdef c99
-"inline"                    { LEXTOK(INLINE); }
-"_Imaginary"                { LEXTOK(_IMAGINARY); }
-%endif
 %ifdef c11
-"_Alignas"                  { LEXTOK(_ALIGNAS); }
-"_Alignof"                  { LEXTOK(_ALIGNOF); }
 "_Generic"                  { LEXTOK(_GENERIC); }
-"_Noreturn"                 { LEXTOK(_NORETURN) }
 "_Static_assert"            { LEXTOK(_STATIC_ASSERT); }
-"_Thread_local"             { LEXTOK(_THREAD_LOCAL); }
 %endif
 {identifier}                { if (tn.count(yytext)) {
                                 LEXTOK(TYPENAME_IDENTIFIER); 
                               } else {
                                 LEXTOK(IDENTIFIER); 
                               }
-		            }
-{integer_constant}          { LEXTOK(INTEGER_CONSTANT);   }
-{floating_constant}         { LEXTOK(FLOATING_CONSTANT);   }
-{character_constant}        { LEXTOK(CHARACTER_CONSTANT);   }
-{string_literal}            { LEXTOK(STRING_CONSTANT);   }
+			    }
+%include c.constant2.l			      
 {whitespace}                { }
 .                           { LEXTOK(UNSUPPORTED_INPUT_CHAR);   }
 %%
