@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2017-2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -49,8 +49,9 @@ public:
   scanner(std::istream *i, std::string *f) : yyFlexLexer(i) {
     loc = new location;
     loc->begin.filename = loc->end.filename = f;
+    eof = 0;
   };
-  scanner(const scanner &s){};
+  scanner(const scanner &s) { eof = 0; };
   virtual ~scanner(){};
   /* the one flex wants to use */
   virtual int yylex(afront::parser::semantic_type *lval);
@@ -92,6 +93,7 @@ private:
   std::shared_ptr<std::string> s;
   std::vector<std::shared_ptr<std::string>> ln; // lines of text
   std::set<std::string> tn;                     // custom type names
+  unsigned eof;
 };
 
 #undef YY_DECL
@@ -106,6 +108,7 @@ private:
 /* TBD */
 #define RESERVED(A)
 
-#define yyterminate() return afront::parser::token::END;
+#define yyterminate()                                                          \
+  return (eof++ > 0) ? afront::parser::token::END : afront::parser::token::NL;
 
 #endif
