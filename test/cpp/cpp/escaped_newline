@@ -1,0 +1,4 @@
+#if (defined a && defined b \
+  && defined c)
+
+#endif
