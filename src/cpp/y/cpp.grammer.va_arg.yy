@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2019 Tom Rix
+/* Copyright (c) 2017-2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,32 +31,20 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%ifdef debug.all
+%def   debug.grammer.va_arg
+%endif
 
-/* multiple includes is ok */
-
-// Define PT_CLASS(classname) to do something
-#ifndef PT_CLASS
-// If you did not, then it is foreward decl of the class
-#define PT_CLASS(C) class C;
-#endif
-
-PT_CLASS(control_line)
-PT_CLASS(cpp_primary_expr)
-PT_CLASS(cpp_va_arg)
-PT_CLASS(defined)
-PT_CLASS(elif_groups)
-PT_CLASS(elif_group)
-PT_CLASS(else_group)
-PT_CLASS(group_part)
-PT_CLASS(group)
-PT_CLASS(if_group)
-PT_CLASS(if_section)
-PT_CLASS(new_line)
-PT_CLASS(non_directive)
-PT_CLASS(pp_tokens)
-PT_CLASS(preprocessing_file)
-PT_CLASS(preprocessing_token)
-PT_CLASS(replacement_list)
-PT_CLASS(text_line)
-
-#undef PT_CLASS
+/*
+ * A gcc extension
+ * https://gcc.gnu.org/onlinedocs/cpp/Variadic-Macros.html#Variadic-Macros
+ */
+va_arg
+	: VA_ARG
+{
+	$1.pop_back();
+	$1.pop_back();	
+	$1.pop_back();
+	$$ = std::shared_ptr<cpp_va_arg> (new cpp_va_arg($1));
+}
+	;

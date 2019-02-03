@@ -49,6 +49,8 @@
 %type <std::shared_ptr<constant>> constant;
 %type <std::shared_ptr<constant_expr>> constant_expr;
 %type <std::shared_ptr<control_line>> control_line;
+%type <std::shared_ptr<cpp_primary_expr>> primary_expr;
+%type <std::shared_ptr<cpp_va_arg>> va_arg;
 %type <std::shared_ptr<declaration_specifiers>> declaration_specifiers;
 %type <std::shared_ptr<declarator>> declarator;
 %type <std::shared_ptr<defined>> defined;
@@ -92,7 +94,6 @@
 %type <std::shared_ptr<pp_tokens>> pp_tokens;
 %type <std::shared_ptr<preprocessing_file>> preprocessing_file;
 %type <std::shared_ptr<preprocessing_token>> preprocessing_token;
-%type <std::shared_ptr<cpp_primary_expr>> primary_expr;
 %type <std::shared_ptr<relation_expr>> relation_expr;
 %type <std::shared_ptr<replacement_list>> replacement_list;
 %type <std::shared_ptr<shift_expr>> shift_expr;
@@ -114,3 +115,4 @@
 %type <std::shared_ptr<type_specifier>> type_specifier;
 %type <std::shared_ptr<unary_expr>> unary_expr;
 %type <std::shared_ptr<unary_operator>> unary_operator;
+

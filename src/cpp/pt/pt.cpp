@@ -59,6 +59,15 @@ control_line::control_line(lex_token a, std::shared_ptr<identifier> b,
   *this += b;
   *this += d;
 }
+
+control_line::control_line(lex_token a, std::shared_ptr<identifier> b,
+                           std::shared_ptr<cpp_va_arg> c, std::shared_ptr<replacement_list> d)
+    : n(a) {
+  *this += b;
+  *this += c;
+  *this += d;
+}
+
 control_line::control_line(lex_token a, std::shared_ptr<identifier> b,
                            std::shared_ptr<identifier_list> c, lex_token d,
                            std::shared_ptr<replacement_list> e)
@@ -67,6 +76,17 @@ control_line::control_line(lex_token a, std::shared_ptr<identifier> b,
   *this += c;
   *this += e;
 }
+
+control_line::control_line(lex_token a, std::shared_ptr<identifier> b,
+                           std::shared_ptr<identifier_list> c, std::shared_ptr<cpp_va_arg> d,
+                           std::shared_ptr<replacement_list> e)
+    : n(a) {
+  *this += b;
+  *this += c;
+  *this += d;
+  *this += e;
+}
+
 control_line::control_line(lex_token a, std::shared_ptr<identifier> b) : n(a) {
   *this += b;
 }
@@ -86,6 +106,13 @@ void cpp_primary_expr::notify() {
 }
 std::string cpp_primary_expr::classname() { return "cpp_primary_expr"; }
 
+cpp_va_arg::cpp_va_arg(lex_token a) : n(a) { }
+void cpp_va_arg::accept(visitor *a) { a->v(this); }
+void cpp_va_arg::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string cpp_va_arg::classname() { return "cpp_va_arg"; }
 
 defined::defined(std::shared_ptr<identifier> a) { *this += a; }
 void defined::accept(visitor *a) { a->v(this); }
@@ -246,3 +273,4 @@ void text_line::notify() {
     i->update(this);
 }
 std::string text_line::classname() { return "text_line"; }
+

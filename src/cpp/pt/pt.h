@@ -50,8 +50,13 @@ public:
                std::shared_ptr<replacement_list> d);
   control_line(lex_token a, std::shared_ptr<identifier> b, lex_token c,
                std::shared_ptr<replacement_list> d);
+  control_line(lex_token a, std::shared_ptr<identifier> b, std::shared_ptr<cpp_va_arg> c,
+               std::shared_ptr<replacement_list> d);
   control_line(lex_token a, std::shared_ptr<identifier> b,
                std::shared_ptr<identifier_list> c, lex_token d,
+               std::shared_ptr<replacement_list> e);
+  control_line(lex_token a, std::shared_ptr<identifier> b,
+	       std::shared_ptr<identifier_list> c, std::shared_ptr<cpp_va_arg> d,
                std::shared_ptr<replacement_list> e);
   control_line(lex_token a, std::shared_ptr<identifier> b);
   control_line(lex_token a);
@@ -68,6 +73,16 @@ public:
   using primary_expr::primary_expr;
 
   virtual ~cpp_primary_expr(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class cpp_va_arg : public n {
+public:
+  cpp_va_arg(lex_token a);
+
+  virtual ~cpp_va_arg(){};
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
@@ -229,5 +244,6 @@ public:
   virtual void notify();
   virtual std::string classname();
 };
+
 
 #endif

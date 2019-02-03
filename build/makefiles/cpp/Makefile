@@ -117,6 +117,7 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(SRCDIR)/y/cpp.grammer.preprocessing_token.yy \
 	$(SRCDIR)/y/cpp.grammer.replacement_list.yy \
 	$(SRCDIR)/y/cpp.grammer.text_line.yy \
+	$(SRCDIR)/y/cpp.grammer.va_arg.yy \
 	$(SRCDIR)/y/cpp.grammer.yy \
 	$(SRCDIR)/y/cpp.parser.yy \
 	$(SRCDIR)/y/cpp.tokens.yy \

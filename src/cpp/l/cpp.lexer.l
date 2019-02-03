@@ -120,6 +120,7 @@ static void comment();
 
 <D>{identifier}           { BEGIN(NPP); LEXTOK(IDENTIFIER); }
 <D>{identifier}"("        { BEGIN(DL); LEXTOK(IDENTIFIER_LPAREN); }
+<DL>{identifier}"..."     { LEXTOK(VA_ARG); }
 <PP,DL,U,I,C>{identifier} { LEXTOK(IDENTIFIER); }
 
 %include c.constant2.l			      

@@ -49,6 +49,7 @@
 %include cpp.grammer.group.yy
 %include cpp.grammer.elif_group.yy
 %include cpp.grammer.elif_groups.yy
+%include cpp.grammer.va_arg.yy
 
 %include c.grammer.primary_expr.yy
 %include c.grammer.postfix_expr.yy
