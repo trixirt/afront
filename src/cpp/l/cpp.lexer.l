@@ -78,8 +78,7 @@ static void comment();
 "#"                       { BEGIN(PP); LEXTOK(HASH); };  
 "??="                     { BEGIN(PP); LEXTOK(HASH); };
 <*>\n                     { this->line(); BEGIN(INITIAL); LEXTOK(NL); }
-
-"\\\n"                    { this->line(); /* do not pass escaped nl */ }
+<*>"\\\n"                 { this->line(); /* do not pass escaped nl */ }
 
 
 <PP>"include"             { BEGIN(NPP); LEXTOK(INCLUDE); };
