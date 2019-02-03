@@ -52,12 +52,14 @@ static void comment();
 %option yylineno
 %x NPP PP D DL U I C COMMENT CXX_COMMENT
 
+%def c_start C
+%def common_start C
 
 %include digit.l
 %include c.identifier.l
 %include c.constant.l
 %include c.string_literal.l
-%include c.whitespace.l
+%include cpp.whitespace.l
 
 %%
 %{
@@ -95,6 +97,7 @@ static void comment();
 <PP>"ifdef"               { BEGIN(I); LEXTOK(IFDEF); };
 <PP>"ifndef"              { BEGIN(I); LEXTOK(IFNDEF); };
 <PP>"endif"               { LEXTOK(ENDIF); };
+<PP>"else"                { LEXTOK(ELSE); };
 
 <PP>"if"                  { BEGIN(C); LEXTOK(IF); }
 <PP>"elif"                { BEGIN(C); LEXTOK(ELIF); }
@@ -121,7 +124,7 @@ static void comment();
 <PP,DL,U,I,C>{identifier} { LEXTOK(IDENTIFIER); }
 
 %include c.constant2.l			      
-{whitespace}              { }
+<*>{whitespace}              { }
 .                         { LEXTOK(UNSUPPORTED_INPUT_CHAR);   }
 
 %%

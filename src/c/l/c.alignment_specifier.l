@@ -1,3 +1,7 @@
+%ifndef c_start
+%def c_start *
+%endif
+
 %ifdef c11
-<*>"_Alignas"                  { LEXTOK(_ALIGNAS); }
+<c_start>"_Alignas"                  { LEXTOK(_ALIGNAS); }
 %endif

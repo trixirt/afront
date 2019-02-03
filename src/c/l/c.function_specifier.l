@@ -1,6 +1,10 @@
+%ifndef c_start
+%def c_start *
+%endif
+
 %ifdef c99
-<*>"inline"                    { LEXTOK(INLINE); }
+<c_start>"inline"                    { LEXTOK(INLINE); }
 %endif
 %ifdef c11
-<*>"_Noreturn"                 { LEXTOK(_NORETURN) }
+<c_start>"_Noreturn"                 { LEXTOK(_NORETURN) }
 %endif

@@ -84,12 +84,14 @@ static void comment();
 %option yylineno
 %x COMMENT CPP_COMMENT PP_DIRECTIVE
 
+%def start INITIAL
+%def cstart INITIAL
 
 %include digit.l
 %include c.identifier.l
 %include c.constant.l
 %include c.string_literal.l
-%include c.whitespace.l
+%include cpp.whitespace.l
 
 %%
 %{
@@ -145,7 +147,7 @@ static void comment();
                               }
 			    }
 %include c.constant2.l			      
-{whitespace}                { }
+<*>{whitespace}                { }
 .                           { LEXTOK(UNSUPPORTED_INPUT_CHAR);   }
 %%
 

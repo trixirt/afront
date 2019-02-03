@@ -1,11 +1,15 @@
-<*>"&="       { LEXTOK(AND_ASSIGN); }
-<*>"+="       { LEXTOK(ADD_ASSIGN); }
-<*>"-="       { LEXTOK(SUB_ASSIGN); }
-<*>"*="       { LEXTOK(MUL_ASSIGN); }
-<*>"%="       { LEXTOK(MOD_ASSIGN); }
-<*>"|="       { LEXTOK(OR_ASSIGN); }
-<*>"^="       { LEXTOK(XOR_ASSIGN); }
-<*>"/="       { LEXTOK(DIV_ASSIGN); }
-<*>"<<="      { LEXTOK(LEFT_ASSIGN); }
-<*>">>="      { LEXTOK(RIGHT_ASSIGN); }
+%ifndef c_start
+%def c_start *
+%endif
+
+<c_start>"&="       { LEXTOK(AND_ASSIGN); }
+<c_start>"+="       { LEXTOK(ADD_ASSIGN); }
+<c_start>"-="       { LEXTOK(SUB_ASSIGN); }
+<c_start>"*="       { LEXTOK(MUL_ASSIGN); }
+<c_start>"%="       { LEXTOK(MOD_ASSIGN); }
+<c_start>"|="       { LEXTOK(OR_ASSIGN); }
+<c_start>"^="       { LEXTOK(XOR_ASSIGN); }
+<c_start>"/="       { LEXTOK(DIV_ASSIGN); }
+<c_start>"<<="      { LEXTOK(LEFT_ASSIGN); }
+<c_start>">>="      { LEXTOK(RIGHT_ASSIGN); }
 
