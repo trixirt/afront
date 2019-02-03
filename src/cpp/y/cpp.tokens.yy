@@ -48,7 +48,6 @@
 %token <class lex_token> ELLIPSIS
 %token <class lex_token> ELSE
 %token <class lex_token> ENDIF
-%token <class lex_token> XENDIF
 %token <class lex_token> ENUM
 %token <class lex_token> ERROR
 %token <class lex_token> EXTERN

@@ -62,12 +62,12 @@ public:
   virtual std::string classname();
 };
 
-class cpp_conditional_expr : public conditional_expr {
+class cpp_primary_expr : public primary_expr {
 public:
-  cpp_conditional_expr(std::shared_ptr<defined> a);
-  using conditional_expr::conditional_expr;
+  cpp_primary_expr(std::shared_ptr<defined> a);
+  using primary_expr::primary_expr;
 
-  virtual ~cpp_conditional_expr(){};
+  virtual ~cpp_primary_expr(){};
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
@@ -110,16 +110,6 @@ public:
   else_group(std::shared_ptr<group> a);
 
   virtual ~else_group(){};
-  virtual void accept(visitor *a);
-  virtual void notify();
-  virtual std::string classname();
-};
-
-class endif_line : public n {
-public:
-  endif_line();
-
-  virtual ~endif_line(){};
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();

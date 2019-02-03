@@ -45,7 +45,7 @@
 %type <std::shared_ptr<atomic_type_specifier>> atomic_type_specifier;
 %type <std::shared_ptr<cast_expr>> cast_expr;
 %type <std::shared_ptr<character_constant>> character_constant;
-%type <std::shared_ptr<cpp_conditional_expr>> conditional_expr;
+%type <std::shared_ptr<conditional_expr>> conditional_expr;
 %type <std::shared_ptr<constant>> constant;
 %type <std::shared_ptr<constant_expr>> constant_expr;
 %type <std::shared_ptr<control_line>> control_line;
@@ -92,7 +92,7 @@
 %type <std::shared_ptr<pp_tokens>> pp_tokens;
 %type <std::shared_ptr<preprocessing_file>> preprocessing_file;
 %type <std::shared_ptr<preprocessing_token>> preprocessing_token;
-%type <std::shared_ptr<primary_expr>> primary_expr;
+%type <std::shared_ptr<cpp_primary_expr>> primary_expr;
 %type <std::shared_ptr<relation_expr>> relation_expr;
 %type <std::shared_ptr<replacement_list>> replacement_list;
 %type <std::shared_ptr<shift_expr>> shift_expr;

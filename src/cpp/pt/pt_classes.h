@@ -42,12 +42,11 @@
 #endif
 
 PT_CLASS(control_line)
-PT_CLASS(cpp_conditional_expr)
+PT_CLASS(cpp_primary_expr)
 PT_CLASS(defined)
 PT_CLASS(elif_groups)
 PT_CLASS(elif_group)
 PT_CLASS(else_group)
-PT_CLASS(endif_line)
 PT_CLASS(group_part)
 PT_CLASS(group)
 PT_CLASS(if_group)
@@ -59,6 +58,5 @@ PT_CLASS(preprocessing_file)
 PT_CLASS(preprocessing_token)
 PT_CLASS(replacement_list)
 PT_CLASS(text_line)
-PT_CLASS(white_space)
 
 #undef PT_CLASS

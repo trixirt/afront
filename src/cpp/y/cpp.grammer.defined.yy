@@ -1,4 +1,4 @@
-/* Copyright (c) 2018-2019 Tom Rix
+/* Copyright (c) 2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,12 +32,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 %ifdef debug.all
-%def   debug.grammer.generic_assoc_list
+%def   debug.grammer.defined
 %endif
 
-generic_assoc_list
-	: generic_association                        { $$ = std::shared_ptr<generic_assoc_list> (new generic_assoc_list($1)); }
-	| generic_assoc_list COM generic_association { *$1 += $3; $$ = $1; }
+defined
+	: DEFINED identifier         { $$ = std::shared_ptr<defined> (new defined($2)); }
+	| DEFINED OPA identifier CPA { $$ = std::shared_ptr<defined> (new defined($3)); }
 	;
-
-

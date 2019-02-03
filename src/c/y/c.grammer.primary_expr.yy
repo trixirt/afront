@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2017-2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -35,12 +35,23 @@
 %def   debug.grammer.primary_expr
 %endif
 
+%ifdef cpp
+%def TYPE cpp_primary_expr
+%else
+%def TYPE primary_expr
+%endif
+
 primary_expr
-	: identifier 	    { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); } 
-	| constant          { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); } 
-	| string_literal    { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); } 
-	| OPA expr CPA      { $$ = std::shared_ptr<primary_expr> (new primary_expr($2)); }
+	: identifier 	    { $$ = std::shared_ptr<TYPE> (new TYPE($1)); } 
+	| constant          { $$ = std::shared_ptr<TYPE> (new TYPE($1)); } 
+	| string_literal    { $$ = std::shared_ptr<TYPE> (new TYPE($1)); } 
+	| OPA expr CPA      { $$ = std::shared_ptr<TYPE> (new TYPE($2)); }
 %ifdef c11
-	| generic_selection { $$ = std::shared_ptr<primary_expr> (new primary_expr($1)); }
-%endif			
+	| generic_selection { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
+%endif
+%ifdef cpp
+        | defined { $$ = std::shared_ptr<TYPE> (new TYPE($1)); } 
+%endif
 	;
+
+%undef TYPE

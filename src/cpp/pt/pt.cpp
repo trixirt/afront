@@ -78,13 +78,13 @@ void control_line::notify() {
 }
 std::string control_line::classname() { return "control_line"; }
 
-cpp_conditional_expr::cpp_conditional_expr(std::shared_ptr<defined> a) { *this += a; }
-void cpp_conditional_expr::accept(visitor *a) { a->v(this); }
-void cpp_conditional_expr::notify() {
+cpp_primary_expr::cpp_primary_expr(std::shared_ptr<defined> a) { *this += a; }
+void cpp_primary_expr::accept(visitor *a) { a->v(this); }
+void cpp_primary_expr::notify() {
   for (auto i : observers)
     i->update(this);
 }
-std::string cpp_conditional_expr::classname() { return "cpp_conditional_expr"; }
+std::string cpp_primary_expr::classname() { return "cpp_primary_expr"; }
 
 
 defined::defined(std::shared_ptr<identifier> a) { *this += a; }
@@ -124,14 +124,6 @@ void else_group::notify() {
     i->update(this);
 }
 std::string else_group::classname() { return "else_group"; }
-
-endif_line::endif_line() {}
-void endif_line::accept(visitor *a) { a->v(this); }
-void endif_line::notify() {
-  for (auto i : observers)
-    i->update(this);
-}
-std::string endif_line::classname() { return "endif_line"; }
 
 group::group(std::shared_ptr<group_part> a) { *this += a; }
 void group::accept(visitor *a) { a->v(this); }
