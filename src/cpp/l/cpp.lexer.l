@@ -103,6 +103,7 @@ static void comment();
 
 <C>"defined"              { LEXTOK(DEFINED); }
 
+<INITIAL>{whitespace}              { }
 <INITIAL>.                { BEGIN(NPP); LEXTOK(TOKEN); }
 <NPP>.*                   { LEXTOK(TOKEN); }
 
