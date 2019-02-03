@@ -261,6 +261,7 @@ public:
 
 class conditional_expr : public n {
 public:
+    conditional_expr() {};
   conditional_expr(std::shared_ptr<logical_or_expr> a);
   conditional_expr(std::shared_ptr<logical_or_expr> a,
                    std::shared_ptr<logical_or_expr> c,
@@ -810,6 +811,7 @@ public:
 
 class primary_expr : public n {
 public:
+    primary_expr() {};
   primary_expr(std::shared_ptr<string_literal> a);
   primary_expr(std::shared_ptr<constant> a);
   primary_expr(std::shared_ptr<identifier> a);
