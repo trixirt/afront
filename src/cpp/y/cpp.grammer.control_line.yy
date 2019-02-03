@@ -37,6 +37,7 @@
 
 control_line
 	: HASH INCLUDE pp_tokens NL                                                          { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
+	| HASH INCLUDE_NEXT pp_tokens NL                                                     { $$ = std::shared_ptr<control_line> (new control_line($2, $3));             }
 	| HASH DEFINE identifier replacement_list NL                                         { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $4));         }
 	| HASH DEFINE identifier_lparen CPA replacement_list NL                              { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $5));         }
 	| HASH DEFINE identifier_lparen identifier_list CPA replacement_list NL              { $$ = std::shared_ptr<control_line> (new control_line($2, $3, $4, $6));     }

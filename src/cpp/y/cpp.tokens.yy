@@ -59,6 +59,7 @@
 %token <class lex_token> IFNDEF
 %token <class lex_token> INC
 %token <class lex_token> INCLUDE
+%token <class lex_token> INCLUDE_NEXT
 %token <class lex_token> INLINE
 %token <class lex_token> INT
 %token <class lex_token> LEFT_ASSIGN

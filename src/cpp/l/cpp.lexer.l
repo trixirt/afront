@@ -82,6 +82,7 @@ static void comment();
 
 
 <PP>"include"             { BEGIN(NPP); LEXTOK(INCLUDE); };
+<PP>"include_next"        { BEGIN(NPP); LEXTOK(INCLUDE_NEXT); };
 <PP>"pragma"              { BEGIN(NPP); LEXTOK(PRAGMA); };
 <PP>"error"               { BEGIN(NPP); LEXTOK(ERROR); };
 <PP>"warning"             { BEGIN(NPP); LEXTOK(WARNING); };
