@@ -84,6 +84,7 @@ static void comment();
 <PP>"include"             { BEGIN(NPP); LEXTOK(INCLUDE); };
 <PP>"pragma"              { BEGIN(NPP); LEXTOK(PRAGMA); };
 <PP>"error"               { BEGIN(NPP); LEXTOK(ERROR); };
+<PP>"warning"             { BEGIN(NPP); LEXTOK(WARNING); };
 <PP>"line"                { BEGIN(NPP); LEXTOK(LINE); };
 
 <PP>"define"              { BEGIN(D); LEXTOK(DEFINE); };
@@ -103,7 +104,7 @@ static void comment();
 
 <C>"defined"              { LEXTOK(DEFINED); }
 
-<INITIAL>{whitespace}              { }
+<INITIAL>{whitespace}     { }
 <INITIAL>.                { BEGIN(NPP); LEXTOK(TOKEN); }
 <NPP>.*                   { LEXTOK(TOKEN); }
 

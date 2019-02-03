@@ -90,6 +90,7 @@
 %token <class lex_token> VA_ARG
 %token <class lex_token> VOID
 %token <class lex_token> VOLATILE
+%token <class lex_token> WARNING
 %token <class lex_token> XOR_ASSIGN
 
 %token <class lex_token> _ALIGNAS
