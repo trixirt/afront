@@ -70,6 +70,8 @@ public:
 class cpp_primary_expr : public primary_expr {
 public:
   cpp_primary_expr(std::shared_ptr<defined> a);
+  cpp_primary_expr(std::shared_ptr<has_include> a);
+  cpp_primary_expr(std::shared_ptr<has_include_next> a);
   using primary_expr::primary_expr;
 
   virtual ~cpp_primary_expr(){};
@@ -148,6 +150,26 @@ public:
   group_part(std::shared_ptr<non_directive> a);
 
   virtual ~group_part(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class has_include : public n {
+public:
+  has_include(std::shared_ptr<pp_tokens> a);
+
+  virtual ~has_include(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class has_include_next : public n {
+public:
+  has_include_next(std::shared_ptr<pp_tokens> a);
+
+  virtual ~has_include_next(){};
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();

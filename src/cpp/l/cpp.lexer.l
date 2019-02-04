@@ -50,7 +50,7 @@ static void comment();
 %option noyywrap
 %option c++
 %option yylineno
-%x NPP PP D DL U I C COMMENT CXX_COMMENT
+%x NPP PP D DL U I C COMMENT CXX_COMMENT C_NPP
 
 %def c_start C
 %def common_start C
@@ -78,7 +78,7 @@ static void comment();
 "#"                       { BEGIN(PP); LEXTOK(HASH); };  
 "??="                     { BEGIN(PP); LEXTOK(HASH); };
 <*>\n                     { this->line(); BEGIN(INITIAL); LEXTOK(NL); }
-<*>"\\\n"                 { this->line(); /* do not pass escaped nl */ }
+<*>\\\n                   { this->line(); /* do not pass escaped nl */ }
 
 
 <PP>"include"             { BEGIN(NPP); LEXTOK(INCLUDE); };
@@ -104,10 +104,13 @@ static void comment();
 <PP>"elif"                { BEGIN(C); LEXTOK(ELIF); }
 
 <C>"defined"              { LEXTOK(DEFINED); }
+<C>"__has_include("       { BEGIN(C_NPP); LEXTOK(HAS_INCLUDE); }
+<C>"__has_include_next("  { BEGIN(C_NPP); LEXTOK(HAS_INCLUDE_NEXT); }
+<C_NPP>")"                { BEGIN(C); LEXTOK(CPA); }
 
 <INITIAL>{whitespace}     { }
 <INITIAL>.                { BEGIN(NPP); LEXTOK(TOKEN); }
-<NPP>.*                   { LEXTOK(TOKEN); }
+<NPP,C_NPP>.              { LEXTOK(TOKEN); }
 
 %include lexer.l
 %include c.assign.l

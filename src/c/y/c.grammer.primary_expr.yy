@@ -50,7 +50,9 @@ primary_expr
 	| generic_selection { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
 %endif
 %ifdef cpp
-        | defined { $$ = std::shared_ptr<TYPE> (new TYPE($1)); } 
+        | defined           { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
+	| has_include       { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
+	| has_include_next  { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }	
 %endif
 	;
 

@@ -99,6 +99,8 @@ void control_line::notify() {
 std::string control_line::classname() { return "control_line"; }
 
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<defined> a) { *this += a; }
+cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_include> a) { *this += a; }
+cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_include_next> a) { *this += a; }
 void cpp_primary_expr::accept(visitor *a) { a->v(this); }
 void cpp_primary_expr::notify() {
   for (auto i : observers)
@@ -170,6 +172,22 @@ void group_part::notify() {
     i->update(this);
 }
 std::string group_part::classname() { return "group_part"; }
+
+has_include::has_include(std::shared_ptr<pp_tokens> a) { *this += a; }
+void has_include::accept(visitor *a) { a->v(this); }
+void has_include::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string has_include::classname() { return "has_include"; }
+
+has_include_next::has_include_next(std::shared_ptr<pp_tokens> a) { *this += a; }
+void has_include_next::accept(visitor *a) { a->v(this); }
+void has_include_next::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string has_include_next::classname() { return "has_include_next"; }
 
 if_group::if_group(lex_token a, std::shared_ptr<constant_expr> b) : n(a) {
   *this += b;
