@@ -69,6 +69,7 @@ static void comment();
 <*>"/*"                   { yy_push_state(COMMENT); }
 <COMMENT>"*/"             { yy_pop_state(); }
 <COMMENT>.                {                 }
+<COMMENT>"//"             {                 }
 <COMMENT>\n               { this->line();   }
 
 <*>"//"                   { BEGIN(CXX_COMMENT); }
