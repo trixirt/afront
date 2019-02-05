@@ -53,6 +53,7 @@
 %token <class lex_token> EXTERN
 %token <class lex_token> FLOAT
 %token <class lex_token> HASH
+%token <class lex_token> HAS_FEATURE
 %token <class lex_token> HAS_INCLUDE
 %token <class lex_token> HAS_INCLUDE_NEXT
 %token <class lex_token> IDENTIFIER_LPAREN

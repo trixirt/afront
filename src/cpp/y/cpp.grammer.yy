@@ -41,6 +41,7 @@
 %include cpp.grammer.pp_tokens.yy
 %include cpp.grammer.preprocessing_token.yy
 %include cpp.grammer.replacement_list.yy
+%include cpp.grammer.has_feature.yy
 %include cpp.grammer.has_include.yy
 %include cpp.grammer.has_include_next.yy
 %include cpp.grammer.if_section.yy

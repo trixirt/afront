@@ -99,6 +99,7 @@ void control_line::notify() {
 std::string control_line::classname() { return "control_line"; }
 
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<defined> a) { *this += a; }
+cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_feature> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_include> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_include_next> a) { *this += a; }
 void cpp_primary_expr::accept(visitor *a) { a->v(this); }
@@ -172,6 +173,14 @@ void group_part::notify() {
     i->update(this);
 }
 std::string group_part::classname() { return "group_part"; }
+
+has_feature::has_feature(std::shared_ptr<identifier> a) { *this += a; }
+void has_feature::accept(visitor *a) { a->v(this); }
+void has_feature::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string has_feature::classname() { return "has_feature"; }
 
 has_include::has_include(std::shared_ptr<pp_tokens> a) { *this += a; }
 void has_include::accept(visitor *a) { a->v(this); }
