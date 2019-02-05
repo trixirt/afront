@@ -73,6 +73,7 @@ public:
   cpp_primary_expr(std::shared_ptr<has_feature> a);
   cpp_primary_expr(std::shared_ptr<has_include> a);
   cpp_primary_expr(std::shared_ptr<has_include_next> a);
+  cpp_primary_expr(std::shared_ptr<has_warning> a);
   using primary_expr::primary_expr;
 
   virtual ~cpp_primary_expr(){};
@@ -181,6 +182,16 @@ public:
   has_include_next(std::shared_ptr<pp_tokens> a);
 
   virtual ~has_include_next(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class has_warning : public n {
+public:
+  has_warning(std::shared_ptr<string_literal> a);
+
+  virtual ~has_warning(){};
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();

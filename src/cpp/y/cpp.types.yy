@@ -74,9 +74,10 @@
 %type <std::shared_ptr<generic_selection>> generic_selection;
 %type <std::shared_ptr<group>> group;
 %type <std::shared_ptr<group_part>> group_part;
+%type <std::shared_ptr<has_feature>> has_feature;
 %type <std::shared_ptr<has_include>> has_include;
 %type <std::shared_ptr<has_include_next>> has_include_next;
-%type <std::shared_ptr<has_feature>> has_feature;
+%type <std::shared_ptr<has_warning>> has_warning;
 %type <std::shared_ptr<identifier>> identifier;
 %type <std::shared_ptr<identifier>> identifier_lparen;
 %type <std::shared_ptr<identifier>> typename_identifier;

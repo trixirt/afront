@@ -56,6 +56,7 @@
 %token <class lex_token> HAS_FEATURE
 %token <class lex_token> HAS_INCLUDE
 %token <class lex_token> HAS_INCLUDE_NEXT
+%token <class lex_token> HAS_WARNING
 %token <class lex_token> IDENTIFIER_LPAREN
 %token <class lex_token> IF
 %token <class lex_token> IFDEF

@@ -102,6 +102,7 @@ cpp_primary_expr::cpp_primary_expr(std::shared_ptr<defined> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_feature> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_include> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_include_next> a) { *this += a; }
+cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_warning> a) { *this += a; }
 void cpp_primary_expr::accept(visitor *a) { a->v(this); }
 void cpp_primary_expr::notify() {
   for (auto i : observers)
@@ -197,6 +198,14 @@ void has_include_next::notify() {
     i->update(this);
 }
 std::string has_include_next::classname() { return "has_include_next"; }
+
+has_warning::has_warning(std::shared_ptr<string_literal> a) { *this += a; }
+void has_warning::accept(visitor *a) { a->v(this); }
+void has_warning::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string has_warning::classname() { return "has_warning"; }
 
 if_group::if_group(lex_token a, std::shared_ptr<constant_expr> b) : n(a) {
   *this += b;

@@ -111,6 +111,7 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(SRCDIR)/y/cpp.grammer.has_feature.yy \
 	$(SRCDIR)/y/cpp.grammer.has_include.yy \
 	$(SRCDIR)/y/cpp.grammer.has_include_next.yy \
+	$(SRCDIR)/y/cpp.grammer.has_warning.yy \
 	$(SRCDIR)/y/cpp.grammer.identifier_lparen.yy \
 	$(SRCDIR)/y/cpp.grammer.if_group.yy \
 	$(SRCDIR)/y/cpp.grammer.if_section.yy \
