@@ -1,0 +1,3 @@
+#if __has_feature(foo)
+#define a
+#endif
