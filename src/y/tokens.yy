@@ -27,6 +27,7 @@
 %token <class lex_token> LTEQ
 %token <class lex_token> GTEQ
 %token <class lex_token> EQEQ
+%token <class lex_token> COLCOL
 
 %token <class lex_token> CHARACTER_CONSTANT
 %token <class lex_token> FLOATING_CONSTANT

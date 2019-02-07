@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2019 Tom Rix
+/* Copyright (c) 2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,32 +32,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 %ifdef debug.all
-%def   debug.grammer.primary_expr
+%def   debug.grammer.has_declspec_attribute
 %endif
 
-%ifdef cpp
-%def TYPE cpp_primary_expr
-%else
-%def TYPE primary_expr
-%endif
-
-primary_expr
-	: identifier 	    { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-	| constant          { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-	| string_literal    { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-	| OPA expr CPA      { $$ = std::shared_ptr<TYPE> (new TYPE($2)); }
-%ifdef c11
-	| generic_selection { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-%endif
-%ifdef cpp
-       | defined           { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-	| has_cpp_attribute { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-	| has_declspec_attribute { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-	| has_feature       { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-	| has_include       { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-	| has_include_next  { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-	| has_warning       { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-%endif
+/* HAS_DECLSPEC_ATTRIBUTE has the OPA */
+has_declspec_attribute
+	: HAS_DECLSPEC_ATTRIBUTE identifier CPA { $$ = std::shared_ptr<has_declspec_attribute> (new has_declspec_attribute($2)); }
 	;
-
-%undef TYPE

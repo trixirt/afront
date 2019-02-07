@@ -33,3 +33,4 @@
 <common_start>"<="       { LEXTOK(LTEQ); }
 <common_start>">="       { LEXTOK(GTEQ); }
 <common_start>"&&"       { LEXTOK(AMPAMP); }
+<common_start>"::"       { LEXTOK(COLCOL); }

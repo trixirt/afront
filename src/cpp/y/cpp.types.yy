@@ -74,6 +74,8 @@
 %type <std::shared_ptr<generic_selection>> generic_selection;
 %type <std::shared_ptr<group>> group;
 %type <std::shared_ptr<group_part>> group_part;
+%type <std::shared_ptr<has_cpp_attribute>> has_cpp_attribute;
+%type <std::shared_ptr<has_declspec_attribute>> has_declspec_attribute;
 %type <std::shared_ptr<has_feature>> has_feature;
 %type <std::shared_ptr<has_include>> has_include;
 %type <std::shared_ptr<has_include_next>> has_include_next;

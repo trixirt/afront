@@ -70,6 +70,8 @@ public:
 class cpp_primary_expr : public primary_expr {
 public:
   cpp_primary_expr(std::shared_ptr<defined> a);
+  cpp_primary_expr(std::shared_ptr<has_cpp_attribute> a);
+  cpp_primary_expr(std::shared_ptr<has_declspec_attribute> a);
   cpp_primary_expr(std::shared_ptr<has_feature> a);
   cpp_primary_expr(std::shared_ptr<has_include> a);
   cpp_primary_expr(std::shared_ptr<has_include_next> a);
@@ -152,6 +154,27 @@ public:
   group_part(std::shared_ptr<non_directive> a);
 
   virtual ~group_part(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class has_cpp_attribute : public n {
+public:
+  has_cpp_attribute(std::shared_ptr<identifier> a);
+  has_cpp_attribute(std::shared_ptr<identifier> a, std::shared_ptr<identifier> b);
+
+  virtual ~has_cpp_attribute(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class has_declspec_attribute : public n {
+public:
+  has_declspec_attribute(std::shared_ptr<identifier> a);
+
+  virtual ~has_declspec_attribute(){};
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
