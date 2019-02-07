@@ -99,6 +99,7 @@ void control_line::notify() {
 std::string control_line::classname() { return "control_line"; }
 
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<defined> a) { *this += a; }
+cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_attribute> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_cpp_attribute> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_declspec_attribute> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_feature> a) { *this += a; }
@@ -176,6 +177,14 @@ void group_part::notify() {
     i->update(this);
 }
 std::string group_part::classname() { return "group_part"; }
+
+has_attribute::has_attribute(std::shared_ptr<identifier> a) { *this += a; }
+void has_attribute::accept(visitor *a) { a->v(this); }
+void has_attribute::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string has_attribute::classname() { return "has_attribute"; }
 
 has_cpp_attribute::has_cpp_attribute(std::shared_ptr<identifier> a) { *this += a; }
 has_cpp_attribute::has_cpp_attribute(std::shared_ptr<identifier> a, std::shared_ptr<identifier> b) { *this += a; *this += b; }

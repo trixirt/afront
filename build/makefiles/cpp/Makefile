@@ -108,6 +108,7 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(SRCDIR)/y/cpp.grammer.else_group.yy \
 	$(SRCDIR)/y/cpp.grammer.group_part.yy \
 	$(SRCDIR)/y/cpp.grammer.group.yy \
+	$(SRCDIR)/y/cpp.grammer.has_attribute.yy \
 	$(SRCDIR)/y/cpp.grammer.has_cpp_attribute.yy \
 	$(SRCDIR)/y/cpp.grammer.has_declspec_attribute.yy \
 	$(SRCDIR)/y/cpp.grammer.has_feature.yy \
