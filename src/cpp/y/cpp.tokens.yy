@@ -55,6 +55,7 @@
 %token <class lex_token> HASH
 %token <class lex_token> HAS_ATTRIBUTE
 %token <class lex_token> HAS_BUILTIN
+%token <class lex_token> HAS_C_ATTRIBUTE
 %token <class lex_token> HAS_CPP_ATTRIBUTE
 %token <class lex_token> HAS_DECLSPEC_ATTRIBUTE
 %token <class lex_token> HAS_EXTENSION

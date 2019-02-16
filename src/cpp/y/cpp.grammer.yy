@@ -43,6 +43,7 @@
 %include cpp.grammer.replacement_list.yy
 %include cpp.grammer.has_attribute.yy
 %include cpp.grammer.has_builtin.yy
+%include cpp.grammer.has_c_attribute.yy
 %include cpp.grammer.has_cpp_attribute.yy
 %include cpp.grammer.has_declspec_attribute.yy
 %include cpp.grammer.has_extension.yy

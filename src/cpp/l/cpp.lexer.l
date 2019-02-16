@@ -96,10 +96,10 @@ static void comment();
 
 <PP>"undef"               { BEGIN(U); LEXTOK(UNDEF); };
 
-<PP>"ifdef"               { BEGIN(I); LEXTOK(IFDEF); };
-<PP>"ifndef"              { BEGIN(I); LEXTOK(IFNDEF); };
-<PP>"endif"               { LEXTOK(ENDIF); };
-<PP>"else"                { LEXTOK(ELSE); };
+<PP>"ifdef"                    { BEGIN(I); LEXTOK(IFDEF); };
+<PP>"ifndef"                   { BEGIN(I); LEXTOK(IFNDEF); };
+<PP>"endif"                    { LEXTOK(ENDIF); };
+<PP>"else"                     { LEXTOK(ELSE); };
 
 <PP>"if"                       { BEGIN(C); LEXTOK(IF); }
 <PP>"elif"                     { BEGIN(C); LEXTOK(ELIF); }
@@ -107,6 +107,7 @@ static void comment();
 <C>"defined"                   { LEXTOK(DEFINED); }
 <C>"__has_attribute("          { LEXTOK(HAS_ATTRIBUTE); }
 <C>"__has_builtin("            { LEXTOK(HAS_BUILTIN); }
+<C>"__has_c_attribute("        { LEXTOK(HAS_C_ATTRIBUTE); }
 <C>"__has_cpp_attribute("      { LEXTOK(HAS_CPP_ATTRIBUTE); }
 <C>"__has_declspec_attribute(" { LEXTOK(HAS_DECLSPEC_ATTRIBUTE); }
 <C>"__has_extension("          { LEXTOK(HAS_EXTENSION); }
