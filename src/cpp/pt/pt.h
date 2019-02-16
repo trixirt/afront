@@ -74,6 +74,7 @@ public:
   cpp_primary_expr(std::shared_ptr<has_builtin> a);
   cpp_primary_expr(std::shared_ptr<has_cpp_attribute> a);
   cpp_primary_expr(std::shared_ptr<has_declspec_attribute> a);
+  cpp_primary_expr(std::shared_ptr<has_extension> a);
   cpp_primary_expr(std::shared_ptr<has_feature> a);
   cpp_primary_expr(std::shared_ptr<has_include> a);
   cpp_primary_expr(std::shared_ptr<has_include_next> a);
@@ -197,6 +198,16 @@ public:
   has_declspec_attribute(std::shared_ptr<identifier> a);
 
   virtual ~has_declspec_attribute(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class has_extension : public n {
+public:
+  has_extension(std::shared_ptr<identifier> a);
+
+  virtual ~has_extension(){};
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();

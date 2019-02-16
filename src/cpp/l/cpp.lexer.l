@@ -101,23 +101,24 @@ static void comment();
 <PP>"endif"               { LEXTOK(ENDIF); };
 <PP>"else"                { LEXTOK(ELSE); };
 
-<PP>"if"                  { BEGIN(C); LEXTOK(IF); }
-<PP>"elif"                { BEGIN(C); LEXTOK(ELIF); }
+<PP>"if"                       { BEGIN(C); LEXTOK(IF); }
+<PP>"elif"                     { BEGIN(C); LEXTOK(ELIF); }
 
 <C>"defined"                   { LEXTOK(DEFINED); }
 <C>"__has_attribute("          { LEXTOK(HAS_ATTRIBUTE); }
 <C>"__has_builtin("            { LEXTOK(HAS_BUILTIN); }
 <C>"__has_cpp_attribute("      { LEXTOK(HAS_CPP_ATTRIBUTE); }
 <C>"__has_declspec_attribute(" { LEXTOK(HAS_DECLSPEC_ATTRIBUTE); }
+<C>"__has_extension("          { LEXTOK(HAS_EXTENSION); }
+<C>"__has_feature("            { LEXTOK(HAS_FEATURE); }
 <C>"__has_include("            { BEGIN(C_NPP); LEXTOK(HAS_INCLUDE); }
 <C>"__has_include_next("       { BEGIN(C_NPP); LEXTOK(HAS_INCLUDE_NEXT); }
-<C>"__has_feature("            { LEXTOK(HAS_FEATURE); }
 <C>"__has_warning("            { LEXTOK(HAS_WARNING); }
 <C_NPP>")"                     { BEGIN(C); LEXTOK(CPA); }
 
-<INITIAL>{whitespace}     { }
-<INITIAL>.                { BEGIN(NPP); LEXTOK(TOKEN); }
-<NPP,C_NPP>.              { LEXTOK(TOKEN); }
+<INITIAL>{whitespace}          { }
+<INITIAL>.                     { BEGIN(NPP); LEXTOK(TOKEN); }
+<NPP,C_NPP>.                   { LEXTOK(TOKEN); }
 
 %include lexer.l
 %include c.assign.l

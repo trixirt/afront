@@ -45,6 +45,7 @@
 %include cpp.grammer.has_builtin.yy
 %include cpp.grammer.has_cpp_attribute.yy
 %include cpp.grammer.has_declspec_attribute.yy
+%include cpp.grammer.has_extension.yy
 %include cpp.grammer.has_feature.yy
 %include cpp.grammer.has_include.yy
 %include cpp.grammer.has_include_next.yy

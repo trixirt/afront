@@ -103,6 +103,7 @@ cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_attribute> a) { *this += 
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_builtin> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_cpp_attribute> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_declspec_attribute> a) { *this += a; }
+cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_extension> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_feature> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_include> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_include_next> a) { *this += a; }
@@ -211,6 +212,14 @@ void has_declspec_attribute::notify() {
     i->update(this);
 }
 std::string has_declspec_attribute::classname() { return "has_declspec_attribute"; }
+
+has_extension::has_extension(std::shared_ptr<identifier> a) { *this += a; }
+void has_extension::accept(visitor *a) { a->v(this); }
+void has_extension::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string has_extension::classname() { return "has_extension"; }
 
 has_feature::has_feature(std::shared_ptr<identifier> a) { *this += a; }
 void has_feature::accept(visitor *a) { a->v(this); }

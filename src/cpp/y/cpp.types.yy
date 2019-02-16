@@ -78,6 +78,7 @@
 %type <std::shared_ptr<has_builtin>> has_builtin;
 %type <std::shared_ptr<has_cpp_attribute>> has_cpp_attribute;
 %type <std::shared_ptr<has_declspec_attribute>> has_declspec_attribute;
+%type <std::shared_ptr<has_extension>> has_extension;
 %type <std::shared_ptr<has_feature>> has_feature;
 %type <std::shared_ptr<has_include>> has_include;
 %type <std::shared_ptr<has_include_next>> has_include_next;

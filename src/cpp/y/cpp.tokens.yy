@@ -57,6 +57,7 @@
 %token <class lex_token> HAS_BUILTIN
 %token <class lex_token> HAS_CPP_ATTRIBUTE
 %token <class lex_token> HAS_DECLSPEC_ATTRIBUTE
+%token <class lex_token> HAS_EXTENSION
 %token <class lex_token> HAS_FEATURE
 %token <class lex_token> HAS_INCLUDE
 %token <class lex_token> HAS_INCLUDE_NEXT
