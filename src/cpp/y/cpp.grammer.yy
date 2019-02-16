@@ -42,6 +42,7 @@
 %include cpp.grammer.preprocessing_token.yy
 %include cpp.grammer.replacement_list.yy
 %include cpp.grammer.has_attribute.yy
+%include cpp.grammer.has_builtin.yy
 %include cpp.grammer.has_cpp_attribute.yy
 %include cpp.grammer.has_declspec_attribute.yy
 %include cpp.grammer.has_feature.yy

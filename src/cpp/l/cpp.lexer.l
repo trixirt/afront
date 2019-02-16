@@ -106,13 +106,14 @@ static void comment();
 
 <C>"defined"                   { LEXTOK(DEFINED); }
 <C>"__has_attribute("          { LEXTOK(HAS_ATTRIBUTE); }
+<C>"__has_builtin("            { LEXTOK(HAS_BUILTIN); }
 <C>"__has_cpp_attribute("      { LEXTOK(HAS_CPP_ATTRIBUTE); }
 <C>"__has_declspec_attribute(" { LEXTOK(HAS_DECLSPEC_ATTRIBUTE); }
 <C>"__has_include("            { BEGIN(C_NPP); LEXTOK(HAS_INCLUDE); }
 <C>"__has_include_next("       { BEGIN(C_NPP); LEXTOK(HAS_INCLUDE_NEXT); }
-<C>"__has_feature("       { LEXTOK(HAS_FEATURE); }
-<C>"__has_warning("       { LEXTOK(HAS_WARNING); }
-<C_NPP>")"                { BEGIN(C); LEXTOK(CPA); }
+<C>"__has_feature("            { LEXTOK(HAS_FEATURE); }
+<C>"__has_warning("            { LEXTOK(HAS_WARNING); }
+<C_NPP>")"                     { BEGIN(C); LEXTOK(CPA); }
 
 <INITIAL>{whitespace}     { }
 <INITIAL>.                { BEGIN(NPP); LEXTOK(TOKEN); }

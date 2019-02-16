@@ -75,6 +75,7 @@
 %type <std::shared_ptr<group>> group;
 %type <std::shared_ptr<group_part>> group_part;
 %type <std::shared_ptr<has_attribute>> has_attribute;
+%type <std::shared_ptr<has_builtin>> has_builtin;
 %type <std::shared_ptr<has_cpp_attribute>> has_cpp_attribute;
 %type <std::shared_ptr<has_declspec_attribute>> has_declspec_attribute;
 %type <std::shared_ptr<has_feature>> has_feature;
