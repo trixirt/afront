@@ -72,6 +72,7 @@
 %token <class lex_token> INCLUDE_NEXT
 %token <class lex_token> INLINE
 %token <class lex_token> INT
+%token <class lex_token> IS_IDENTIFIER
 %token <class lex_token> LEFT_ASSIGN
 %token <class lex_token> LINE
 %token <class lex_token> LONG

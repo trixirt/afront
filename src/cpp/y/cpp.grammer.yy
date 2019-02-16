@@ -51,6 +51,7 @@
 %include cpp.grammer.has_include.yy
 %include cpp.grammer.has_include_next.yy
 %include cpp.grammer.has_warning.yy
+%include cpp.grammer.is_identifier.yy
 %include cpp.grammer.if_section.yy
 %include cpp.grammer.control_line.yy
 %include cpp.grammer.text_line.yy

@@ -121,6 +121,7 @@ YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(SRCDIR)/y/cpp.grammer.identifier_lparen.yy \
 	$(SRCDIR)/y/cpp.grammer.if_group.yy \
 	$(SRCDIR)/y/cpp.grammer.if_section.yy \
+	$(SRCDIR)/y/cpp.grammer.is_identifier.yy \
 	$(SRCDIR)/y/cpp.grammer.non_directive.yy \
 	$(SRCDIR)/y/cpp.grammer.pp_tokens.yy \
 	$(SRCDIR)/y/cpp.grammer.preprocessing_file.yy \

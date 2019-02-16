@@ -89,12 +89,12 @@ static void comment();
 <PP>"warning"             { BEGIN(NPP); LEXTOK(WARNING); };
 <PP>"line"                { BEGIN(NPP); LEXTOK(LINE); };
 
-<PP>"define"              { BEGIN(D); LEXTOK(DEFINE); };
-<DL>","                   { LEXTOK(COM); }
-<DL>"..."                 { LEXTOK(ELLIPSIS); }
-<DL>")"                   { BEGIN(NPP); LEXTOK(CPA); }
+<PP>"define"                   { BEGIN(D); LEXTOK(DEFINE); };
+<DL>","                        { LEXTOK(COM); }
+<DL>"..."                      { LEXTOK(ELLIPSIS); }
+<DL>")"                        { BEGIN(NPP); LEXTOK(CPA); }
 
-<PP>"undef"               { BEGIN(U); LEXTOK(UNDEF); };
+<PP>"undef"                    { BEGIN(U); LEXTOK(UNDEF); };
 
 <PP>"ifdef"                    { BEGIN(I); LEXTOK(IFDEF); };
 <PP>"ifndef"                   { BEGIN(I); LEXTOK(IFNDEF); };
@@ -115,6 +115,7 @@ static void comment();
 <C>"__has_include("            { BEGIN(C_NPP); LEXTOK(HAS_INCLUDE); }
 <C>"__has_include_next("       { BEGIN(C_NPP); LEXTOK(HAS_INCLUDE_NEXT); }
 <C>"__has_warning("            { LEXTOK(HAS_WARNING); }
+<C>"__is_identifier("          { LEXTOK(IS_IDENTIFIER); }
 <C_NPP>")"                     { BEGIN(C); LEXTOK(CPA); }
 
 <INITIAL>{whitespace}          { }

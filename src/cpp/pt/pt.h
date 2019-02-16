@@ -80,6 +80,7 @@ public:
   cpp_primary_expr(std::shared_ptr<has_include> a);
   cpp_primary_expr(std::shared_ptr<has_include_next> a);
   cpp_primary_expr(std::shared_ptr<has_warning> a);
+  cpp_primary_expr(std::shared_ptr<is_identifier> a);
   using primary_expr::primary_expr;
 
   virtual ~cpp_primary_expr(){};
@@ -288,6 +289,16 @@ public:
              std::shared_ptr<else_group> c);
 
   virtual ~if_section(){};
+  virtual void accept(visitor *a);
+  virtual void notify();
+  virtual std::string classname();
+};
+
+class is_identifier : public n {
+public:
+  is_identifier(std::shared_ptr<identifier> a);
+
+  virtual ~is_identifier(){};
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();

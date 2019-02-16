@@ -109,6 +109,7 @@ cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_feature> a) { *this += a;
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_include> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_include_next> a) { *this += a; }
 cpp_primary_expr::cpp_primary_expr(std::shared_ptr<has_warning> a) { *this += a; }
+cpp_primary_expr::cpp_primary_expr(std::shared_ptr<is_identifier> a) { *this += a; }
 void cpp_primary_expr::accept(visitor *a) { a->v(this); }
 void cpp_primary_expr::notify() {
   for (auto i : observers)
@@ -313,6 +314,14 @@ void if_section::notify() {
     i->update(this);
 }
 std::string if_section::classname() { return "if_section"; }
+
+is_identifier::is_identifier(std::shared_ptr<identifier> a) { *this += a; }
+void is_identifier::accept(visitor *a) { a->v(this); }
+void is_identifier::notify() {
+  for (auto i : observers)
+    i->update(this);
+}
+std::string is_identifier::classname() { return "is_identifier"; }
 
 non_directive::non_directive(std::shared_ptr<pp_tokens> a) { *this += a; }
 void non_directive::accept(visitor *a) { a->v(this); }

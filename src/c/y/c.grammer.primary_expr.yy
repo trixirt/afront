@@ -51,16 +51,17 @@ primary_expr
 %endif
 %ifdef cpp
         | defined                { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-       	| has_attribute          { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-       	| has_builtin            { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-       	| has_c_attribute        { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }		
+	| has_attribute          { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
+	| has_builtin            { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
+	| has_c_attribute        { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
 	| has_cpp_attribute      { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
 	| has_declspec_attribute { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
-       	| has_extension          { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }	
+	| has_extension          { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
 	| has_feature            { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
 	| has_include            { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
 	| has_include_next       { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
 	| has_warning            { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
+	| is_identifier          { $$ = std::shared_ptr<TYPE> (new TYPE($1)); }
 %endif
 	;
 

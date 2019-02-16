@@ -92,6 +92,7 @@
 %type <std::shared_ptr<if_section>> if_section;
 %type <std::shared_ptr<inclusive_or_expr>> inclusive_or_expr;
 %type <std::shared_ptr<integer_constant>> integer_constant;
+%type <std::shared_ptr<is_identifier>> is_identifier;
 %type <std::shared_ptr<logical_and_expr>> logical_and_expr;
 %type <std::shared_ptr<logical_or_expr>> logical_or_expr;
 %type <std::shared_ptr<multiplicative_expr>> multiplicative_expr;
