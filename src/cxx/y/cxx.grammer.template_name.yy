@@ -31,15 +31,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%ifdef debug.all
+%def   debug.grammer.template_name
+%endif
 
-cxx.grammer.attribute_specifier_seq.yy
-cxx.grammer.class_name.yy
-cxx.grammer.enum_name.yy
-cxx.grammer.namespace_name.yy
-cxx.grammer.nested_name_specifier.yy
-cxx.grammer.simple_template_id.yy
-cxx.grammer.template_name.yy
-cxx.grammer.type_name.yy
-cxx.grammer.using_directive.yy
-
-%include c.grammer.typedef_name.yy
+template_name
+	: identifier { $$ = std::shared_ptr<template_name> (new template_name($1)); } 
+	;
