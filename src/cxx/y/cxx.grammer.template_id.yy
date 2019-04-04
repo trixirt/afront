@@ -31,16 +31,14 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%ifdef debug.all
+%def   debug.grammer.template_id
+%endif
 
-cxx.grammer.attribute_specifier_seq.yy
-cxx.grammer.class_name.yy
-cxx.grammer.enum_name.yy
-cxx.grammer.namespace_name.yy
-cxx.grammer.nested_name_specifier.yy
-cxx.grammer.simple_template_id.yy
-cxx.grammer.template_id.yy
-cxx.grammer.template_name.yy
-cxx.grammer.type_name.yy
-cxx.grammer.using_directive.yy
-
-%include c.grammer.typedef_name.yy
+template_id
+	: simple_template_id                                  { $$ = std::shared_ptr<template_id> (new template_id($1));     }
+	| operator_function_id  LT  GT                        { $$ = std::shared_ptr<template_id> (new template_id($1));     }
+	| operator_function_id  LT template_arguement_list GT { $$ = std::shared_ptr<template_id> (new template_id($1, $3)); }
+	| literal_operator_id  LT  GT                         { $$ = std::shared_ptr<template_id> (new template_id($1));     }
+	| literal_operator_id  LT template_arguement_list GT  { $$ = std::shared_ptr<template_id> (new template_id($1, $3)); }	
+	;
