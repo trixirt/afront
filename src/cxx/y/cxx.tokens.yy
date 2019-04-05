@@ -31,18 +31,11 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%token <class lex_token> NAMESPACE
+%token <class lex_token> TEMPLATE
+%token <class lex_token> TRY
+%token <class lex_token> USING
 
-cxx.grammer.attribute_specifier_seq.yy
-cxx.grammer.class_name.yy
-cxx.grammer.enum_name.yy
-cxx.grammer.namespace_name.yy
-cxx.grammer.nested_name_specifier.yy
-cxx.grammer.simple_template_id.yy
-cxx.grammer.template_id.yy
-cxx.grammer.template_name.yy
-cxx.grammer.template_argument_list.yy
-cxx.grammer.try_block.yy
-cxx.grammer.type_name.yy
-cxx.grammer.using_directive.yy
 
-%include c.grammer.typedef_name.yy
+
+

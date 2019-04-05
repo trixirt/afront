@@ -31,18 +31,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%ifdef debug.all
+%def   debug.grammer.try_block
+%endif
 
-cxx.grammer.attribute_specifier_seq.yy
-cxx.grammer.class_name.yy
-cxx.grammer.enum_name.yy
-cxx.grammer.namespace_name.yy
-cxx.grammer.nested_name_specifier.yy
-cxx.grammer.simple_template_id.yy
-cxx.grammer.template_id.yy
-cxx.grammer.template_name.yy
-cxx.grammer.template_argument_list.yy
-cxx.grammer.try_block.yy
-cxx.grammer.type_name.yy
-cxx.grammer.using_directive.yy
+try_block
+	: TRY compound_statement handler_seq  { $$ = std::shared_ptr<try_block> (new try_block($2, $3)); }
+	;
 
-%include c.grammer.typedef_name.yy
+
+
