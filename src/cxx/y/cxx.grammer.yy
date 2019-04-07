@@ -35,6 +35,7 @@
 %include cxx.grammer.attribute_specifier_seq.yy
 %include cxx.grammer.class_name.yy
 %include cxx.grammer.class_specifier.yy
+%include cxx.grammer.class_head.yy
 %include cxx.grammer.enum_name.yy
 %include cxx.grammer.namespace_name.yy
 %include cxx.grammer.nested_name_specifier.yy
