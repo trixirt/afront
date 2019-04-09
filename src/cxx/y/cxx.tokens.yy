@@ -31,6 +31,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%token <class lex_token> CLASS
+%token <class lex_token> FINAL
 %token <class lex_token> NAMESPACE
 %token <class lex_token> TEMPLATE
 %token <class lex_token> TRY
