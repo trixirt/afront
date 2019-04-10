@@ -31,23 +31,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%ifdef debug.all
+%def   debug.grammer.class_key
+%endif
 
-%include cxx.grammer.attribute_specifier_seq.yy
-%include cxx.grammer.class_name.yy
-%include cxx.grammer.class_specifier.yy
-%include cxx.grammer.class_head.yy
-%include cxx.grammer.class_head_name.yy
-%include cxx.grammer.class_virt_specifier.yy
-%include cxx.grammer.class_key.yy
-%include cxx.grammer.enum_name.yy
-%include cxx.grammer.namespace_name.yy
-%include cxx.grammer.nested_name_specifier.yy
-%include cxx.grammer.simple_template_id.yy
-%include cxx.grammer.template_id.yy
-%include cxx.grammer.template_name.yy
-%include cxx.grammer.template_argument_list.yy
-%include cxx.grammer.try_block.yy
-%include cxx.grammer.type_name.yy
-%include cxx.grammer.using_directive.yy
+class_key
+	: CLASS  { $$ = std::shared_ptr<class_key> (new class_key($1)); }
+	| STRUCT { $$ = std::shared_ptr<class_key> (new class_key($1)); }
+	| UNION  { $$ = std::shared_ptr<class_key> (new class_key($1)); }
+	;
 
-%include c.grammer.typedef_name.yy
+
+
