@@ -31,24 +31,16 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+%ifdef debug.all
+%def   debug.grammer.member_specification
+%endif
 
-%include cxx.grammer.attribute_specifier_seq.yy
-%include cxx.grammer.class_name.yy
-%include cxx.grammer.class_specifier.yy
-%include cxx.grammer.class_head.yy
-%include cxx.grammer.class_head_name.yy
-%include cxx.grammer.class_virt_specifier.yy
-%include cxx.grammer.class_key.yy
-%include cxx.grammer.enum_name.yy
-%include cxx.grammer.member_specification.yy
-%include cxx.grammer.namespace_name.yy
-%include cxx.grammer.nested_name_specifier.yy
-%include cxx.grammer.simple_template_id.yy
-%include cxx.grammer.template_id.yy
-%include cxx.grammer.template_name.yy
-%include cxx.grammer.template_argument_list.yy
-%include cxx.grammer.try_block.yy
-%include cxx.grammer.type_name.yy
-%include cxx.grammer.using_directive.yy
+member_specification
+	: member_declaration                        { $$ = std::shared_ptr<member_specification> (new member_specification($1)); }
+	| member_declaration member_specification   { $$ = std::shared_ptr<member_specification> (new member_specification($1, $2)); }
+	| access_specifier COL                      { $$ = std::shared_ptr<member_specification> (new member_specification($1)); }
+	| access_specifier COL member_specification { $$ = std::shared_ptr<member_specification> (new member_specification($1, $3)); }
+	;
 
-%include c.grammer.typedef_name.yy
+
+
