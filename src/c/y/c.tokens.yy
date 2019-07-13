@@ -54,6 +54,7 @@
 %token <class lex_token> MOD_ASSIGN
 %token <class lex_token> MUL_ASSIGN
 %token <class lex_token> NE
+%token <class lex_token> NL
 %token <class lex_token> OR_ASSIGN
 %token <class lex_token> RIGHT_ASSIGN
 %token <class lex_token> REGISTER
