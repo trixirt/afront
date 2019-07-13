@@ -34,7 +34,7 @@
  */
 
 #include "lang_driver.h"
-#include "con/oparser.h"
+#include "co/oparser.h"
 #include "scanner.h"
 
 bool lang_driver::initialize_scanner(std::istream *i) {

@@ -34,7 +34,7 @@
 #ifndef AFRONT_LANG_DRIVER
 #define AFRONT_LANG_DRIVER
 
-#include "con/driver.h"
+#include "co/driver.h"
 #include "pt/pt.h"
 
 class lang_driver : public driver {

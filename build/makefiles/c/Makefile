@@ -33,7 +33,7 @@ OBJS =	$(OBJDIR)/ast.o \
 	$(OBJDIR)/type.o \
 	$(OBJDIR)/scope.o \
 	$(TOPOBJDIR)/pt/n.o \
-	$(TOPOBJDIR)/con/m.o
+	$(TOPOBJDIR)/co/m.o
 
 YYS =	$(TOPSRCDIR)/y/directives.yy \
 	$(TOPSRCDIR)/y/error.yy \
@@ -150,7 +150,7 @@ LS = 	$(TOPSRCDIR)/l/digit.l \
 	$(SRCDIR)/l/c.unary_expression.l \
 	$(SRCDIR)/l/c.whitespace.l
 
-$(OBJDIR)/driver.o : $(TOPSRCDIR)/con/driver.cpp $(OBJDIR)/parser.tab.cc
+$(OBJDIR)/driver.o : $(TOPSRCDIR)/co/driver.cpp $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/c.lexer.o : $(OBJDIR)/c.lexer.yy.cc
@@ -206,8 +206,8 @@ $(OBJDIR)/type.o : $(TOPSRCDIR)/at/type.cpp
 $(OBJDIR)/scope.o : $(TOPSRCDIR)/at/scope.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
-$(OBJDIR)/oparser.o : $(OBJDIR)/parser.tab.cc $(TOPSRCDIR)/con/oparser.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/con/oparser.cpp
+$(OBJDIR)/oparser.o : $(OBJDIR)/parser.tab.cc $(TOPSRCDIR)/co/oparser.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/co/oparser.cpp
 
 $(OBJDIR)/cc1: $(OBJS)
 	$(LD) -o $@ $(LDFLAGS) $(OBJS) -L$(TOPOBJDIR)/fig -lfig $(LLVM_LIBS) $(LLVM_SYSTEM_LIBS) $(LIBS)

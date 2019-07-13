@@ -61,7 +61,7 @@ LS = 	$(TOPSRCDIR)/l/digit.l \
 	$(TOPSRCDIR)/c/l/c.whitespace.l \
 	$(SRCDIR)/l/fig.lexer.l
 
-$(OBJDIR)/driver.o : $(TOPSRCDIR)/con/driver.cpp $(OBJDIR)/parser.tab.cc
+$(OBJDIR)/driver.o : $(TOPSRCDIR)/co/driver.cpp $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/fig.lexer.o : $(OBJDIR)/fig.lexer.yy.cc
@@ -82,14 +82,14 @@ $(OBJDIR)/figc1.o : $(SRCDIR)/figc1.cpp
 $(OBJDIR)/lang_driver.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/lang_driver.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/lang_driver.cpp
 
-$(OBJDIR)/m.o : $(TOPSRCDIR)/con/m.cpp
+$(OBJDIR)/m.o : $(TOPSRCDIR)/co/m.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
 
 $(OBJDIR)/n.o : $(TOPSRCDIR)/pt/n.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
 
-$(OBJDIR)/oparser.o : $(OBJDIR)/parser.tab.cc $(TOPSRCDIR)/con/oparser.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/con/oparser.cpp
+$(OBJDIR)/oparser.o : $(OBJDIR)/parser.tab.cc $(TOPSRCDIR)/co/oparser.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/co/oparser.cpp
 
 $(OBJDIR)/parser.o : $(OBJDIR)/parser.tab.cc
 	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<

@@ -35,7 +35,7 @@
 #ifndef AFRONT_C_PT_N_H
 #define AFRONT_C_PT_N_H
 
-#include "con/m.h"
+#include "co/m.h"
 #include "l/lex_token.h"
 #include <exception>
 #include <string>

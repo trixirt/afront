@@ -2,8 +2,8 @@ TOP = ../../..
 include $(TOP)/build/makefiles/Makefile.pre.inc
 TOPOBJDIR= $(TOP)/obj
 TOPSRCDIR= $(TOP)/src
-OBJDIR= $(TOPOBJDIR)/con
-SRCDIR= $(TOPSRCDIR)/con
+OBJDIR= $(TOPOBJDIR)/co
+SRCDIR= $(TOPSRCDIR)/co
 
 OBJS = $(OBJDIR)/m.o
 
