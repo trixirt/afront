@@ -91,7 +91,7 @@ static void comment();
 %include c.identifier.l
 %include c.constant.l
 %include c.string_literal.l
-%include cpp.whitespace.l
+%include c.whitespace.l
 
 %%
 %{
