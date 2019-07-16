@@ -125,6 +125,7 @@ int main(int argc, char *argv[]) {
         goto end;
       } catch (visitor_exception &e) {
         drv.error(e.who()->here(), e.what());
+	std::cerr << drv.result() << std::endl;
         ret = 1;
         goto end;
       }
