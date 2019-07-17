@@ -37,6 +37,7 @@
 
 #include "ast.h"
 #include "l/lex_token.h"
+#include "pt/pt_classes.h"
 #include <map>
 #include <vector>
 
@@ -57,6 +58,12 @@ public:
   bool has_tag(std::string a);
   struct_or_union_specifier *struct_or_union_tag(struct_or_union_specifier *a);
   n *user_type(std::string a, n *b);
+  // check if a declaration has already been made at this scope
+  bool has_declaration(std::string a);
+  // get the scope's declaration
+  declaration_specifiers *get_declaration(std::string a);
+  // set declaration to this scope
+  void set_declaration(std::string a, declaration_specifiers *b);
 
 private:
   location loc;
@@ -66,6 +73,7 @@ private:
   std::map<std::string, enum_specifier *> enum_tag_map;
   std::map<std::string, struct_or_union_specifier *> struct_or_union_tag_map;
   std::map<std::string, class n *> user_type_map;
+  std::map<std::string, declaration_specifiers *> declaration_specifiers_map;
 };
 
 #endif

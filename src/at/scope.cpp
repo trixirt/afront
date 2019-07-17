@@ -162,3 +162,22 @@ class n *scope::user_type(std::string a, class n *b) {
   }
   return ret;
 }
+
+bool scope::has_declaration(std::string a) {
+  bool ret = false;
+  if (declaration_specifiers_map.find(a) != declaration_specifiers_map.end())
+    ret = true;
+  return ret;
+}
+declaration_specifiers * scope::get_declaration(std::string a) {
+  declaration_specifiers *ret = nullptr;
+  if (has_declaration(a)) {
+    ret = declaration_specifiers_map[a];
+  }
+  return ret;
+}
+void scope::set_declaration(std::string a, declaration_specifiers *b) {
+  if (!has_declaration(a)) {
+    declaration_specifiers_map[a] = b;
+  }
+}
