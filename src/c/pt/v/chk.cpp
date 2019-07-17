@@ -48,8 +48,8 @@ chk::chk(std::shared_ptr<scope> a) {
   // Keep track of the current function
   current_function = nullptr;
 
-  // debug = true;
-  debug = false;
+  debug = true;
+  // debug = false;
 }
 chk::~chk() {}
 void chk::descend() { indent += " "; }
@@ -80,6 +80,7 @@ void chk::v(compound_statement *a) {
   std::string n = pn + "." + std::to_string(num);
   std::shared_ptr<scope> s =
       std::shared_ptr<scope>(new scope(a->here(), scope_stack.top().get(), n));
+  a->set_scope(s);
   scope_stack.push(s);
 
   if (debug) {
@@ -95,6 +96,9 @@ V(constant)
 V(constant_expr)
 
 void chk::v(declaration *a) {
+  if (debug) {
+    std::cout << indent << a->classname() << std::endl;
+  }
   auto c = a->children();
   // expecting { declaration-specifiers }
   // expecting { declaration-specifiers,  init-declarator-list }
@@ -132,6 +136,40 @@ void chk::v(declaration *a) {
           // No bare void's
           throw(visitor_exception("invalid void usage", i));
         }
+      }
+    }
+    //
+    // expecting { declaration-specifiers,  init-declarator-list }
+    //
+    // Look for the identifiers
+    if (c.size() == 2) {
+      init_declarator_list *idl =
+	dynamic_cast<init_declarator_list *>(c[1].get());
+      if (idl != nullptr) {
+	auto cc = idl->children();
+	for (size_t i = 0; i < cc.size(); i++) {
+	  init_declarator *id = dynamic_cast<init_declarator *>(cc[i].get());
+	  if (id != nullptr) {
+	    //
+	    // expecting { declarator }
+	    //           { declarator EQ initializer }
+	    declarator *d = dynamic_cast<declarator *>(id->children()[0].get());
+	    if (d != nullptr) {
+	      identifier *i = d->identifier();
+	      // TODO : check for multiple identifiers
+	      if (i != nullptr) {
+		scope *s = scope_stack.top().get();
+		if (s->has_declaration(i->id())) {
+		  throw(visitor_exception("identifier has already been defined", i));
+		  // error 
+		} else {
+		  s->set_declaration(i->id(), ds);
+		}
+		std::cout << "identifier " << i->id() << "\n";
+	      }
+	    }
+	  }
+	}
       }
     }
   }
@@ -343,7 +381,12 @@ void chk::v(init_declarator *a) {
   a->caccept(this);
 }
 
-V(init_declarator_list)
+void chk::v(init_declarator_list *a) {
+  if (debug)
+    std::cout << indent << a->classname() << std::endl;
+  a->caccept(this);
+}
+
 V(initializer)
 V(initializer_list)
 V(integer_constant)
@@ -617,6 +660,7 @@ void chk::v(translation_unit *a) {
   std::string f = a->filename();
   std::shared_ptr<scope> s =
       std::shared_ptr<scope>(new scope(a->here(), scope_stack.top().get(), f));
+  a->set_scope(s);
   scope_stack.push(s);
 
   if (debug) {
