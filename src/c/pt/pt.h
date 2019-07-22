@@ -37,6 +37,8 @@
 
 #include "n.h"
 #include "pt_classes.h"
+#include "pt_defines.h"
+#include "at/at.h"
 #include <map>
 #include <vector>
 
@@ -257,6 +259,11 @@ public:
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
+  std::shared_ptr<scope> get_scope();
+  void set_scope(std::shared_ptr<scope> a);
+ private:
+  std::shared_ptr<scope> s;
+
 };
 
 class conditional_expr : public n {
@@ -317,7 +324,7 @@ public:
   virtual std::string classname();
 };
 
-class declaration_specifiers : public n {
+class declaration_specifiers : public n, public type_data_inf {
 public:
   declaration_specifiers(std::shared_ptr<storage_class_specifier>);
   declaration_specifiers(std::shared_ptr<type_specifier>);
@@ -1021,6 +1028,10 @@ public:
   virtual void notify();
   virtual std::string classname();
   std::string filename();
+  std::shared_ptr<scope> get_scope();
+  void set_scope(std::shared_ptr<scope> a);
+ private:
+  std::shared_ptr<scope> s;
 };
 
 class type_name : public n {
@@ -1045,7 +1056,7 @@ public:
   virtual std::string classname();
 };
 
-class type_qualifier_list : public n {
+class type_qualifier_list : public n, public type_data_inf {
 public:
   type_qualifier_list(std::shared_ptr<type_qualifier> a);
   virtual ~type_qualifier_list(){};
@@ -1077,6 +1088,8 @@ public:
   virtual void notify();
   virtual std::string classname();
   bool is_void();
+  bool is_primitive() { return primitive; }
+  bool primitive;
 };
 
 class unary_expr : public n {

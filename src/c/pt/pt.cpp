@@ -379,19 +379,25 @@ void character_constant::notify() {
 }
 std::string character_constant::classname() { return "character_constant"; }
 
-compound_statement::compound_statement() {}
+//
+// compound-statement 
+compound_statement::compound_statement() { s = nullptr; }
 compound_statement::compound_statement(std::shared_ptr<statement_list> a) {
+  s = nullptr;
   *this += a;
 }
 compound_statement::compound_statement(std::shared_ptr<declaration_list> a) {
+  s = nullptr;
   *this += a;
 }
 compound_statement::compound_statement(std::shared_ptr<declaration_list> a,
                                        std::shared_ptr<statement_list> b) {
+  s = nullptr;
   *this += a;
   *this += b;
 }
 compound_statement::compound_statement(std::shared_ptr<block_item_list> a) {
+  s = nullptr;
   *this += a;
 }
 void compound_statement::accept(visitor *a) { a->v(this); }
@@ -400,6 +406,10 @@ void compound_statement::notify() {
     i->update(this);
 }
 std::string compound_statement::classname() { return "compound_statement"; }
+void compound_statement::set_scope(std::shared_ptr<scope> a) { s = a; }
+std::shared_ptr<scope> compound_statement::get_scope() { return s; }
+
+
 
 conditional_expr::conditional_expr(std::shared_ptr<logical_or_expr> a) {
   *this += a;
@@ -1685,8 +1695,9 @@ void struct_or_union_specifier::declarators(std::vector<declarator *> *a) {
 //
 // 6.9 translation-unit
 //
-translation_unit::translation_unit() {}
+translation_unit::translation_unit() { s = nullptr; }
 translation_unit::translation_unit(std::shared_ptr<external_definition> a) {
+  s = nullptr;
   *this += a;
 }
 void translation_unit::accept(visitor *a) { a->v(this); }
@@ -1702,6 +1713,9 @@ std::string translation_unit::filename() {
     ret = *l.begin.filename;
   return ret;
 }
+
+void translation_unit::set_scope(std::shared_ptr<scope> a) { s = a; }
+std::shared_ptr<scope> translation_unit::get_scope() { return s; }
 
 type_name::type_name(std::shared_ptr<specifier_qualifier_list> a) {
   *this += a;
@@ -1737,15 +1751,16 @@ void type_qualifier_list::notify() {
 }
 std::string type_qualifier_list::classname() { return "type_qualifier_list"; }
 
-type_specifier::type_specifier(lex_token a) : n(a) {}
-type_specifier::type_specifier(std::shared_ptr<struct_or_union_specifier> a) {
+type_specifier::type_specifier(lex_token a) : n(a), primitive(true) {}
+type_specifier::type_specifier(std::shared_ptr<struct_or_union_specifier> a) : primitive(false) {
+  *this += a;
+  
+}
+type_specifier::type_specifier(std::shared_ptr<enum_specifier> a) : primitive(false){
   *this += a;
 }
-type_specifier::type_specifier(std::shared_ptr<enum_specifier> a) {
-  *this += a;
-}
-type_specifier::type_specifier(std::shared_ptr<typedef_name> a) { *this += a; }
-type_specifier::type_specifier(std::shared_ptr<atomic_type_specifier> a) {
+type_specifier::type_specifier(std::shared_ptr<typedef_name> a) : primitive(false) { *this += a; }
+type_specifier::type_specifier(std::shared_ptr<atomic_type_specifier> a) : primitive(false) {
   *this += a;
 }
 void type_specifier::accept(visitor *a) { a->v(this); }

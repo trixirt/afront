@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Tom Rix
+ * Copyright (c) 2019 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -32,12 +32,33 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef NADA_AT_AT_H
-#define NADA_AT_AT_H
+#ifndef AFRONT_AT_BITDATA_H
+#define AFRONT_AT_BITDATA_H
 
-#include "ast.h"
-#include "bitdata.h"
-#include "scope.h"
-#include "type.h"
+class bit_data {
+ public:
+  bit_data() { d = 0; }
+  unsigned set(unsigned a) { d |= a; return d;}
+  unsigned clear(unsigned a) { d &= ~a; return d;}
+  unsigned get() { return d; }
+ private:
+  unsigned d;
+};
+
+class type_data {
+ public:
+  bit_data storage_class_specifier;
+  bit_data type_specifier;
+  bit_data type_qualifer;
+  bit_data function_specifier;
+  bit_data alignment_specifier;
+};
+
+class type_data_inf {
+ public:
+  type_data_inf() { d = std::shared_ptr<type_data>(new type_data); }
+  std::shared_ptr<type_data> get_type_data() { return d; };
+  std::shared_ptr<type_data> d;
+};
 
 #endif

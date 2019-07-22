@@ -161,11 +161,11 @@ void chk::v(declaration *a) {
 		scope *s = scope_stack.top().get();
 		if (s->has_declaration(i->id())) {
 		  throw(visitor_exception("identifier has already been defined", i));
-		  // error 
 		} else {
+		  // add this identifier:declaration-specifiers to the current
+		  // scope's declaration map.
 		  s->set_declaration(i->id(), ds);
 		}
-		std::cout << "identifier " << i->id() << "\n";
 	      }
 	    }
 	  }
@@ -719,6 +719,132 @@ void chk::v(type_specifier *a) {
       std::cout << indent << a->where() << " " << a->who() << std::endl;
   }
 
+  std::shared_ptr<type_data>td;
+  if (dynamic_cast<type_qualifier_list *>(a->parent())) {
+    type_qualifier_list *tql = dynamic_cast<type_qualifier_list *>(a->parent());
+    td = tql->get_type_data();
+  } else if (dynamic_cast<declaration_specifiers *>(a->parent())) {
+    declaration_specifiers *ds = dynamic_cast<declaration_specifiers *>(a->parent());
+    td = ds->get_type_data();
+  } else {
+    std::string str = "unexpected parent of type_specifier ";
+    str += a->parent()->classname();
+    throw(ice_exception(__FILE__, __LINE__, str));
+  }
+
+  unsigned tsd = td->type_specifier.get();
+  unsigned ts = 0;
+  if (a->is_primitive()) {
+    signed tok = a->what();
+    size_t i, max;
+    if (tok == afront::parser::token::VOID) {
+      ts = TYPE_SPECIFIER_VOID;
+      unsigned vts[] = { 0,
+      };
+      max = sizeof(vts)/sizeof(vts[0]);
+      for (i = 0; i < max; i++) {
+	if (tsd == vts[i])
+	  break;
+      }
+    } else if (tok == afront::parser::token::CHAR) {
+      ts = TYPE_SPECIFIER_CHAR;
+      unsigned vts[] = { 0,
+			  TYPE_SPECIFIER_SIGNED,
+			  TYPE_SPECIFIER_UNSIGNED,
+      };
+      max = sizeof(vts)/sizeof(vts[0]);
+      for (i = 0; i < max; i++) {
+	if (tsd == vts[i])
+	  break;
+      }
+      
+    } else if (tok == afront::parser::token::SHORT) {
+      ts = TYPE_SPECIFIER_SHORT;
+      unsigned vts[] = { 0,
+			  TYPE_SPECIFIER_SIGNED,
+			  TYPE_SPECIFIER_UNSIGNED,
+			  TYPE_SPECIFIER_INT,
+			  TYPE_SPECIFIER_SIGNED | TYPE_SPECIFIER_INT,
+			  TYPE_SPECIFIER_UNSIGNED | TYPE_SPECIFIER_INT,
+      };
+      max = sizeof(vts)/sizeof(vts[0]);
+      for (i = 0; i < max; i++) {
+	if (tsd == vts[i])
+	  break;
+      }
+
+    } else if (tok == afront::parser::token::INT) {
+      ts = TYPE_SPECIFIER_INT;
+      unsigned vts[] = { 0,
+			  TYPE_SPECIFIER_SIGNED,
+			  TYPE_SPECIFIER_UNSIGNED,
+			  TYPE_SPECIFIER_SHORT,
+			  TYPE_SPECIFIER_SIGNED | TYPE_SPECIFIER_SHORT,
+			  TYPE_SPECIFIER_UNSIGNED | TYPE_SPECIFIER_SHORT,
+			  TYPE_SPECIFIER_LONG,
+			  TYPE_SPECIFIER_SIGNED | TYPE_SPECIFIER_LONG,
+			  TYPE_SPECIFIER_UNSIGNED | TYPE_SPECIFIER_LONG,
+			  TYPE_SPECIFIER_LONG_LONG,
+			  TYPE_SPECIFIER_SIGNED | TYPE_SPECIFIER_LONG_LONG,
+			  TYPE_SPECIFIER_UNSIGNED | TYPE_SPECIFIER_LONG_LONG,
+      };
+      max = sizeof(vts)/sizeof(vts[0]);
+      for (i = 0; i < max; i++) {
+	if (tsd == vts[i])
+	  break;
+      }
+
+    } else if (tok == afront::parser::token::LONG) {
+      ts = TYPE_SPECIFIER_LONG;
+      unsigned vts[] = { 0,
+			 TYPE_SPECIFIER_SIGNED,
+			 TYPE_SPECIFIER_UNSIGNED,
+			 TYPE_SPECIFIER_INT,
+			 TYPE_SPECIFIER_SIGNED | TYPE_SPECIFIER_INT,
+			 TYPE_SPECIFIER_UNSIGNED | TYPE_SPECIFIER_INT,
+			 TYPE_SPECIFIER_LONG,
+			 TYPE_SPECIFIER_SIGNED | TYPE_SPECIFIER_LONG,
+			 TYPE_SPECIFIER_UNSIGNED | TYPE_SPECIFIER_LONG,
+			 TYPE_SPECIFIER_LONG | TYPE_SPECIFIER_INT,
+			 TYPE_SPECIFIER_SIGNED | TYPE_SPECIFIER_LONG | TYPE_SPECIFIER_INT,
+			 TYPE_SPECIFIER_UNSIGNED | TYPE_SPECIFIER_LONG | TYPE_SPECIFIER_INT,
+
+      };
+      max = sizeof(vts)/sizeof(vts[0]);
+      for (i = 0; i < max; i++) {
+	if (tsd == vts[i])
+	  break;
+      }
+    } else if (tok == afront::parser::token::SIGNED || tok == afront::parser::token::UNSIGNED) {
+      ts = TYPE_SPECIFIER_SIGNED;
+      if (tok == afront::parser::token::UNSIGNED)
+	ts = TYPE_SPECIFIER_UNSIGNED;
+      unsigned vts[] = { 0,
+			 TYPE_SPECIFIER_CHAR,
+			 TYPE_SPECIFIER_SHORT,
+			 TYPE_SPECIFIER_SHORT | TYPE_SPECIFIER_INT,
+			 TYPE_SPECIFIER_INT,
+			 TYPE_SPECIFIER_LONG,
+			 TYPE_SPECIFIER_LONG | TYPE_SPECIFIER_INT,
+			 TYPE_SPECIFIER_LONG_LONG,
+			 TYPE_SPECIFIER_LONG_LONG | TYPE_SPECIFIER_INT,
+      };
+      max = sizeof(vts)/sizeof(vts[0]);
+      for (i = 0; i < max; i++) {
+	if (tsd == vts[i])
+	  break;
+      }
+    } else {
+      std::string str = "unexpected token for type_specifier ";
+      throw(ice_exception(__FILE__, __LINE__, str));
+    }
+
+    if (i < max) {
+      td->type_specifier.set(ts);
+    } else {
+      throw(visitor_exception("overspecified type", a));
+    }
+  }
   bool self = false;
   bool tdef = false;
   auto sib = a->siblings();
@@ -739,197 +865,6 @@ void chk::v(type_specifier *a) {
       }
     }
     if (compound_type.size() > 0) {
-      // c99 Type Specifiers
-      // 2. At least one type specifier shall be given
-      //    in the declaration specifiers in each declaration,
-      //    and in the specifier-qualifier list in each
-      //    struct declaration and type name. Each list of
-      //    type specifiers shall be one of the following sets
-      //
-      //
-      //    void
-      if (compound_type[0] == afront::parser::token::VOID) {
-        if (compound_type.size() > 1) {
-          throw(visitor_exception("overspecified void type", a));
-        }
-      }
-      //
-      //    char
-      //    signed char
-      //    unsigned char
-      else if (compound_type[0] == afront::parser::token::CHAR) {
-        if (compound_type.size() > 2) {
-          throw(visitor_exception("overspecified char type", a));
-        } else {
-          bool valid = false;
-          if (compound_type.size() == 1) {
-            valid = true;
-          } else /* 2 */ {
-            if ((compound_type[1] == afront::parser::token::SIGNED) ||
-                (compound_type[1] == afront::parser::token::UNSIGNED))
-              valid = true;
-          }
-          if (!valid)
-            throw(visitor_exception("invalid char type", a));
-        }
-      }
-      //
-      //    short
-      //    signed short
-      //    unsigned short
-      else if (compound_type[0] == afront::parser::token::SHORT) {
-        if (compound_type.size() > 2) {
-          throw(visitor_exception("overspecified short type", a));
-        } else {
-          bool valid = false;
-          if (compound_type.size() == 1) {
-            valid = true;
-          } else /* 2 */ {
-
-            if ((compound_type[1] == afront::parser::token::SIGNED) ||
-                (compound_type[1] == afront::parser::token::UNSIGNED))
-              valid = true;
-          }
-          if (!valid)
-            throw(visitor_exception("invalid short type", a));
-        }
-      }
-      //    int
-      //
-      //    signed int
-      //    unsigned int
-      //    short int
-      //    long int
-      //
-      //    signed short int
-      //    unsigned short int
-      //    signed long int
-      //    unsigned long int
-      //    long long int
-      //
-      //    signed long long int
-      //    unsigned long long int
-      else if (compound_type[0] == afront::parser::token::INT) {
-        if (compound_type.size() > 4) {
-          throw(visitor_exception("overspecified int type", a));
-        } else {
-          bool valid = false;
-          if (compound_type.size() == 1) {
-            valid = true;
-          } else if (compound_type.size() == 2) {
-            if ((compound_type[1] == afront::parser::token::SIGNED) ||
-                (compound_type[1] == afront::parser::token::UNSIGNED) ||
-                (compound_type[1] == afront::parser::token::SHORT) ||
-                (compound_type[1] == afront::parser::token::LONG))
-              valid = true;
-          } else if (compound_type.size() == 3) {
-            if ((compound_type[1] == afront::parser::token::SHORT) &&
-                ((compound_type[2] == afront::parser::token::SIGNED) ||
-                 (compound_type[2] == afront::parser::token::UNSIGNED)))
-              valid = true;
-            else if ((compound_type[1] == afront::parser::token::LONG) &&
-                     ((compound_type[2] == afront::parser::token::SIGNED) ||
-                      (compound_type[2] == afront::parser::token::UNSIGNED) ||
-                      (compound_type[2] == afront::parser::token::LONG)))
-              valid = true;
-          } else /* 4 */ {
-            if ((compound_type[1] == afront::parser::token::LONG) &&
-                (compound_type[2] == afront::parser::token::LONG) &&
-                ((compound_type[3] == afront::parser::token::SIGNED) ||
-                 (compound_type[3] == afront::parser::token::UNSIGNED)))
-              valid = true;
-          }
-          if (!valid)
-            throw(visitor_exception("invalid int type", a));
-        }
-      }
-      //
-      //    signed
-      else if (compound_type[0] == afront::parser::token::SIGNED) {
-        if (compound_type.size() > 1) {
-          throw(visitor_exception("overspecified signed type", a));
-        }
-      }
-      //
-      //    unsigned
-      else if (compound_type[0] == afront::parser::token::UNSIGNED) {
-        if (compound_type.size() > 1) {
-          throw(visitor_exception("overspecified unsigned type", a));
-        }
-      }
-      //
-      //    long
-      //    signed long
-      //    unsigned long
-      //    long long
-      //    signed long long
-      //    unsigned long long
-      else if (compound_type[0] == afront::parser::token::LONG) {
-        if (compound_type.size() > 3) {
-          throw(visitor_exception("overspecified long type", a));
-        } else {
-          bool valid = false;
-          if (compound_type.size() == 1) {
-            valid = true;
-          } else if (compound_type.size() == 2) {
-            if ((compound_type[1] == afront::parser::token::SIGNED) ||
-                (compound_type[1] == afront::parser::token::UNSIGNED) ||
-                (compound_type[1] == afront::parser::token::LONG))
-              valid = true;
-          } else /* 3 */ {
-            if ((compound_type[1] == afront::parser::token::LONG) &&
-                ((compound_type[2] == afront::parser::token::SIGNED) ||
-                 (compound_type[2] == afront::parser::token::UNSIGNED)))
-              valid = true;
-          }
-
-          if (!valid)
-            throw(visitor_exception("invalid long type", a));
-        }
-      }
-      //
-      //    float
-      else if (compound_type[0] == afront::parser::token::FLOAT) {
-        if (compound_type.size() > 1) {
-          throw(visitor_exception("overspecified float type", a));
-        }
-      }
-      //
-      //    double
-      //    long double
-      else if (compound_type[0] == afront::parser::token::DOUBLE) {
-        if (compound_type.size() > 2) {
-          throw(visitor_exception("overspecified double type", a));
-        } else {
-          bool valid = false;
-          if (compound_type.size() == 1) {
-            valid = true;
-          } else /* 2 */ {
-
-            if (compound_type[1] == afront::parser::token::LONG)
-              valid = true;
-          }
-          if (!valid)
-            throw(visitor_exception("invalid double type", a));
-        }
-      }
-#ifdef C99
-      //
-      //    _Bool
-      else if (compound_type[0] == afront::parser::token::_BOOL) {
-      }
-      //
-      //     float _Complex
-      //     double _Complex
-      //     long double _Complex
-      else if (compound_type[0] == afront::parser::token::_COMPLEX) {
-      }
-#error "Add _Bool and _Complex"
-#endif
-      else {
-        // Unhandled what
-        throw(ice_exception(__FILE__, __LINE__, "unhandled token"));
-      }
     } else {
       // The current node must be in it's sibling list.
       throw(ice_exception(__FILE__, __LINE__, "could not build compound type"));
