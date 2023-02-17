@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2017-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -76,7 +76,6 @@ bool driver::parse(const char *const filename) {
     // TBD : HANDLE ERROR
   }
 
-end:
   return ret;
 }
 
