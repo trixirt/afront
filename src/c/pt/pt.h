@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2017-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -353,7 +353,7 @@ public:
   virtual void accept(visitor *a);
   virtual void notify();
   virtual std::string classname();
-  identifier *identifier();
+  class identifier *identifier();
   bool has_pointer();
 };
 
