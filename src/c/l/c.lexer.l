@@ -27,7 +27,7 @@
  *
  * Modifications :
  *
- * Copyright (c) 2017-2019 Tom Rix
+ * Copyright (c) 2017-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -73,8 +73,6 @@ void scanner::add_typename(std::string a) {
 using token = afront::parser::token;
 
 int yyFlexLexer::yylex() { return -1; /* to silence undefined reference in yyFlexLex class */ }
-
-static void comment();
 
 %}
 
