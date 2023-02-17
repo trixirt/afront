@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Tom Rix
+ * Copyright (c) 2018-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :

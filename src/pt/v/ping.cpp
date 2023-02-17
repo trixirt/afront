@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Tom Rix
+ * Copyright (c) 2018-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -36,7 +36,7 @@
 #include "ping.h"
 #include "e.h"
 #include "pt.h"
-ping::ping(bool pre, int max) : preorder(pre), max_depth(max), depth(0) {}
+ping::ping(bool pre, int max) : preorder(pre), depth(0), max_depth(max) {}
 ping::~ping() {}
 
 void ping::descend() { depth++; }
