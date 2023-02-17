@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2017-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -681,19 +681,18 @@ void chk::v(type_qualifier *a) {
       std::cout << indent << a->where() << " " << a->who() << std::endl;
   }
 
-  bool self = false;
   auto sib = a->siblings();
   unsigned what = a->what();
   for (auto s : sib) {
     /* Do not bother with younger siblings */
     if (s.get() == a) {
-      self = true;
       break;
     }
 
     class type_qualifier *tq = dynamic_cast<type_qualifier *>(s.get());
     if (tq) {
-      if (tq->what() == what) {
+      unsigned w = tq->what();
+      if (w == what) {
         // c99 6.7.3 Type Qualifiers
         // 4. If the same qualifier appears more than once in
         //    the same specifier-qualifier-list, either directly
