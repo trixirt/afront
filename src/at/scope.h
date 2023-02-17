@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2017-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -66,14 +66,14 @@ public:
   void set_declaration(std::string a, declaration_specifiers *b);
 
 private:
-  location loc;
-  std::string n;
-  scope *super;
-  std::vector<scope *> sub;
-  std::map<std::string, enum_specifier *> enum_tag_map;
-  std::map<std::string, struct_or_union_specifier *> struct_or_union_tag_map;
-  std::map<std::string, class n *> user_type_map;
-  std::map<std::string, declaration_specifiers *> declaration_specifiers_map;
+  location _location;
+  std::string _name;
+  scope *_super;
+  std::vector<scope *> _sub;
+  std::map<std::string, enum_specifier *> _enum_tag_map;
+  std::map<std::string, struct_or_union_specifier *> _struct_or_union_tag_map;
+  std::map<std::string, class n *> _user_type_map;
+  std::map<std::string, declaration_specifiers *> _declaration_specifiers_map;
 };
 
 #endif

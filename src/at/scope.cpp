@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2017-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -38,19 +38,19 @@
 scope::scope() {}
 
 scope::scope(location &l, scope *p, std::string name) {
-  loc = l;
-  super = p;
-  n = name;
-  if (super != nullptr)
-    super->sub.push_back(this);
+  _location = l;
+  _super = p;
+  _name = name;
+  if (_super != nullptr)
+    _super->_sub.push_back(this);
 }
 
 std::string scope::classname() { return "scope"; }
 
 void scope::notify() {}
 
-std::string scope::name() { return n; }
-size_t scope::subscopes() { return sub.size(); }
+std::string scope::name() { return _name; }
+size_t scope::subscopes() { return _sub.size(); }
 
 //
 // Add an enum tag to map
@@ -66,11 +66,11 @@ enum_specifier *scope::enum_tag(enum_specifier *a) {
   if (i != nullptr) {
     std::string s = i->id();
     // not already a struct/union
-    if (struct_or_union_tag_map.find(s) == struct_or_union_tag_map.end()) {
-      auto e = enum_tag_map.find(s);
-      if (e == enum_tag_map.end()) {
+    if (_struct_or_union_tag_map.find(s) == _struct_or_union_tag_map.end()) {
+      auto e = _enum_tag_map.find(s);
+      if (e == _enum_tag_map.end()) {
         // easy, first time
-        enum_tag_map[s] = a;
+        _enum_tag_map[s] = a;
         ret = a;
       } else {
         if (a->children().size() == 1) {
@@ -82,7 +82,7 @@ enum_specifier *scope::enum_tag(enum_specifier *a) {
           // an enum definition
           if (e->second->children().size() == 1) {
             // replace existing incomplete with complete
-            enum_tag_map[s] = a;
+            _enum_tag_map[s] = a;
             ret = a;
           } else {
             // both existing and input have an enumeration_list
@@ -113,11 +113,11 @@ scope::struct_or_union_tag(struct_or_union_specifier *a) {
   if (i != nullptr) {
     std::string s = i->id();
     // not already an enum
-    if (enum_tag_map.find(s) == enum_tag_map.end()) {
-      auto sou = struct_or_union_tag_map.find(s);
-      if (sou == struct_or_union_tag_map.end()) {
+    if (_enum_tag_map.find(s) == _enum_tag_map.end()) {
+      auto sou = _struct_or_union_tag_map.find(s);
+      if (sou == _struct_or_union_tag_map.end()) {
         // easy, first time..
-        struct_or_union_tag_map[s] = a;
+        _struct_or_union_tag_map[s] = a;
         ret = a;
       } else {
         // previous
@@ -133,7 +133,7 @@ scope::struct_or_union_tag(struct_or_union_specifier *a) {
             // 'a' size == 3
             if (sou->second->children().size() == 2) {
               // replace existing incomplete with complete
-              struct_or_union_tag_map[s] = a;
+              _struct_or_union_tag_map[s] = a;
               ret = a;
             } else {
               // both existing and input have struct_declaration_list
@@ -156,8 +156,8 @@ scope::struct_or_union_tag(struct_or_union_specifier *a) {
 // Returns input on success
 class n *scope::user_type(std::string a, class n *b) {
   class n *ret = nullptr;
-  if (user_type_map.find(a) == user_type_map.end()) {
-    user_type_map[a] = b;
+  if (_user_type_map.find(a) == _user_type_map.end()) {
+    _user_type_map[a] = b;
     ret = b;
   }
   return ret;
@@ -165,19 +165,19 @@ class n *scope::user_type(std::string a, class n *b) {
 
 bool scope::has_declaration(std::string a) {
   bool ret = false;
-  if (declaration_specifiers_map.find(a) != declaration_specifiers_map.end())
+  if (_declaration_specifiers_map.find(a) != _declaration_specifiers_map.end())
     ret = true;
   return ret;
 }
 declaration_specifiers * scope::get_declaration(std::string a) {
   declaration_specifiers *ret = nullptr;
   if (has_declaration(a)) {
-    ret = declaration_specifiers_map[a];
+    ret = _declaration_specifiers_map[a];
   }
   return ret;
 }
 void scope::set_declaration(std::string a, declaration_specifiers *b) {
   if (!has_declaration(a)) {
-    declaration_specifiers_map[a] = b;
+    _declaration_specifiers_map[a] = b;
   }
 }
