@@ -1,4 +1,4 @@
-/* Copyright (c) 2017-2018 Tom Rix
+/* Copyright (c) 2017-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -40,7 +40,7 @@
 %define api.namespace {afront}
 %define api.value.type variant
 %define api.location.type {location}
-%define parser_class_name {parser}
+%define api.parser.class {parser}
 %define parse.error verbose
 
 %code requires {
