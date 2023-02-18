@@ -4,6 +4,7 @@ TOPOBJDIR= $(TOP)/obj
 TOPSRCDIR= $(TOP)/src
 OBJDIR= $(TOPOBJDIR)/fig
 SRCDIR= $(TOPSRCDIR)/fig
+VISIBILITY=
 
 all: dirs $(OBJDIR)/figc1
 
@@ -62,10 +63,10 @@ LS = 	$(TOPSRCDIR)/l/digit.l \
 	$(SRCDIR)/l/fig.lexer.l
 
 $(OBJDIR)/driver.o : $(TOPSRCDIR)/co/driver.cpp $(OBJDIR)/parser.tab.cc
-	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
+	$(CXX) -o $@ $(CXXFLAGS) $(VISIBILITY) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/l -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/fig.lexer.o : $(OBJDIR)/fig.lexer.yy.cc
-	$(CXX) -o $@ $(CXXFLAGS) $(TOOL_INCLUDES) -fvisibility=hidden -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+	$(CXX) -o $@ $(CXXFLAGS) $(TOOL_INCLUDES) $(VISIBLITY) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/fig.lexer.yy.cc : $(OBJDIR)/fig.lexer.l $(OBJDIR)/parser.tab.cc
 	$(LEX) --outfile=$@ $<
@@ -80,19 +81,19 @@ $(OBJDIR)/figc1.o : $(SRCDIR)/figc1.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(LLVM_INCLUDEDIR) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
 
 $(OBJDIR)/lang_driver.o : $(OBJDIR)/parser.tab.cc $(SRCDIR)/lang_driver.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/lang_driver.cpp
+	$(CXX) -o $@ $(CXXFLAGS) $(VISIBLITY) -I$(SRCDIR)/pt -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(SRCDIR)/lang_driver.cpp
 
 $(OBJDIR)/m.o : $(TOPSRCDIR)/co/m.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
+	$(CXX) -o $@ $(CXXFLAGS) $(VISIBLITY) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
 
 $(OBJDIR)/n.o : $(TOPSRCDIR)/pt/n.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
+	$(CXX) -o $@ $(CXXFLAGS) $(VISIBLITY) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $<
 
 $(OBJDIR)/oparser.o : $(OBJDIR)/parser.tab.cc $(TOPSRCDIR)/co/oparser.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/co/oparser.cpp
+	$(CXX) -o $@ $(CXXFLAGS) $(VISIBLITY) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/co/oparser.cpp
 
 $(OBJDIR)/parser.o : $(OBJDIR)/parser.tab.cc
-	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
+	$(CXX) -o $@ $(CXXFLAGS) $(VISIBLITY) -I$(TOPSRCDIR) -I$(TOPSRCDIR)/l -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(OBJDIR) -I$(SRCDIR) -c $<
 
 $(OBJDIR)/parser.tab.cc : $(OBJDIR)/parser.yy
 	$(YACC) -o $@ $(YACC_FLAGS) -d -v $<
@@ -106,7 +107,7 @@ $(OBJDIR)/ping.o : $(OBJDIR)/parser.tab.cc $(TOPSRCDIR)/pt/v/ping.cpp
 	$(CXX) -o $@ $(CXXFLAGS) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(TOPSRCDIR)/pt/v -I$(OBJDIR) -I$(SRCDIR) -c $(TOPSRCDIR)/pt/v/ping.cpp
 
 $(OBJDIR)/pt.o : $(SRCDIR)/pt/pt.h $(SRCDIR)/pt/pt.cpp
-	$(CXX) -o $@ $(CXXFLAGS) -fvisibility=hidden -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $(SRCDIR)/pt/pt.cpp
+	$(CXX) -o $@ $(CXXFLAGS) $(VISIBLITY) -I$(TOPSRCDIR) -I$(SRCDIR)/pt -I$(TOPSRCDIR)/pt -I$(SRCDIR) -c $(SRCDIR)/pt/pt.cpp
 
 $(OBJDIR)/libfig.so : $(LOBJS)
 	$(LD) -Wl,-z,defs -shared -o $@ $(LOBJS) $(LLVM_LIBS) $(LLVM_SYSTEM_LIBS) 
