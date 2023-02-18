@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Tom Rix
+ * Copyright (c) 2017-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -103,8 +103,18 @@ void oparser::error(const class location &loc, const std::string &msg) {
   }
 #endif
 }
-std::string oparser::yysyntax_error_(state_type yystate,
-                                     const symbol_type &yyla) const {
+
+template <typename Base>
+oparser::symbol_kind_type
+oparser::basic_symbol<Base>::type_get() const YY_NOEXCEPT {
+  return this->kind();
+}
+
+std::string oparser::yysyntax_error_(const context &yyctx) const {
+
+  state_type yystate = yystack_[0].state;
+  const symbol_type &yyla = yyctx.lookahead();
+
   if (!yyla.empty()) {
     int ty = yyla.type_get();
     if (ty == yytranslate_(afront::parser::token::UNSUPPORTED_INPUT_CHAR)) {
@@ -116,7 +126,7 @@ std::string oparser::yysyntax_error_(state_type yystate,
     }
   }
 
-  std::string r = afront::parser::yysyntax_error_(yystate, yyla);
+  std::string r = afront::parser::yysyntax_error_(yyctx);
   std::hash<std::string> shash;
   std::size_t h = shash(r);
   auto si = syntax_error_map.find((int)yystate);
@@ -149,6 +159,7 @@ std::string oparser::yysyntax_error_(state_type yystate,
 #endif
 #endif
   }
+
   return r;
 }
 

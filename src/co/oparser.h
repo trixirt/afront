@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Tom Rix
+ * Copyright (c) 2017-2023 Tom Rix
  * All rights reserved.
  *
  * You may distribute under the terms of :
@@ -45,8 +45,8 @@ class oparser : public afront::parser {
 public:
   oparser(lang_driver *drv);
   virtual void error(const class location &loc, const std::string &msg);
-  virtual std::string yysyntax_error_(state_type yystate,
-                                      const symbol_type &yyla) const;
+  virtual std::string yysyntax_error_(const context &yyctx) const;
+
   std::string error();
 
 private:
